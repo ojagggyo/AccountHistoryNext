@@ -1,28 +1,14 @@
-// output.pathに絶対パスを指定する必要があるため、pathモジュールを読み込んでおく
-//const path = require('path');
-//const nodeExternals = require('webpack-node-externals');
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 
-export default  {
-    // モードの設定、v4系以降はmodeを指定しないと、webpack実行時に警告が出る
-    mode: 'development',
-    // エントリーポイントの設定
-    //entry: './src/app.js',
-    // Uncaught (in promise) ReferenceError: regeneratorRuntime is not defined
-    entry: ['regenerator-runtime/runtime.js', './src/app.js'],
-    // 出力の設定
-    output: {
-        // 出力するファイル名
-        filename: 'bundle.js',
-        // 出力先のパス（絶対パスを指定する必要がある）
-        path: path.join(__dirname, 'public')
-    },
+// ESモジュール環境で __dirname の代わりに import.meta.url を使ってパスを計算
+const __dirname = new URL('.', import.meta.url).pathname;
 
-    externals: [nodeExternals()],  // Node.jsのモジュールを外部依存として扱う
-    resolve: {
-        fallback: {
-            "undici": require.resolve("undici"), // undiciを明示的に指定
-        },
-    },
+export default {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'), // __dirname の代わりに新しく定義したパスを使用
+    filename: 'bundle.js',
+  },
+  externals: [nodeExternals()],
 };
