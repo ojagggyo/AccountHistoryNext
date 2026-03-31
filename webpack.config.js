@@ -1,6 +1,8 @@
 // output.pathに絶対パスを指定する必要があるため、pathモジュールを読み込んでおく
-const path = require('path');
-const nodeExternals = require('webpack-node-externals');
+//const path = require('path');
+//const nodeExternals = require('webpack-node-externals');
+import path from 'path';
+import nodeExternals from 'webpack-node-externals';
 
 module.exports = {
     // モードの設定、v4系以降はmodeを指定しないと、webpack実行時に警告が出る
