@@ -4,7 +4,7 @@
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 
-module.exports = {
+export default  {
     // モードの設定、v4系以降はmodeを指定しないと、webpack実行時に警告が出る
     mode: 'development',
     // エントリーポイントの設定
