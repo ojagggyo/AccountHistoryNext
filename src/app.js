@@ -1,5 +1,5 @@
 //require("regenerator-runtime/runtime");
-import 'regenerator-runtime/runtime';
+import 'regenerator-runtime/runtime.js';
 
 //const dsteem = require('dsteem');
 //let client = new dsteem.Client('https://api.steememory.com');
