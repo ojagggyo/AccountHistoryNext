@@ -6,7 +6,7 @@ const __dirname = new URL('.', import.meta.url).pathname;
 
 export default {
     mode: 'development', // または 'production'
-    entry: './src/index.js',
+    entry: ['regenerator-runtime/runtime.js', './src/app.js'],
     output: {
         path: path.resolve(__dirname, 'dist'), // __dirname の代わりに新しく定義したパスを使用
         filename: 'bundle.js',
