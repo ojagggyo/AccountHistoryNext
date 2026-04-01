@@ -1276,7 +1276,12 @@ async function rate(){
 async function aaa(days){
 
 	await rate();
+
+		console.log("***1280***");
+
 	await getTick();
+
+		console.log("***1284***");
 
 	const upbiturl = "https://upbit.com/exchange?code=CRIX.UPBIT.";
 	const huobiurl = "https://www.htx.com/trade/";
