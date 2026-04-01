@@ -1,6 +1,6 @@
 import Koa from 'koa';
 import Router from '@koa/router';
-import request from 'request';
+import axios from 'axios';
 import dsteem from 'dsteem';
 
 const { Client, cryptoUtils, Signature, PublicKey } = dsteem;
@@ -47,7 +47,7 @@ async function getPrice(markets) {
       url: url,
       headers: {}
     };
-    request(options, function (error, response) {
+    axios(options, function (error, response) {
       if (error) throw new Error(error);
       resolve(response.body);
     });
@@ -63,7 +63,7 @@ async function getPriceHuobi(pattern) {
       url: url,
       headers: {}
     };
-    request(options, function (error, response) {
+    axios(options, function (error, response) {
       if (error) throw new Error(error);
       resolve(response.body);
     });
