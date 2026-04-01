@@ -5,6 +5,9 @@ import axios from 'axios';
 const router = new Router();
 const app = new Koa();
 
+const serve = require('koa-static')
+app.use(serve('./public'))
+
 // Hello API
 router.get('/hello', (ctx) => {
   console.log('hello');
