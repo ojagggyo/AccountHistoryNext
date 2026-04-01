@@ -26,35 +26,13 @@ async function getTick(){
 
 	console.log("*** getTick start ***",steemsbd);
 
-    let o = await callAsync('market_history_api','get_ticker',[] )
+    //let o = await callAsync('market_history_api','get_ticker',[] )
+	let o = await steem.api.callAsync('market_history_api.get_ticker');
 	steemsbd = 1 / parseFloat(o.latest)
 	console.log("*** getTick end ***",steemsbd);
 }
 
 //-----------------------------------------------------------------------
-const callAsync  =  async (api, method, params) => {
-	console.log("*** callAsync start ***");
-
-    return new Promise((resolve, reject) => {
-		(async() => {
-
-		console.log("*** callAsync 1 ***");
-
-            steem.api.callAsync(api+"."+method,params).then(
-                function(result) {
-					console.log("*** callAsync 2 ***");
-					console.log("result",result);
-                    resolve(result)
-                },
-                function(error) {
-					console.log("*** callAsync 3 ***");
-					console.log("error",error);
-                    reject(error)
-                }
-            )
-        })();
-    });
-}
 
 const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 //-----------------------------------------------------------------------
