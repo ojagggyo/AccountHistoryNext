@@ -1289,15 +1289,36 @@ async function aaa(days){
 
 	const username = document.getElementById("username").value;
 	effectivepower(username);
+
+	console.log("***1293***");
+
   	votingpower(username);
+
+	console.log("***1297***");
+
 	reputation(username, "reputation");
+
+	console.log("***1301***");
+
 	witness(username, );//2025.10.10
+
+	console.log("***1305***");
+
 	age(username);
+
+	console.log("***1309***");
+
 	wallet(username);
+
+	console.log("***1313***");
+
 	setUsername(username);
+
+	console.log("***1317***");
+
 	userlink();
 	
-console.log("***1300***");
+console.log("***1321***");
 
 	let out = [];
 	let limit = _get_account_history_limit;
