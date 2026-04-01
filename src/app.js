@@ -727,6 +727,12 @@ async function getPriceHuobi(name, markets) {
     return new Promise((resolve, reject) => {
 
 		window['get'+name] = async function(data){
+
+
+			console.log("xxx");
+			console.log(JSON.parse(data));
+
+
 			let price = JSON.parse(data).data[0].data[0].price
 
 			resolve(price);
