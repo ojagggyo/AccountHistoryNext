@@ -25,6 +25,7 @@ let steemsbd;//2025/01/18
 async function getTick(){
     let o = await callAsync('market_history_api','get_ticker',[] )
 	steemsbd = 1 / parseFloat(o.latest)
+	console.log("*** getTick ***",steemsbd);
 }
 
 //-----------------------------------------------------------------------
