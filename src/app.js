@@ -1297,6 +1297,8 @@ async function aaa(days){
 	setUsername(username);
 	userlink();
 	
+console.log("***1300***");
+
 	let out = [];
 	let limit = _get_account_history_limit;
 	let lastlength = limit;
@@ -1336,6 +1338,9 @@ async function aaa(days){
 		try {
 			//ret = await client.database.call('get_account_history',[username, firstValue, limit]);
       ret = await steem.api.getAccountHistoryAsync([username, firstValue, limit]);
+
+console.log("***1342***");
+console.log("ret",ret);
 
 		} catch (error) {
 			if( error.message == "Request Timeout"){
