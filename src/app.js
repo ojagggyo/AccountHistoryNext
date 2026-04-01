@@ -40,7 +40,7 @@ const callAsync  =  async (api, method, params) => {
 
 		console.log("*** callAsync 1 ***");
 
-            steem.api.callAsync(api+"."+method,[params]).then(
+            steem.api.callAsync(api+"."+method,params).then(
                 function(result) {
 					console.log("*** callAsync 2 ***");
 					console.log("result",result);
