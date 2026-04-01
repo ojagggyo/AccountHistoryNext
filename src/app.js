@@ -97,6 +97,17 @@ function getUserName(){
 }
 
 // ---------- emoji ----------
+let emoji_upvote = "";
+let emoji_downvote = "";
+let emoji_author_reward = "";
+let emoji_curation_reward = "";
+let emoji_authored = "";
+let emoji_replied = "";
+let emoji_transfer = "";
+let emoji_delegate_vesting_shares = "";
+let emoji_undelegate_vesting_shares = "";
+let emoji_claim_reward_balance = "";
+let emoji_comment_benefactor_reward = "";
 let emoji_index = Math.floor( Math.random() * 4 );	;
 function emoji(){
 emoji_index = ++emoji_index % 4;
