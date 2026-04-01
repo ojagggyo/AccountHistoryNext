@@ -712,8 +712,13 @@ async function getPrice(name, markets) {
     return new Promise((resolve, reject) => {
 
 		window['get'+name] = async function(data){
-			let price = JSON.parse(data)[0].trade_price
 
+			console.log("getPrice");
+			const jsonString = JSON.stringify(data);
+			console.log(jsonString);
+			console.log(JSON.parse(jsonString));
+
+			let price = JSON.parse(jsonString)[0].trade_price
 			resolve(price);
 		}
 		let sc = document.createElement("script");
@@ -729,12 +734,11 @@ async function getPriceHuobi(name, markets) {
 		window['get'+name] = async function(data){
 
 			const jsonString = JSON.stringify(data);
-
 			console.log("xxx");
 			console.log(jsonString);
 			console.log(JSON.parse(jsonString));
 
-			let price = JSON.parse(data).data[0].data[0].price
+			let price = JSON.parse(jsonString).data[0].data[0].price
 
 			resolve(price);
 		}
