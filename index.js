@@ -5,7 +5,6 @@ import axios from 'axios';
 const router = new Router();
 const app = new Koa();
 
-
 // Hello API
 router.get('/hello', (ctx) => {
   console.log('hello');
@@ -17,10 +16,17 @@ router.get('/upbit', async (ctx) => {
   const query = ctx.query;
   const pattern = query.pattern;
   const callbackName = query.callback;
+
+  if (!pattern || !callbackName) {
+    ctx.status = 400;
+    ctx.body = '必須パラメータが不足しています: pattern または callback';
+    return;
+  }
+
   const s = await getPrice(pattern);
   console.log("upbit=", s);
   ctx.contentType = 'application/json';
-  ctx.body = `${callbackName}('${s}')`;
+  ctx.body = `${callbackName}('${JSON.stringify(s)}')`;  // JSONP形式
 });
 
 // Huobi API
@@ -28,46 +34,43 @@ router.get('/huobi', async (ctx) => {
   const query = ctx.query;
   const pattern = query.pattern;
   const callbackName = query.callback;
+
+  if (!pattern || !callbackName) {
+    ctx.status = 400;
+    ctx.body = '必須パラメータが不足しています: pattern または callback';
+    return;
+  }
+
   const s = await getPriceHuobi(pattern);
   console.log("huobi=", s);
   ctx.contentType = 'application/json';
-  ctx.body = `${callbackName}('${s}')`;
+  ctx.body = `${callbackName}('${JSON.stringify(s)}')`;  // JSONP形式
 });
 
-// Webhook - get price from Upbit
+// Webhook - Upbitから価格を取得
 async function getPrice(markets) {
-  return new Promise((resolve, reject) => {
-    let url = "https://api.upbit.com/v1/ticker?markets=" + markets;
-    const options = {
-      method: 'GET',
-      url: url,
-      headers: {}
-    };
-    axios(options, function (error, response) {
-      if (error) throw new Error(error);
-      resolve(response.body);
-    });
-  });
+  let url = "https://api.upbit.com/v1/ticker?markets=" + markets;
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    throw new Error('Upbitからデータを取得中にエラーが発生しました: ' + error.message);
+  }
 }
 
-// Webhook - get price from Huobi
+// Webhook - Huobiから価格を取得
 async function getPriceHuobi(pattern) {
-  return new Promise((resolve, reject) => {
-    let url = "https://api.huobi.pro/market/history/trade?symbol=" + pattern;
-    const options = {
-      method: 'GET',
-      url: url,
-      headers: {}
-    };
-    axios(options, function (error, response) {
-      if (error) throw new Error(error);
-      resolve(response.body);
-    });
-  });
+  let url = "https://api.huobi.pro/market/history/trade?symbol=" + pattern;
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    throw new Error('Huobiからデータを取得中にエラーが発生しました: ' + error.message);
+  }
 }
 
-// Start server
+// サーバー起動
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.listen(3000, "0.0.0.0");
-console.log('Server started!!');
+console.log('サーバーが起動しました!!');
