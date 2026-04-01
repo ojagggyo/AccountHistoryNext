@@ -28,10 +28,10 @@ async function getTick(){
 }
 
 //-----------------------------------------------------------------------
-const constcallAsync  =  async (api, method, params) => {
+const callAsync  =  async (api, method, params) => {
     return new Promise((resolve, reject) => {
 		(async() => {
-            client.call(api,method,params).then(
+            steem.api.callAsync(api,method,params).then(
                 function(result) {
                     resolve(result)
                 },
