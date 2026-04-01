@@ -1,9 +1,7 @@
 import Koa from 'koa';
 import Router from '@koa/router';
 import axios from 'axios';
-import dsteem from 'dsteem';
 
-const { Client, cryptoUtils, Signature, PublicKey } = dsteem;
 const client = new Client('https://api.steememory.com');
 
 const router = new Router();
