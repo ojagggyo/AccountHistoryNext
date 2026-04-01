@@ -2,8 +2,6 @@ import Koa from 'koa';
 import Router from '@koa/router';
 import axios from 'axios';
 
-const client = new Client('https://api.steememory.com');
-
 const router = new Router();
 const app = new Koa();
 
