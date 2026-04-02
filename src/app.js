@@ -508,7 +508,7 @@ async function getAge(username){
     steem.api.getAccountsAsync([username]).then(res =>{
 
 			if (res.length == 0) reject("res.length == 0");
-			date1 = new Date(res[0].created);
+			let date1 = new Date(res[0].created);
 			date1.setHours(date1.getHours() + 9);
 			var now = new Date();
 
