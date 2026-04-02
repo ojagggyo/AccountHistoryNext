@@ -1359,6 +1359,9 @@ console.log("***1342***");
 console.log("ret",ret);
 
 		} catch (error) {
+
+			console.log("ret",error);
+
 			if( error.message == "Request Timeout"){
 				document.getElementById("text").innerText = error.message;
 				return out;
