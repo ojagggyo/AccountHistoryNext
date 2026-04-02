@@ -1360,7 +1360,7 @@ console.log("ret",ret);
 
 		} catch (error) {
 
-			console.log("ret",error);
+			console.log("error",error);
 
 			if( error.message == "Request Timeout"){
 				document.getElementById("text").innerText = error.message;
