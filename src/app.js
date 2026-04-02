@@ -894,7 +894,7 @@ function setUsername(username){
 }
     
 function getUsernames(){
-    cookies = document.cookie;
+    let cookies = document.cookie;
     let lines = cookies.split(';');
     for(var line of lines){
         let elementList = line.split('=');
