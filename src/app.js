@@ -42,7 +42,7 @@ function numberWithCommas(x) {
 }
 
 function donokuraimae(date){
-	date1 = new Date(date);
+	let date1 = new Date(date);
 	date1.setHours(date1.getHours() + 9);
 	var now = new Date();
 	sa = now - date1;
@@ -176,9 +176,9 @@ async function getEffectivePower(username){
 	let vesting_shares = parseFloat(accounts[0].vesting_shares.replace(" VESTS", ""));
 	let received_vesting_shares = parseFloat(accounts[0].received_vesting_shares.replace(" VESTS", ""));
 	let delegated_vesting_shares = parseFloat(accounts[0].delegated_vesting_shares.replace(" VESTS", ""));
-	sp = vesting_shares * k;//保持しているSP
-	sp1 = received_vesting_shares * k;//委任されたSP
-	sp2 = delegated_vesting_shares * k;//委任したSP
+	let sp = vesting_shares * k;//保持しているSP
+	let sp1 = received_vesting_shares * k;//委任されたSP
+	let sp2 = delegated_vesting_shares * k;//委任したSP
 	return {sp:sp, received_sp: sp1, delegated_sp: sp2};
 }
 
