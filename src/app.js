@@ -4,7 +4,8 @@ import 'regenerator-runtime/runtime.js';
 //const dsteem = require('dsteem');
 //let client = new dsteem.Client('https://api.steememory.com');
 import {steem} from '@steemit/steem-js';  // steemライブラリをインポート
-steem.api.setOptions({ url: 'https://api.steememory.com' });
+//steem.api.setOptions({ url: 'https://api.steememory.com' });
+steem.api.setOptions({ url: 'http://192.168.0.8:8080' });
 
 let _get_account_history_limit = 100
 let _get_account_history_keyword
