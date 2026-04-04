@@ -19,7 +19,7 @@ export default {
 
     resolve: {
         fallback: {
-            "undici": "undici"  // これで `node:undici` を `undici` に置き換える
+            "undici": require.resolve("undici")  // undici を解決
         }
     },
 
