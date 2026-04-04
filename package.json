@@ -6,7 +6,7 @@
     "scripts": {
         "_test": "echo \"Error: no test specified\" && exit 1",
         "_g": "git pull && webpack --mode production && sudo docker build . -t ojagggyo/accounthistory:tag",
-        "gogo": "git pull && webpack -c webpack.config.mjs && cp ./dist/main.js ./public/bundle.js && node index.js",
+        "gogo": "rm -rf ./dist ./node_modules ./package-lock.json && git pull && npm i && webpack -c webpack.config.mjs && cp ./dist/main.js ./public/bundle.js && node index.js",
         "dev": "px webpack-dev-server --config webpack.config.mjs --port 9000 --static ./public"
     },
     "author": "",
