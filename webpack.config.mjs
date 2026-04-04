@@ -2,6 +2,8 @@ import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 import 'regenerator-runtime/runtime.js';
 
+import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
+
 // ESモジュール環境で __dirname の代わりに import.meta.url を使ってパスを計算
 const __dirname = new URL('.', import.meta.url).pathname;
 
@@ -13,4 +15,13 @@ export default {
         path: __dirname + '/dist',
         filename: 'bundle.js',
     },
+
+    plugins: [
+        new NodePolyfillPlugin()  // これでNode.jsの組み込みモジュールがバンドルされます
+    ],
+    resolve: {
+        fallback: {
+        "undici": require.resolve("undici")
+    }
+  }
 };
