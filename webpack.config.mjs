@@ -19,11 +19,11 @@ export default {
 
     resolve: {
         fallback: {
-            "undici": require.resolve("undici")  // undici を解決
+            "undici": "undici"  // "node:undici" を解決するために設定
         }
     },
 
     externals: {
-        "undici": "undici"  // "node:undici" を外部モジュールとして扱う
+        //"undici": "undici"  // "node:undici" を外部モジュールとして扱う
     }
 };
