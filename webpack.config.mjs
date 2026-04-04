@@ -19,7 +19,7 @@ export default {
 
     resolve: {
         fallback: {
-            "undici": require.resolve("undici")
+            "undici": "undici" // ここではrequire.resolveを使わず、モジュール名を直接指定
         }
     }
 };
