@@ -4,27 +4,29 @@
     "description": "1111111",
     "main": "index.js",
     "scripts": {
-        "_test": "echo \"Error: no test specified\" && exit 1",
-        "_gogo": "git pull && webpack --production && cp ./dist/main.js ./public/bundle.js && node index.js",
-        "_g": "git pull && webpack --mode production && sudo docker build . -t ojagggyo/accounthistory:tag",
-        "gogo": "git pull && webpack -c webpack.config.mjs && cp ./dist/main.js ./public/bundle.js && node index.js",
-        "dev": "npx webpack-dev-server --config webpack.config.mjs --port 9000 --static ./public"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "gogo": "git pull && webpack --production && cp ./dist/main.js ./public/bundle.js && node index.js",
+        "g": "git pull && webpack --mode production && sudo docker build . -t ojagggyo/accounthistory:tag",
+        "dev": "px webpack-dev-server --config webpack.config.mjs --port 9000 --static ./public"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@koa/router": "^15.4.0",
         "@steemit/steem-js": "^1.0.15",
+        "axios": "^1.14.0",
         "jdenticon": "^3.2.0",
-        "koa": "^2.13.4",
+        "koa": "^3.2.0",
         "koa-static": "^5.0.0",
         "regenerator-runtime": "^0.13.10",
-        "undici": "^7.24.6",
+        "undici": "^7.24.7",
         "webpack": "^5.75.0"
     },
     "devDependencies": {
+        "webpack-bundle-analyzer": "^5.3.0",
         "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.2.3",
         "webpack-node-externals": "^3.0.0"
     },
-    "type": "module" 
+    "type": "module"
 }
-
