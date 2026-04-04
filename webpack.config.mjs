@@ -1,6 +1,7 @@
 import path from 'path';
 import 'regenerator-runtime/runtime.js';
 import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
+//import nodeExternals from 'webpack-node-externals';
 
 // ESモジュール環境で __dirname の代わりに import.meta.url を使ってパスを計算
 const __dirname = new URL('.', import.meta.url).pathname;
