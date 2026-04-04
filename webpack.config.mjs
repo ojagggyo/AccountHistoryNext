@@ -7,7 +7,7 @@ const __dirname = new URL('.', import.meta.url).pathname;
 
 export default {
     mode: 'development', // または 'production'
-    entry:  ['regenerator-runtime/runtime.js', './src/app.js'],
+    entry: ['regenerator-runtime/runtime.js', './src/app.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
@@ -19,7 +19,7 @@ export default {
 
     resolve: {
         fallback: {
-            "undici": "undici" // ここではrequire.resolveを使わず、モジュール名を直接指定
-        }
+            "undici": false // "node:undici" を処理するポリフィルが必要
+        },
     }
 };
