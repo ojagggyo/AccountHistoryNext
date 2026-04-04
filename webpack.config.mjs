@@ -19,7 +19,7 @@ export default {
 
     resolve: {
         fallback: {
-            "undici": false // "node:undici" を処理するポリフィルが必要
-        },
+            "undici": "undici"  // これで `node:undici` を `undici` に置き換える
+        }
     }
 };
