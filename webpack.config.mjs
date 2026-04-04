@@ -21,7 +21,8 @@ export default {
     ],
     resolve: {
         fallback: {
-        "undici": require.resolve("undici")
-    }
-  }
+            "undici": require.resolve("undici")
+        },
+    },
+    "type": "module"
 };
