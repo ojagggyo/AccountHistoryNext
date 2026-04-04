@@ -15,11 +15,15 @@ export default {
 
     plugins: [
         new NodePolyfillPlugin()  // これでNode.jsの組み込みモジュールがバンドルされます
-    ],
+    ],  
 
     resolve: {
         fallback: {
             "undici": "undici"  // これで `node:undici` を `undici` に置き換える
         }
+    },
+
+    externals: {
+        "undici": "undici"  // "node:undici" を外部モジュールとして扱う
     }
 };
