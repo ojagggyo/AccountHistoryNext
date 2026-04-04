@@ -23,7 +23,5 @@ export default {
         fallback: {
             "undici": "undici" // "require.resolve('undici')" の代わりに直接指定
         },
-    },
-
-    type: 'module' // これはESモジュールを使用するために必須
+    }
 };
