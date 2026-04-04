@@ -1,7 +1,4 @@
 import path from 'path';
-import nodeExternals from 'webpack-node-externals';
-import 'regenerator-runtime/runtime.js';
-
 import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
 
 // ESモジュール環境で __dirname の代わりに import.meta.url を使ってパスを計算
@@ -21,7 +18,7 @@ export default {
 
     resolve: {
         fallback: {
-            "undici": "undici" // "require.resolve('undici')" の代わりに直接指定
-        },
+            "undici": require.resolve("undici")
+        }
     }
 };
