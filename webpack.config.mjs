@@ -11,7 +11,7 @@ export default {
     mode: 'development', // または 'production'
     entry: './src/app.js',
     output: {
-        path: path.resolve(__dirname, 'dist'),  // __dirname の代わりに path.resolve を使う
+        path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
     },
 
@@ -21,10 +21,9 @@ export default {
 
     resolve: {
         fallback: {
-            // `require.resolve("undici")` を `import` で書き換え
-            undici: import.resolve('undici')
+            "undici": "undici" // "require.resolve('undici')" の代わりに直接指定
         },
     },
-    
+
     type: 'module' // これはESモジュールを使用するために必須
 };
