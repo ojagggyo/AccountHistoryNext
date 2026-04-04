@@ -715,7 +715,7 @@ async function getPrice(name, markets) {
 		}
 		let sc = document.createElement("script");
 		sc.id = name;
-		sc.src = "https://steememory.com/ah/upbit/?callback="+'get'+name+"&pattern=" + markets;
+		sc.src = "http://192.168.0.8:8080/ah/upbit/?callback="+'get'+name+"&pattern=" + markets;
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
@@ -736,7 +736,7 @@ async function getPriceHuobi(name, markets) {
 		}
 		let sc = document.createElement("script");
 		sc.id = name;
-		sc.src = "https://steememory.com/ah/huobi/?callback="+'get'+name+"&pattern=" + markets;
+		sc.src = "http://192.168.0.8:8080/ah/huobi/?callback="+'get'+name+"&pattern=" + markets;
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
