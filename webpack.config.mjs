@@ -1,4 +1,5 @@
 import path from 'path';
+import 'regenerator-runtime/runtime.js';
 import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
 
 // ESモジュール環境で __dirname の代わりに import.meta.url を使ってパスを計算
@@ -6,7 +7,7 @@ const __dirname = new URL('.', import.meta.url).pathname;
 
 export default {
     mode: 'development', // または 'production'
-    entry: './src/app.js',
+    entry:  ['regenerator-runtime/runtime.js', './src/app.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
