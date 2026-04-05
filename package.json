@@ -21,10 +21,10 @@
         "node-fetch": "^3.3.2",
         "node-polyfill-webpack-plugin": "^4.1.0",
         "regenerator-runtime": "^0.13.11",
+        "undici": "^8.0.2",
         "webpack": "^5.105.4"
     },
     "devDependencies": {
-        "webpack-bundle-analyzer": "^5.3.0",
         "webpack-cli": "^7.0.2",
         "webpack-dev-server": "^5.2.3"
     },

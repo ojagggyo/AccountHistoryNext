@@ -20,7 +20,7 @@ export default {
 
     resolve: {
         fallback: {
-            "undici": "undici"  // "node:undici" を解決するために設定
+            "undici": path.resolve('node_modules/undici') // "undici" の解決を `import` を使って解決
         }
     },
 
