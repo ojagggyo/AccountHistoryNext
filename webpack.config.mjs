@@ -1,10 +1,13 @@
+// サーバーサイド設定
+import nodeExternals from 'webpack-node-externals';
+
+// クライアントサイド設定
 import path from 'path';
-import 'regenerator-runtime/runtime.js';
 import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
-//import nodeExternals from 'webpack-node-externals';
+import 'regenerator-runtime/runtime.js';
 
 // ESモジュール環境で __dirname の代わりに import.meta.url を使ってパスを計算
-const __dirname = new URL('.', import.meta.url).pathname;
+const __dirname = new URL('.', import.meta.url).pathname;  // __dirname の代わりに import.meta.url を使用
 
 export default {
     mode: 'development', // または 'production'
@@ -13,18 +16,13 @@ export default {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
     },
-
     plugins: [
         new NodePolyfillPlugin()  // これでNode.jsの組み込みモジュールがバンドルされます
-    ],  
-
+    ],
     resolve: {
         fallback: {
-            "undici": path.resolve('node_modules/undici') // "undici" の解決を `import` を使って解決
-        }
+            "undici": "undici"  // "node:undici" を解決するための設定
+        },
     },
-
-    externals: {
-        //"undici": "undici"  // "node:undici" を外部モジュールとして扱う
-    }
+    externals: [nodeExternals()],  // Node.js 組み込みモジュールと外部依存を除外
 };
