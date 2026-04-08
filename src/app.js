@@ -1,9 +1,10 @@
-//require("regenerator-runtime/runtime");
-import 'regenerator-runtime/runtime.js';
+require("regenerator-runtime/runtime");
+//import 'regenerator-runtime/runtime.js';
 
 //const dsteem = require('dsteem');
 //let client = new dsteem.Client('https://api.steememory.com');
-import {steem} from '@steemit/steem-js';  // steemライブラリをインポート
+const steem = require('@steemit/steem-js');
+
 //steem.api.setOptions({ url: 'https://api.steememory.com' });
 steem.api.setOptions({ url: 'http://192.168.0.8:8080' });
 
