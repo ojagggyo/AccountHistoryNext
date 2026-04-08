@@ -15,7 +15,7 @@ router.get('/hello', (ctx) => {
 
 // Upbit API
 router.get('/upbit', async (ctx) => {
-  onsole.log("***upbit***");
+  console.log("***upbit***");
   const query = ctx.query;
   const pattern = query.pattern;
   const callbackName = query.callback;
@@ -39,7 +39,7 @@ router.get('/upbit', async (ctx) => {
 
 // Huobi API
 router.get('/huobi', async (ctx) => {
-  onsole.log("***huobi***");
+  console.log("***huobi***");
   const query = ctx.query;
   const pattern = query.pattern;
   const callbackName = query.callback;
