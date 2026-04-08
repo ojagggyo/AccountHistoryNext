@@ -3,10 +3,10 @@ require("regenerator-runtime/runtime");
 
 //const dsteem = require('dsteem');
 //let client = new dsteem.Client('https://api.steememory.com');
-const steem = require('@steemit/steem-js');
+const s= require('@steemit/steem-js');
 
 //steem.api.setOptions({ url: 'https://api.steememory.com' });
-steem.api.setOptions({ url: 'http://192.168.0.8:8080' });
+s.config.set(steem.api.setOptions({ url: 'http://192.168.0.8:8080' });
 
 let _get_account_history_limit = 100
 let _get_account_history_keyword
@@ -29,7 +29,7 @@ async function getTick(){
 	console.log("*** getTick start ***",steemsbd);
 
     //let o = await callAsync('market_history_api','get_ticker',[] )
-	let o = await steem.api.callAsync('market_history_api.get_ticker');
+	let o = await steem.Api.callAsync('market_history_api.get_ticker');
 	steemsbd = 1 / parseFloat(o.latest)
 	console.log("*** getTick end ***",steemsbd);
 }
@@ -166,14 +166,14 @@ break;
 // ---------- power ---------- 
 async function getEffectivePower(username){
 	//let globalProperties = await client.database.getDynamicGlobalProperties();//★
-  let globalProperties = await steem.api.getDynamicGlobalPropertiesAsync();
+  let globalProperties = await steem.Api.getDynamicGlobalPropertiesAsync();
 
 	let total_vesting_shares = parseFloat(globalProperties.total_vesting_shares.replace(" VESTS", ""));
 	let total_vesting_fund_steem = parseFloat(globalProperties.total_vesting_fund_steem.replace(" STEEM", ""));
 	let k = total_vesting_fund_steem / total_vesting_shares;
 	//let accounts = await client.api.getAccounts([username]);//★
 	//let accounts = await client.database.getAccounts([username]);
-  let accounts = await steem.api.getAccountsAsync([username]);
+  let accounts = await steem.steem.api.getAccountsAsync([username]);
 	
 	let vesting_shares = parseFloat(accounts[0].vesting_shares.replace(" VESTS", ""));
 	let received_vesting_shares = parseFloat(accounts[0].received_vesting_shares.replace(" VESTS", ""));
@@ -222,8 +222,8 @@ async function getVotingPower(username) {
 */
 async function getVotingPower(username) {
 	return new Promise((resolve, reject) => {
-    steem.api.getAccountsAsync(['yasu']).then(accounts =>{
-      resolve(accounts[0].voting_power/ 100);
+	    steem.steem.api.getAccountsAsync(['yasu']).then(accounts =>{
+    	resolve(accounts[0].voting_power/ 100);
     });
 	});
 }
@@ -334,7 +334,7 @@ async function getReputation(username){
 async function getProxy(username){
 	return new Promise((resolve, reject) => {
 		//client.database.getAccounts([username]).then(res =>{
-    steem.api.getAccountsAsync([username]).then(res =>{
+    steem.steem.api.getAccountsAsync([username]).then(res =>{
 
 			if (res.length == 0) reject("res.length == 0");
 
@@ -507,7 +507,7 @@ function editDate(d){
 async function getAge(username){
 	return new Promise((resolve, reject) => {
 		//client.database.getAccounts([username]).then(res =>{
-    steem.api.getAccountsAsync([username]).then(res =>{
+    steem.Api.getAccountHistoryAsync([username]).then(res =>{
 
 			if (res.length == 0) reject("res.length == 0");
 			let date1 = new Date(res[0].created);
@@ -544,14 +544,14 @@ async function getAge(username){
 // ---------- wallet ----------
 async function getWalllet(username){
 	//let globalProperties = await client.database.getDynamicGlobalProperties();//★
-  let globalProperties = await steem.api.getDynamicGlobalPropertiesAsync();
+  let globalProperties = await steem.steem.api.getDynamicGlobalPropertiesAsync();
 
 	let total_vesting_shares = parseFloat(globalProperties.total_vesting_shares.replace(" VESTS", ""));
 	let total_vesting_fund_steem = parseFloat(globalProperties.total_vesting_fund_steem.replace(" STEEM", ""));
 	let k = total_vesting_fund_steem / total_vesting_shares;
 	return new Promise((resolve, reject) => {
 		//client.database.getAccounts([username]).then(res =>{
-    steem.api.getAccountsAsync([username]).then(res =>{
+    steem.steem.api.getAccountsAsync([username]).then(res =>{
 
 			if (res.length == 0) reject("res.length == 0");
 			resolve({
@@ -716,7 +716,7 @@ async function getPrice(name, markets) {
 		}
 		let sc = document.createElement("script");
 		sc.id = name;
-		sc.src = "http://192.168.0.8:8080/ah/upbit/?callback="+'get'+name+"&pattern=" + markets;
+		sc.src = "http://localhost:3000/upbit/?callback="+'get'+name+"&pattern=" + markets;
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
@@ -737,7 +737,7 @@ async function getPriceHuobi(name, markets) {
 		}
 		let sc = document.createElement("script");
 		sc.id = name;
-		sc.src = "http://192.168.0.8:8080/ah/huobi/?callback="+'get'+name+"&pattern=" + markets;
+		sc.src = "http://localhost:3000/huobi/?callback="+'get'+name+"&pattern=" + markets;
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
@@ -1243,7 +1243,7 @@ function makeTable(records){
 async function rate(){
 	if(!globalProperties){
 		//const promise0 = await client.database.getDynamicGlobalProperties();//★
-    const promise0 = await steem.api.getDynamicGlobalPropertiesAsync();
+    const promise0 = steem.api.getDynamicGlobalPropertiesAsync();
 
 		const promise1 = getPrice('krwsteem','KRW-STEEM');
 		//const promise2 = getPrice('krwsbd','KRW-SBD');//SBD取り引き停止のためアクセス不可
@@ -1355,10 +1355,10 @@ console.log("***1321***");
 		let ret;
 		try {
 			//ret = await client.database.call('get_account_history',[username, firstValue, limit]);
-      ret = await steem.api.getAccountHistoryAsync([username, firstValue, limit]);
+      ret = await steem.steem.api.callAsync('database.get_account_history',[username, firstValue, limit]);
 
 console.log("***1342***");
-console.log("ret",ret);
+//console.log("ret",ret);
 
 		} catch (error) {
 
