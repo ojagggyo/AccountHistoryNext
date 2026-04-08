@@ -1,11 +1,10 @@
-import Koa from 'koa';
-import Router from '@koa/router';
-import axios from 'axios';
-
+const Koa = require('koa');
+const Router = require('@koa/router');
+const axios = require('axios');
 const router = new Router();
 const app = new Koa();
+const koaStatic = require('koa-static');
 
-import koaStatic from 'koa-static';
 app.use(koaStatic('./public'));
 
 // Hello API
