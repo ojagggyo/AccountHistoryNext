@@ -925,7 +925,7 @@ function userlink(){
 function getPostingJsonMetadata(username) {
     return new Promise((resolve, reject) => {
 		//client.database.getAccounts([username]).then(res=>{
-    s.steem.api.getAccountsAsync([username]).then(res=>{
+    steem.api.getAccountsAsync([username]).then(res=>{
 
 			if (res.length == 0) reject("res.length == 0");
 			const posting_json_metadata = res[0].posting_json_metadata ;
@@ -1356,7 +1356,7 @@ console.log("***1321***");
 		let ret;
 		try {
 			//ret = await client.database.call('get_account_history',[username, firstValue, limit]);
-      ret = await s.steem.api.callAsync('database.get_account_history',[username, firstValue, limit]);
+      ret = await steem.api.callAsync('condenser_api.get_account_history',[username, firstValue, limit]);
 
 console.log("***1342***");
 //console.log("ret",ret);
