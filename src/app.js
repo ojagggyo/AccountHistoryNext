@@ -6,7 +6,8 @@ require("regenerator-runtime/runtime");
 const steem = require('@steemit/steem-js');
 
 //steem.api.setOptions({ url: 'https://api.steememory.com' });
-steem.Api.setOptions({ url: 'http://192.168.0.8:8080' });
+steem.api.setOptions({ url: 'http://192.168.0.8:8080' });
+
 
 let _get_account_history_limit = 100
 let _get_account_history_keyword
