@@ -18,11 +18,9 @@
   "homepage": "https://github.com/ojagggyo/AccountHistoryNext#readme",
   "dependencies": {
     "@koa/router": "^15.4.0",
-    "axios": "^1.14.0",
+    "axios": "^1.15.0",
     "koa": "^3.2.0",
-    "koa-static": "^5.0.0"
-  },
-  "devDependencies": {
-    "@types/regenerator-runtime": "^0.13.8"
+    "koa-static": "^5.0.0",
+    "regenerator-runtime": "^0.14.1"
   }
 }
