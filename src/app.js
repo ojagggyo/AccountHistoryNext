@@ -1629,6 +1629,7 @@ window.showTooltip_post = async (e) => {
 	tooltip.style.display = "block";
 	//let o = await callAsync('condenser_api','get_content',[author, permlink] )
 	let o = await steem.api.callAsync('condenser_api.get_content',[author, permlink] )
+	
 	tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<image src=https://steemitimages.com/u/" + author + "/avatar style='margin: 4px;'/>"
 	let imageList = JSON.parse(o.json_metadata).image
 	if(imageList){
