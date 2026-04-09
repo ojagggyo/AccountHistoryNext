@@ -5,8 +5,8 @@ require("regenerator-runtime/runtime");
 //let client = new dsteem.Client('https://api.steememory.com');
 //const steem = require('@steemit/steem-js');
 
-//steem.api.setOptions({ url: 'https://api.steememory.com' });
-steem.api.setOptions({ url: 'http://192.168.0.8:8080' });
+steem.api.setOptions({ url: 'https://api.steememory.com' });
+//steem.api.setOptions({ url: 'http://192.168.0.8:8080' });
 
 
 let _get_account_history_limit = 100
@@ -717,7 +717,7 @@ async function getPrice(name, markets) {
 		}
 		let sc = document.createElement("script");
 		sc.id = name;
-		sc.src = "http://192.168.0.8:8080/upbit/?callback="+'get'+name+"&pattern=" + markets;
+		sc.src = "https://api.steememory.com/ah/upbit/?callback="+'get'+name+"&pattern=" + markets;
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
@@ -738,7 +738,7 @@ async function getPriceHuobi(name, markets) {
 		}
 		let sc = document.createElement("script");
 		sc.id = name;
-		sc.src = "http://192.168.0.8:8080/huobi/?callback="+'get'+name+"&pattern=" + markets;
+		sc.src = "https://api.steememory.com/ah/huobi/?callback="+'get'+name+"&pattern=" + markets;
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
