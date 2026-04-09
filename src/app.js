@@ -3,7 +3,7 @@ require("regenerator-runtime/runtime");
 
 //const dsteem = require('dsteem');
 //let client = new dsteem.Client('https://api.steememory.com');
-//const s = require('@steemit/steem-js');
+const steem = require('@steemit/steem-js');
 
 //steem.api.setOptions({ url: 'https://api.steememory.com' });
 steem.api.setOptions({ url: 'http://192.168.0.8:8080' });
