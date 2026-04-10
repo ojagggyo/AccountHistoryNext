@@ -9,7 +9,7 @@ steem.api.setOptions({ url: 'https://api.steememory.com' });
 //steem.api.setOptions({ url: 'http://192.168.0.8:8080' });
 
 
-let _get_account_history_limit = 100
+let _get_account_history_limit = 1000
 let _get_account_history_keyword
 
 let globalProperties;
