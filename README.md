@@ -74,3 +74,13 @@ module.exports = {
         path: path.join(__dirname, 'public')
     },
 };
+
+
+
+%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe
+power
+d:
+cd D:\GitHub\AccountHistoryNext
+Get-ExecutionPolicy
+Set-ExecutionPolicy RemoteSigned
+Unblock-File -Path "D:\Program Files\nodejs\npm.ps1"
