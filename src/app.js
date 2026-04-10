@@ -1,5 +1,5 @@
 require("regenerator-runtime/runtime");
-const steem = require('@steemit/steem-js').steem;
+//const steem = require('@steemit/steem-js').steem;
 steem.api.setOptions({ url: 'https://api.steememory.com' });
 
 let _get_account_history_limit = 1000
