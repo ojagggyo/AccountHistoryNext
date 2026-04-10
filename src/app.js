@@ -505,7 +505,7 @@ function editDate(d){
 async function getAge(username){
 	return new Promise((resolve, reject) => {
 		//client.database.getAccounts([username]).then(res =>{
-    steem.api.getAccounts([username]).then(res =>{
+    steem.api.getAccountsAsync([username]).then(res =>{
 
 			if (res.length == 0) reject("res.length == 0");
 			let date1 = new Date(res[0].created);
