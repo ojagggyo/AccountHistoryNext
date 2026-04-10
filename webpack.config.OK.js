@@ -16,6 +16,5 @@ module.exports = {
 
     externals: {
         'node:undici': 'commonjs node:undici',
-        '@steemit/steem-js': 'steem' // 外部依存として設定
     },
 };
