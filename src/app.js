@@ -1,13 +1,10 @@
 require("regenerator-runtime/runtime");
-//import 'regenerator-runtime/runtime.js';
 
 //const dsteem = require('dsteem');
 //let client = new dsteem.Client('https://api.steememory.com');
+
 //const steem = require('@steemit/steem-js');
-
 steem.api.setOptions({ url: 'https://api.steememory.com' });
-//steem.api.setOptions({ url: 'http://192.168.0.8:8080' });
-
 
 let _get_account_history_limit = 1000
 let _get_account_history_keyword
