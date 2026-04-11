@@ -45,17 +45,20 @@ router.get('/huobi', async (ctx) => {
   const callbackName = query.callback;
 
   if (!pattern || !callbackName) {
+    console.log("***huobi error***");
     ctx.status = 400;
     ctx.body = '必須パラメータが不足しています: pattern または callback';
     return;
   }
 
   try {
+    console.log("***huobi getPriceHuobi before***");
     const s = await getPriceHuobi(pattern);
     console.log("huobi=", s);
     ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.body = `${callbackName}(${JSON.stringify(s)})`;  // JSONP形式
   } catch (error) {
+    console.log("***huobi exception***");
     ctx.status = 500;
     ctx.body = `Huobi APIエラー: ${error.message}`;
   }
@@ -66,7 +69,7 @@ async function getPrice(markets) {
   const url = `https://api.upbit.com/v1/ticker?markets=${markets}`;
   try {
     const response = await axios.get(url, {
-      timeout: 10000  // タイムアウト設定（5秒）
+      timeout: 5000  // タイムアウト設定（5秒）
     });
     return response.data;
   } catch (error) {
@@ -79,7 +82,7 @@ async function getPriceHuobi(pattern) {
   const url = `https://api.huobi.pro/market/history/trade?symbol=${pattern}`;
   try {
     const response = await axios.get(url, {
-      timeout: 10000  // タイムアウト設定（5秒）
+      timeout: 5000  // タイムアウト設定（5秒）
     });
     return response.data;
   } catch (error) {
