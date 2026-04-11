@@ -16,18 +16,21 @@ router.get('/hello', (ctx) => {
 // Upbit API
 router.get('/upbit', async (ctx) => {
   console.log("***upbit***");
+  ctx.res.on('finish', () => {
+    console.log('レスポンスが正常に送信されました');
+  });
+
+
   const query = ctx.query;
   const pattern = query.pattern;
   const callbackName = query.callback;
 
   if (!callbackName || callbackName.trim() === "") {
+    console.log("***upbit error***");
     ctx.status = 400;
     ctx.body = '必須パラメータが不足しています: pattern または callback';
     return;
   }
-
-  
-
 
   try {
     const s = await getPrice(pattern);
@@ -35,6 +38,7 @@ router.get('/upbit', async (ctx) => {
     ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.body = `${callbackName}(${JSON.stringify(s)})`;  // JSONP形式
   } catch (error) {
+    console.log("***upbit exception***");
     ctx.status = 500;
     ctx.body = `Upbit APIエラー: ${error.message}`;
   }
@@ -43,6 +47,10 @@ router.get('/upbit', async (ctx) => {
 // Huobi API
 router.get('/huobi', async (ctx) => {
   console.log("***huobi***");
+  ctx.res.on('finish', () => {
+    console.log('レスポンスが正常に送信されました');
+  });
+
   const query = ctx.query;
   const pattern = query.pattern;
   const callbackName = query.callback;
