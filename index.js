@@ -66,7 +66,7 @@ async function getPrice(markets) {
   const url = `https://api.upbit.com/v1/ticker?markets=${markets}`;
   try {
     const response = await axios.get(url, {
-      timeout: 5000  // タイムアウト設定（5秒）
+      timeout: 10000  // タイムアウト設定（5秒）
     });
     return response.data;
   } catch (error) {
@@ -79,7 +79,7 @@ async function getPriceHuobi(pattern) {
   const url = `https://api.huobi.pro/market/history/trade?symbol=${pattern}`;
   try {
     const response = await axios.get(url, {
-      timeout: 5000  // タイムアウト設定（5秒）
+      timeout: 10000  // タイムアウト設定（5秒）
     });
     return response.data;
   } catch (error) {
