@@ -57,6 +57,8 @@ router.get('/huobi', async (ctx) => {
     console.log("huobi=", s);
     ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.body = `${callbackName}(${JSON.stringify(s)})`;  // JSONP形式
+
+    console.log(`***huobi bode=${ctx.body}***`);
   } catch (error) {
     console.log("***huobi exception***");
     ctx.status = 500;
