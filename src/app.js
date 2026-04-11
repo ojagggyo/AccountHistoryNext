@@ -696,15 +696,13 @@ function getReward_powerupdown(record){
 	
 //---------- Price ----------
 async function getPrice(name, markets) {
+	console.log("getPrice");
     return new Promise((resolve, reject) => {
 
 		window['get'+name] = async function(data){
 
-			console.log("getPrice");
+			console.log("getPrice 2");
 			const jsonString = JSON.stringify(data);
-			//console.log(jsonString);
-			//console.log(JSON.parse(jsonString));
-
 			let price = JSON.parse(jsonString)[0].trade_price
 			resolve(price);
 		}
@@ -716,15 +714,13 @@ async function getPrice(name, markets) {
 	});
 }
 async function getPriceHuobi(name, markets) {
+	console.log("getPriceHuobi");
     return new Promise((resolve, reject) => {
 
 		window['get'+name] = async function(data){
 
+			console.log("getPriceHuobi 2");
 			const jsonString = JSON.stringify(data);
-			//console.log("xxx");
-			//console.log(jsonString);
-			//console.log(JSON.parse(jsonString));
-
 			let price = JSON.parse(jsonString).data[0].data[0].price
 
 			resolve(price);
@@ -1262,11 +1258,7 @@ async function rate(){
 async function aaa(days){
 
 	await rate();
-
-
 	await getTick();
-
-	
 
 	const upbiturl = "https://upbit.com/exchange?code=CRIX.UPBIT.";
 	const huobiurl = "https://www.htx.com/trade/";
