@@ -30,7 +30,8 @@ app.use(async (ctx, next) => {
   try {
     // 静的ファイルが存在しない場合、404を返す
     const filePath = path.join(staticDir, ctx.path);
-    console.log(`filePath=${ctx.path}`);
+    console.log(`ctx.path)=${ctx.path}`);
+    console.log(`filePath=${filePath}`);
     if (!fs.existsSync(filePath)) {
       console.log(`ファイルが存在しません: ${filePath}`);
       ctx.status = 404;
