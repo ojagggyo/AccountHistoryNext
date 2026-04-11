@@ -7,20 +7,18 @@ const koaStatic = require('koa-static');
 const path= require('path');
 const fs = require('fs');
 
-//app.use(koaStatic('./public'));
-
 // 静的ファイルを提供するディレクトリ
 const staticDir = path.join(__dirname, 'public');
 console.log(`staticDir=${staticDir}`);
 
+//app.use(koaStatic('./public'));
 //app.use(koaStatic(staticDir));
-
 app.use(async (ctx, next) => {
   console.log(`アクセスされたパス: ${ctx.path} - メソッド: ${ctx.method}`);
   
   // スラッシュを取り除いて比較（末尾のスラッシュを削除）
   const normalizedPath = ctx.path.endsWith('/') ? ctx.path.slice(0, -1) : ctx.path;
-  const allowedPaths = ['/hello', '/upbit', '/huobi'];  // 許可するURLパス
+  const allowedPaths = ['/hello', '/upbit', '/huobi','/'];  // 許可するURLパス
   if (allowedPaths.includes(normalizedPath)) {
     console.log(`API はnext: ${ctx.path}`);
     await next(); 
@@ -47,20 +45,6 @@ app.use(async (ctx, next) => {
     ctx.body = 'サーバーエラー';
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Hello API
 router.get('/hello', (ctx) => {
@@ -98,13 +82,6 @@ router.get('/upbit', async (ctx) => {
     ctx.body = `Upbit APIエラー: ${error.message}`;
   }
 });
-
-
-
-
-
-
-
 
 // Huobi API
 router.get('/huobi', async (ctx) => {
@@ -164,6 +141,18 @@ async function getPriceHuobi(pattern) {
     throw new Error('Huobiからデータを取得中にエラーが発生しました: ' + error.message);
   }
 }
+
+// '/' パスにアクセスされたときにindex.htmlを返す
+router.get('/', async (ctx) => {
+  const indexPath = path.join(staticDir, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    ctx.type = 'html';
+    ctx.body = fs.createReadStream(indexPath);
+  } else {
+    ctx.status = 404;
+    ctx.body = 'index.html が見つかりません';
+  }
+});
 
 app.onerror = (err, ctx) => {
   // ログにエラーを記録
