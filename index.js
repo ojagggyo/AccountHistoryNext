@@ -50,14 +50,38 @@ router.get('/upbit', async (ctx) => {
   }
 });
 
-// 静的ファイルへのアクセスをログに出力するミドルウェア
-app.use(async (ctx, next) => {
-  //if (ctx.path.startsWith('/public/')) {  // /public/ で始まるリクエストをチェック
-    console.log(`アクセスされた静的ファイル: ${ctx.path} - メソッド: ${ctx.method}`);
-  //}
+// // 静的ファイルへのアクセスをログに出力するミドルウェア
+// app.use(async (ctx, next) => {
+//   //if (ctx.path.startsWith('/public/')) {  // /public/ で始まるリクエストをチェック
+//     console.log(`アクセスされた静的ファイル: ${ctx.path} - メソッド: ${ctx.method}`);
+//   //}
 
-  await next();  // 次のミドルウェア（静的ファイル提供）に進む
+//   await next();  // 次のミドルウェア（静的ファイル提供）に進む
+// });
+
+app.use(async (ctx, next) => {
+  try {
+    // 静的ファイルが存在しない場合、404を返す
+    const filePath = path.join(staticDir, ctx.path);
+    if (!fs.existsSync(filePath)) {
+      console.log(`ファイルが存在しません: ${filePath}`);
+      ctx.status = 404;
+      ctx.body = 'ファイルが見つかりません';
+      return;
+    }
+
+    // 存在する場合のみ、koa-staticで提供
+    await koaStatic(staticDir)(ctx, next);
+  } catch (error) {
+    console.error(`エラーが発生しました: ${error.message}`);
+    ctx.status = 500;
+    ctx.body = 'サーバーエラー';
+  }
 });
+
+
+
+
 
 // Huobi API
 router.get('/huobi', async (ctx) => {
