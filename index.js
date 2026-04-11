@@ -45,11 +45,6 @@ app.use(async (ctx, next) => {
     // 存在する場合のみ、koa-staticで提供
     await koaStatic(staticDir)(ctx, next);
 
-
-  
-
-
-
   } catch (error) {
     console.error(`エラーが発生しました: ${error.message}`);
     ctx.status = 500;
@@ -176,7 +171,6 @@ app.onerror = (err, ctx) => {
   };
 };
 
-app.
 
 // サーバー起動
 app.use(router.routes());
