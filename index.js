@@ -25,6 +25,10 @@ app.use(async (ctx, next) => {
     return;
   }
 
+  ctx.res.on('finish', () => {
+    console.log('レスポンスが正常に送信されました');
+  });
+
   try {
     // 静的ファイルが存在しない場合、404を返す
     const filePath = path.join(staticDir, ctx.path);
@@ -164,6 +168,8 @@ app.onerror = (err, ctx) => {
     error: err.message,
   };
 };
+
+app.
 
 // サーバー起動
 app.use(router.routes());
