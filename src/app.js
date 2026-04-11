@@ -697,6 +697,13 @@ function getReward_powerupdown(record){
 //---------- Price ----------
 async function getPrice(name, markets) {
 	console.log("getPrice");
+    
+	// すでに同じIDのscriptタグが存在する場合はリクエストしない
+    if (document.getElementById(name)) {
+        console.log(`${name} のリクエストはすでに進行中です。`);
+        return;  // リクエストを発行しない
+    }
+
     return new Promise((resolve, reject) => {
 
 		window['get'+name] = async function(data){
@@ -715,6 +722,13 @@ async function getPrice(name, markets) {
 }
 async function getPriceHuobi(name, markets) {
 	console.log("getPriceHuobi");
+
+	// すでに同じIDのscriptタグが存在する場合はリクエストしない
+    if (document.getElementById(name)) {
+        console.log(`${name} のリクエストはすでに進行中です。`);
+        return;  // リクエストを発行しない
+    }
+
     return new Promise((resolve, reject) => {
 
 		window['get'+name] = async function(data){
