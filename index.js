@@ -79,7 +79,7 @@ router.get('/upbit', async (ctx) => {
 
   try {
     const s = await getPrice(pattern);
-    console.log("upbit=", s);
+    //console.log("upbit=", s);
     ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.body = `${callbackName}(${JSON.stringify(s)})`;  // JSONP形式
   } catch (error) {
@@ -110,7 +110,7 @@ router.get('/huobi', async (ctx) => {
   try {
     console.log("***huobi getPriceHuobi before***");
     const s = await getPriceHuobi(pattern);
-    console.log("huobi=", s);
+    //console.log("huobi=", s);
     ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.body = `${callbackName}(${JSON.stringify(s)})`;  // JSONP形式
 
