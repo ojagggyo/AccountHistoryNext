@@ -695,14 +695,17 @@ function getReward_powerupdown(record){
 	
 	
 //---------- Price ----------
+let isRequestInProgress = false;
+
 async function getPrice(name, markets) {
 	console.log(`getPrice name=${name} markets=${markets}`);
     
-	// すでに同じIDのscriptタグが存在する場合はリクエストしない
-    if (document.getElementById(name)) {
-        console.log(`${name} のリクエストはすでに進行中です。`);
-        return;  // リクエストを発行しない
+    // リクエストが進行中の場合は新たなリクエストを発行しない
+    if (isRequestInProgress) {
+        console.log("リクエスト中です。");
+        return;
     }
+    isRequestInProgress = true;  // リクエスト開始
 
     return new Promise((resolve, reject) => {
 
@@ -711,6 +714,7 @@ async function getPrice(name, markets) {
 			console.log("getPrice 2");
 			const jsonString = JSON.stringify(data);
 			let price = JSON.parse(jsonString)[0].trade_price
+			isRequestInProgress = true;  // リクエスト終了
 			resolve(price);
 		}
 		let sc = document.createElement("script");
@@ -723,11 +727,12 @@ async function getPrice(name, markets) {
 async function getPriceHuobi(name, markets) {
 	console.log(`getPriceHuobi name=${name} markets=${markets}`);
 
-	// すでに同じIDのscriptタグが存在する場合はリクエストしない
-    if (document.getElementById(name)) {
-        console.log(`${name} のリクエストはすでに進行中です。`);
-        return;  // リクエストを発行しない
+    // リクエストが進行中の場合は新たなリクエストを発行しない
+    if (isRequestInProgress) {
+        console.log("リクエスト中です。");
+        return;
     }
+    isRequestInProgress = true;  // リクエスト開始
 
     return new Promise((resolve, reject) => {
 
@@ -736,7 +741,7 @@ async function getPriceHuobi(name, markets) {
 			console.log("getPriceHuobi 2");
 			const jsonString = JSON.stringify(data);
 			let price = JSON.parse(jsonString).data[0].data[0].price
-
+			isRequestInProgress = true;  // リクエスト終了
 			resolve(price);
 		}
 		let sc = document.createElement("script");
