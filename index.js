@@ -5,8 +5,12 @@ const router = new Router();
 const app = new Koa();
 const koaStatic = require('koa-static');
 
-app.use(koaStatic('./public'));
+//app.use(koaStatic('./public'));
 
+// 静的ファイルを提供するディレクトリ
+const staticDir = path.join(__dirname, 'public');
+app.use(koaStatic(staticDir));
+console.log(`staticDir=${staticDir}`);
 
 // Hello API
 router.get('/hello', (ctx) => {
