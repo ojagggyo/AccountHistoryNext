@@ -94,17 +94,17 @@ async function getPriceHuobi(pattern) {
   }
 }
 
-// '/' パスにアクセスされたときにindex.htmlを返す
-router.get('/', async (ctx) => {
-  const indexPath = path.join(staticDir, 'index.html');
-  if (fs.existsSync(indexPath)) {
-    ctx.type = 'html';
-    ctx.body = fs.createReadStream(indexPath);
-  } else {
-    ctx.status = 404;
-    ctx.body = 'index.html が見つかりません';
-  }
-});
+// // '/' パスにアクセスされたときにindex.htmlを返す
+// router.get('/', async (ctx) => {
+//   const indexPath = path.join(staticDir, 'index.html');
+//   if (fs.existsSync(indexPath)) {
+//     ctx.type = 'html';
+//     ctx.body = fs.createReadStream(indexPath);
+//   } else {
+//     ctx.status = 404;
+//     ctx.body = 'index.html が見つかりません';
+//   }
+// });
 
 app.onerror = (err, ctx) => {
   // ログにエラーを記録
