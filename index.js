@@ -51,20 +51,15 @@ router.get('/upbit', async (ctx) => {
   }
 });
 
-// // 静的ファイルへのアクセスをログに出力するミドルウェア
-// app.use(async (ctx, next) => {
-//   //if (ctx.path.startsWith('/public/')) {  // /public/ で始まるリクエストをチェック
-//     console.log(`アクセスされた静的ファイル: ${ctx.path} - メソッド: ${ctx.method}`);
-//   //}
 
-//   await next();  // 次のミドルウェア（静的ファイル提供）に進む
-// });
 
 app.use(async (ctx, next) => {
   console.log(`アクセスされた静的ファイル: ${ctx.path} - メソッド: ${ctx.method}`);
   
+  // スラッシュを取り除いて比較（末尾のスラッシュを削除）
+  const normalizedPath = ctx.path.endsWith('/') ? ctx.path.slice(0, -1) : ctx.path;
   const allowedPaths = ['/hello', '/upbit', '/huobi'];  // 許可するURLパス
-  if (!allowedPaths.includes(ctx.path)) {
+  if (!allowedPaths.includes(normalizedPath)) {
     console.log(`スキップされたパス: ${ctx.path}`);
     return;  // 許可されていないパスの場合は、次のミドルウェアに進まずスキップ
   }
