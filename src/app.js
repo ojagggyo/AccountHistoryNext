@@ -1264,6 +1264,18 @@ async function rate(){
 		// const promise9 = getPriceHuobi('usdtsbd','sbdusdt');
 		// const promise10 = getPriceHuobi('usdtbtc','btcusdt');
 
+
+		const promise1 = 0;
+		const promise3 = 0;
+		const promise4 = 0;
+		const promise5 = 0;
+		const promise6 = 0;
+		const promise7 = 0;
+		const promise8 =0;
+		const promise9 = 0;
+		const promise10 = 0;
+
+
 		// [globalProperties,krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc] 
 		// 	= await Promise.all([promise0,promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10]);
 
