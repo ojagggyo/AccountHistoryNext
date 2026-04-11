@@ -696,7 +696,7 @@ function getReward_powerupdown(record){
 	
 //---------- Price ----------
 async function getPrice(name, markets) {
-	console.log("getPrice");
+	console.log(`getPrice name=${name} markets=${markets}`);
     
 	// すでに同じIDのscriptタグが存在する場合はリクエストしない
     if (document.getElementById(name)) {
@@ -721,7 +721,7 @@ async function getPrice(name, markets) {
 	});
 }
 async function getPriceHuobi(name, markets) {
-	console.log("getPriceHuobi");
+	console.log(`getPriceHuobi name=${name} markets=${markets}`);
 
 	// すでに同じIDのscriptタグが存在する場合はリクエストしない
     if (document.getElementById(name)) {
