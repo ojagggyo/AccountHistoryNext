@@ -25,8 +25,9 @@ app.use(async (ctx, next) => {
     return;
   }
 
+// 静的ファイルが送信された後にレスポンスが正常に送信されたことを確認
   ctx.res.on('finish', () => {
-    console.log('レスポンスが正常に送信されました');
+    console.log(`レスポンスが正常に送信されました: ${ctx.path}`);
   });
 
   try {
@@ -43,6 +44,12 @@ app.use(async (ctx, next) => {
 
     // 存在する場合のみ、koa-staticで提供
     await koaStatic(staticDir)(ctx, next);
+
+
+  
+
+
+
   } catch (error) {
     console.error(`エラーが発生しました: ${error.message}`);
     ctx.status = 500;
