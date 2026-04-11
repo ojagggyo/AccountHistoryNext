@@ -7,6 +7,7 @@ const koaStatic = require('koa-static');
 
 app.use(koaStatic('./public'));
 
+
 // Hello API
 router.get('/hello', (ctx) => {
   console.log('hello');
@@ -102,6 +103,22 @@ async function getPriceHuobi(pattern) {
     throw new Error('Huobiからデータを取得中にエラーが発生しました: ' + error.message);
   }
 }
+
+app.onerror = (err, ctx) => {
+  // ログにエラーを記録
+  logger.error('アプリケーションエラー:', {
+    message: err.message,
+    stack: err.stack,
+    url: ctx.request.url,
+  });
+
+  // クライアントへのレスポンス
+  ctx.status = err.status || 500;
+  ctx.body = {
+    message: 'サーバーエラーが発生しました。',
+    error: err.message,
+  };
+};
 
 // サーバー起動
 app.use(router.routes());
