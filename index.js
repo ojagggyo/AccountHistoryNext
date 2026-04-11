@@ -4,6 +4,7 @@ const axios = require('axios');
 const router = new Router();
 const app = new Koa();
 const koaStatic = require('koa-static');
+const path = require('path');
 
 //app.use(koaStatic('./public'));
 
