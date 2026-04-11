@@ -106,11 +106,8 @@ async function getPriceHuobi(pattern) {
 
 app.onerror = (err, ctx) => {
   // ログにエラーを記録
-  logger.error('アプリケーションエラー:', {
-    message: err.message,
-    stack: err.stack,
-    url: ctx.request.url,
-  });
+  console.log(`アプリケーションエラー: message=${err.message} stack=${err.stack} =${ctx.request.url}`);
+
 
   // クライアントへのレスポンス
   ctx.status = err.status || 500;
