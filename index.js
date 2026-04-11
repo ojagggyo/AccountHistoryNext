@@ -50,6 +50,15 @@ router.get('/upbit', async (ctx) => {
   }
 });
 
+// 静的ファイルへのアクセスをログに出力するミドルウェア
+app.use(async (ctx, next) => {
+  if (ctx.path.startsWith('/public/')) {  // /public/ で始まるリクエストをチェック
+    console.log(`アクセスされた静的ファイル: ${ctx.path} - メソッド: ${ctx.method}`);
+  }
+
+  await next();  // 次のミドルウェア（静的ファイル提供）に進む
+});
+
 // Huobi API
 router.get('/huobi', async (ctx) => {
   console.log("***huobi***");
