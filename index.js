@@ -16,7 +16,7 @@ console.log(`staticDir=${staticDir}`);
 //app.use(koaStatic(staticDir));
 
 app.use(async (ctx, next) => {
-  console.log(`アクセスされた静的ファイル: ${ctx.path} - メソッド: ${ctx.method}`);
+  console.log(`アクセスされたパス: ${ctx.path} - メソッド: ${ctx.method}`);
   
   // スラッシュを取り除いて比較（末尾のスラッシュを削除）
   const normalizedPath = ctx.path.endsWith('/') ? ctx.path.slice(0, -1) : ctx.path;
