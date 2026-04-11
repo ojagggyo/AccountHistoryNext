@@ -20,7 +20,7 @@ app.use(async (ctx, next) => {
   const normalizedPath = ctx.path.endsWith('/') ? ctx.path.slice(0, -1) : ctx.path;
   const allowedPaths = ['/hello', '/upbit', '/huobi','/'];  // 許可するURLパス
   if (allowedPaths.includes(normalizedPath)) {
-    console.log(`API はnext: ${ctx.path}`);
+    //console.log(`API はnext: ${ctx.path}`);
     await next(); 
     return;
   }
