@@ -216,7 +216,7 @@ async function getVotingPower(username) {
 */
 async function getVotingPower(username) {
 	return new Promise((resolve, reject) => {
-	    steem.api.getAccountsAsync(['yasu']).then(accounts =>{
+	    steem.api.getAccountsAsync([username]).then(accounts =>{
     	resolve(accounts[0].voting_power/ 100);
     });
 	});
