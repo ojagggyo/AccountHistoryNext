@@ -15,36 +15,36 @@ app.use(koaStatic(staticDir));
 console.log(`staticDir=${staticDir}`);
 
 
-app.use(async (ctx, next) => {
-  console.log(`アクセスされた静的ファイル: ${ctx.path} - メソッド: ${ctx.method}`);
+// app.use(async (ctx, next) => {
+//   console.log(`アクセスされた静的ファイル: ${ctx.path} - メソッド: ${ctx.method}`);
   
-  // スラッシュを取り除いて比較（末尾のスラッシュを削除）
-  const normalizedPath = ctx.path.endsWith('/') ? ctx.path.slice(0, -1) : ctx.path;
-  const allowedPaths = ['/hello', '/upbit', '/huobi'];  // 許可するURLパス
-  if (!allowedPaths.includes(normalizedPath)) {
-    console.log(`スキップされたパス: ${ctx.path}`);
-    return;  // 許可されていないパスの場合は、次のミドルウェアに進まずスキップ
-  }
+//   // スラッシュを取り除いて比較（末尾のスラッシュを削除）
+//   const normalizedPath = ctx.path.endsWith('/') ? ctx.path.slice(0, -1) : ctx.path;
+//   const allowedPaths = ['/hello', '/upbit', '/huobi'];  // 許可するURLパス
+//   if (!allowedPaths.includes(normalizedPath)) {
+//     console.log(`スキップされたパス: ${ctx.path}`);
+//     return;  // 許可されていないパスの場合は、次のミドルウェアに進まずスキップ
+//   }
 
-  try {
-    // 静的ファイルが存在しない場合、404を返す
-    const filePath = path.join(staticDir, ctx.path);
-    console.log(`filePath=${ctx.path}`);
-    if (!fs.existsSync(filePath)) {
-      console.log(`ファイルが存在しません: ${filePath}`);
-      ctx.status = 404;
-      ctx.body = 'ファイルが見つかりません';
-      return;
-    }
+//   try {
+//     // 静的ファイルが存在しない場合、404を返す
+//     const filePath = path.join(staticDir, ctx.path);
+//     console.log(`filePath=${ctx.path}`);
+//     if (!fs.existsSync(filePath)) {
+//       console.log(`ファイルが存在しません: ${filePath}`);
+//       ctx.status = 404;
+//       ctx.body = 'ファイルが見つかりません';
+//       return;
+//     }
 
-    // 存在する場合のみ、koa-staticで提供
-    await koaStatic(staticDir)(ctx, next);
-  } catch (error) {
-    console.error(`エラーが発生しました: ${error.message}`);
-    ctx.status = 500;
-    ctx.body = 'サーバーエラー';
-  }
-});
+//     // 存在する場合のみ、koa-staticで提供
+//     await koaStatic(staticDir)(ctx, next);
+//   } catch (error) {
+//     console.error(`エラーが発生しました: ${error.message}`);
+//     ctx.status = 500;
+//     ctx.body = 'サーバーエラー';
+//   }
+// });
 
 
 
