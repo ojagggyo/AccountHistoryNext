@@ -20,11 +20,14 @@ router.get('/upbit', async (ctx) => {
   const pattern = query.pattern;
   const callbackName = query.callback;
 
-  if (!pattern || !callbackName) {
+  if (!callbackName || callbackName.trim() === "") {
     ctx.status = 400;
     ctx.body = '必須パラメータが不足しています: pattern または callback';
     return;
   }
+
+  
+
 
   try {
     const s = await getPrice(pattern);
@@ -44,7 +47,7 @@ router.get('/huobi', async (ctx) => {
   const pattern = query.pattern;
   const callbackName = query.callback;
 
-  if (!pattern || !callbackName) {
+  if (!callbackName || callbackName.trim() === "") {
     console.log("***huobi error***");
     ctx.status = 400;
     ctx.body = '必須パラメータが不足しています: pattern または callback';
