@@ -1253,31 +1253,17 @@ async function rate(){
 	if(!globalProperties){
 		//const promise0 = await client.database.getDynamicGlobalProperties();//★
     	const promise0 = steem.api.getDynamicGlobalPropertiesAsync();
-
-		// const promise1 = getPrice('krwsteem','KRW-STEEM');
-		// const promise3 = getPrice('krwtrx','KRW-TRX');
-		// const promise4 = getPrice('krwbtc','KRW-BTC');
-		// const promise5 = getPrice('krweth','KRW-ETH');
-		// const promise6 = getPrice('btcsteem','BTC-STEEM');
-		// const promise7 = getPriceWise('KRW','JPY');
-		// const promise8 = getPriceWise('KRW','USD');
-		// const promise9 = getPriceHuobi('usdtsbd','sbdusdt');
-		// const promise10 = getPriceHuobi('usdtbtc','btcusdt');
-
-
-		const promise1 = 0;
-		const promise3 = 0;
-		const promise4 = 0;
-		const promise5 = 0;
-		const promise6 = 0;
-		const promise7 = 0;
-		const promise8 =0;
-		const promise9 = 0;
-		const promise10 = 0;
-
-
-		// [globalProperties,krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc] 
-		// 	= await Promise.all([promise0,promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10]);
+		const promise1 = getPrice('krwsteem','KRW-STEEM');
+		const promise3 = getPrice('krwtrx','KRW-TRX');
+		const promise4 = getPrice('krwbtc','KRW-BTC');
+		const promise5 = getPrice('krweth','KRW-ETH');
+		const promise6 = getPrice('btcsteem','BTC-STEEM');
+		const promise7 = getPriceWise('KRW','JPY');
+		const promise8 = getPriceWise('KRW','USD');
+		const promise9 = getPriceHuobi('usdtsbd','sbdusdt');
+		const promise10 = getPriceHuobi('usdtbtc','btcusdt');
+		[globalProperties,krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc] 
+			= await Promise.all([promise0,promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10]);
 
 		krwsbd = usdtsbd * krwusd;
 		
