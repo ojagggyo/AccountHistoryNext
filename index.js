@@ -61,6 +61,14 @@ router.get('/upbit', async (ctx) => {
 // });
 
 app.use(async (ctx, next) => {
+  console.log(`アクセスされた静的ファイル: ${ctx.path} - メソッド: ${ctx.method}`);
+  
+  const allowedPaths = ['/hello', '/upbit', '/huobi'];  // 許可するURLパス
+  if (!allowedPaths.includes(ctx.path)) {
+    console.log(`スキップされたパス: ${ctx.path}`);
+    return;  // 許可されていないパスの場合は、次のミドルウェアに進まずスキップ
+  }
+
   try {
     // 静的ファイルが存在しない場合、404を返す
     const filePath = path.join(staticDir, ctx.path);
