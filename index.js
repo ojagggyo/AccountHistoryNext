@@ -2,7 +2,6 @@ const Koa = require('koa');
 const Router = require('@koa/router');
 const axios = require('axios');
 const path = require('path');
-const fs = require('fs');
 const koaStatic = require('koa-static');
 const router = new Router();
 const app = new Koa();
@@ -11,37 +10,41 @@ const app = new Koa();
 const staticDir = path.join(__dirname, 'public');
 console.log(`staticDir=${staticDir}`);
 
+//// クライアントの接続状態を確認するミドルウェア
+//app.use(async (ctx, next) => {
+//  if (ctx.request.aborted) {
+//    console.log('クライアントが接続を切断しました');
+//    return;
+//  }
+//  await next(); // 次のミドルウェアに進む
+//});
+
 // 静的ファイルの提供
 app.use(koaStatic(staticDir, {
   maxage: 60 * 60 * 1000,  // キャッシュ有効期間（ミリ秒）
   hidden: false,           // 隠しファイル（.で始まるファイル）を許可するか
-  index: 'index.html'      // デフォルトのインデックスファイル
+  index: 'index.html',     // デフォルトのインデックスファイル
 }));
 
 // APIにアクセスされた際の処理
 router.get('/hello', (ctx) => {
-  console.log('Hello API accessed');
   ctx.body = 'Hello World!!';
 });
 
 // Upbit API
 router.get('/upbit', async (ctx) => {
-  console.log("***upbit***");
+  const { pattern, callback } = ctx.query;
 
-  const query = ctx.query;
-  const pattern = query.pattern;
-  const callbackName = query.callback;
-
-  if (!callbackName || callbackName.trim() === "") {
+  if (!callback || callback.trim() === "") {
     ctx.status = 400;
     ctx.body = '必須パラメータが不足しています: pattern または callback';
     return;
   }
 
   try {
-    const s = await getPrice(pattern);  // Upbitから価格を取得
+    const data = await getPrice(pattern);  // Upbitから価格を取得
     ctx.contentType = 'application/javascript';  // JSONPのContent-Type
-    ctx.body = `${callbackName}(${JSON.stringify(s)})`;  // JSONP形式で返す
+    ctx.body = `${callback}(${JSON.stringify(data)})`;  // JSONP形式で返す
   } catch (error) {
     ctx.status = 500;
     ctx.body = `Upbit APIエラー: ${error.message}`;
@@ -50,22 +53,18 @@ router.get('/upbit', async (ctx) => {
 
 // Huobi API
 router.get('/huobi', async (ctx) => {
-  console.log("***huobi***");
+  const { pattern, callback } = ctx.query;
 
-  const query = ctx.query;
-  const pattern = query.pattern;
-  const callbackName = query.callback;
-
-  if (!callbackName || callbackName.trim() === "") {
+  if (!callback || callback.trim() === "") {
     ctx.status = 400;
     ctx.body = '必須パラメータが不足しています: pattern または callback';
     return;
   }
 
   try {
-    const s = await getPriceHuobi(pattern);
+    const data = await getPriceHuobi(pattern);
     ctx.contentType = 'application/javascript';  // JSONPのContent-Type
-    ctx.body = `${callbackName}(${JSON.stringify(s)})`;  // JSONP形式で返す
+    ctx.body = `${callback}(${JSON.stringify(data)})`;  // JSONP形式で返す
   } catch (error) {
     ctx.status = 500;
     ctx.body = `Huobi APIエラー: ${error.message}`;
@@ -94,10 +93,10 @@ async function getPriceHuobi(pattern) {
   }
 }
 
+// エラーハンドリング
 app.onerror = (err, ctx) => {
-  // ログにエラーを記録
-  console.log(`アプリケーションエラー: message=${err.message} stack=${err.stack} url=${ctx.request.url}`);
-  // クライアントへのレスポンス
+  console.error(`アプリケーションエラー: message=${err.message} stack=${err.stack} url=${ctx.request.url}`);
+  console.error(`status=${err.status}`);
   ctx.status = err.status || 500;
   ctx.body = {
     message: 'サーバーエラーが発生しました。',
@@ -108,6 +107,8 @@ app.onerror = (err, ctx) => {
 // サーバー起動
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+// サーバーの起動
 app.listen(3000, "0.0.0.0", () => {
   console.log('サーバーが起動しました!!');
 });
