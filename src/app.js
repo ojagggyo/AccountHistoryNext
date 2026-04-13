@@ -747,7 +747,7 @@ async function getPriceBitpoint(name, markets) {
 
 			let bidPrice = JSON.parse(jsonString).statistics[0].bidPrice;
 			let askPrice = JSON.parse(jsonString).statistics[0].askPrice;
-			let price = (parseFloat(bidPrice)+parseFloat(askPrice))/2;
+			let price = parseInt((parseFloat(bidPrice)+parseFloat(askPrice))/2);
 
 			console.log("bidPrice=",bidPrice);
 			console.log("askPrice=",askPrice);
