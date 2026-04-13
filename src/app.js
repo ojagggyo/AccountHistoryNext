@@ -1288,7 +1288,7 @@ async function aaa(days){
 
 	const upbiturl = "https://upbit.com/exchange?code=CRIX.UPBIT.";
 	const huobiurl = "https://www.htx.com/trade/";
-	const bitpointurl = "https://www.htx.com/trade/";
+	const bitpointurl = "https://tradepro.bpj-ex.com/#/";
 	document.getElementById('price').innerHTML = 
 		'<a class="right black" href=' + upbiturl + 'KRW-STEEM'+ ' target=upbit>STEEM ' + (krwsteem == 0 ? "---" : numberWithCommas(krwsteem)) + ' KRW</a>' 
 		+ '<br/><a class="right black" href=' + huobiurl + 'sbd_usdt/' + ' target=huobi>(HTX) SBD ' + (usdtsbd == 0 ? "---" : usdtsbd) + ' USDT ' + numberWithCommas(parseInt(usdtsbd/krwusd)) + ' KRW</a>'
