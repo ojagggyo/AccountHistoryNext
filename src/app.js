@@ -743,7 +743,12 @@ async function getPriceBitpoint(name, markets) {
 
 			console.log("getPriceBitpoint 2");
 			const jsonString = JSON.stringify(data);
-			let price = JSON.parse(jsonString).data[0].data[0].price
+			//let price = JSON.parse(jsonString).data[0].data[0].price
+
+			let bidPrice = JSON.parse(jsonString).statistics[0].bidPrice;
+			let askPrice = JSON.parse(jsonString).statistics[0].askPrice;
+let price = (bidPrice+askPrice)/2;
+
 			resolve(price);
 		}
 		let sc = document.createElement("script");
