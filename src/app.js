@@ -17,6 +17,7 @@ let krwusd;
 let usdtsbd;//2025/01/12
 let usdtbtc;//2025/01/12
 let steemsbd;//2025/01/18
+let btcjpy;//2026/04/13
 
 async function getTick(){
 
@@ -695,18 +696,9 @@ function getReward_powerupdown(record){
 	
 	
 //---------- Price ----------
-//let isRequestInProgress = false;
-
 async function getPrice(name, markets) {
 	console.log(`getPrice name=${name} markets=${markets}`);
     
-    // // リクエストが進行中の場合は新たなリクエストを発行しない
-    // if (isRequestInProgress) {
-    //     console.log("リクエスト中です。");
-    //     return;
-    // }
-    // isRequestInProgress = true;  // リクエスト開始
-
     return new Promise((resolve, reject) => {
 
 		window['get'+name] = async function(data){
@@ -714,7 +706,6 @@ async function getPrice(name, markets) {
 			console.log("getPrice 2");
 			const jsonString = JSON.stringify(data);
 			let price = JSON.parse(jsonString)[0].trade_price
-			//isRequestInProgress = true;  // リクエスト終了
 			resolve(price);
 		}
 		let sc = document.createElement("script");
@@ -727,26 +718,37 @@ async function getPrice(name, markets) {
 async function getPriceHuobi(name, markets) {
 	console.log(`getPriceHuobi name=${name} markets=${markets}`);
 
-    // // リクエストが進行中の場合は新たなリクエストを発行しない
-    // if (isRequestInProgress) {
-    //     console.log("リクエスト中です。");
-    //     return;
-    // }
-    // isRequestInProgress = true;  // リクエスト開始
-
-    return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
 
 		window['get'+name] = async function(data){
 
 			console.log("getPriceHuobi 2");
 			const jsonString = JSON.stringify(data);
 			let price = JSON.parse(jsonString).data[0].data[0].price
-			//isRequestInProgress = true;  // リクエスト終了
 			resolve(price);
 		}
 		let sc = document.createElement("script");
 		sc.id = name;
 		sc.src = "https://steememory.com/ah/huobi/?callback="+'get'+name+"&pattern=" + markets;
+		document.body.appendChild(sc);
+		document.getElementById(sc.id).remove();
+	});
+}
+async function getPriceBitpoint(name, markets) {
+	console.log(`getPriceBitpoint name=${name} markets=${markets}`);
+
+      return new Promise((resolve, reject) => {
+
+		window['get'+name] = async function(data){
+
+			console.log("getPriceBitpoint 2");
+			const jsonString = JSON.stringify(data);
+			let price = JSON.parse(jsonString).data[0].data[0].price
+			resolve(price);
+		}
+		let sc = document.createElement("script");
+		sc.id = name;
+		sc.src = "https://steememory.com/ah/bitpoint/?callback="+'get'+name+"&pattern=" + markets;
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
@@ -1250,6 +1252,7 @@ function makeTable(records){
 }
 
 async function rate(){
+
 	if(!globalProperties){
 		//const promise0 = await client.database.getDynamicGlobalProperties();//★
     	const promise0 = steem.api.getDynamicGlobalPropertiesAsync();
@@ -1262,8 +1265,10 @@ async function rate(){
 		const promise8 = getPriceWise('KRW','USD');
 		const promise9 = getPriceHuobi('usdtsbd','sbdusdt');
 		const promise10 = getPriceHuobi('usdtbtc','btcusdt');
-		[globalProperties,krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc] 
-			= await Promise.all([promise0,promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10]);
+		const promise11 = getPriceBitpoint('btcjpy','BTCJPY');
+
+		[globalProperties,krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc,btcjpy] 
+			= await Promise.all([promise0,promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10,promise11]);
 
 		krwsbd = usdtsbd * krwusd;
 		

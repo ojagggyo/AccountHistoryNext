@@ -10,15 +10,6 @@ const app = new Koa();
 const staticDir = path.join(__dirname, 'public');
 console.log(`staticDir=${staticDir}`);
 
-//// クライアントの接続状態を確認するミドルウェア
-//app.use(async (ctx, next) => {
-//  if (ctx.request.aborted) {
-//    console.log('クライアントが接続を切断しました');
-//    return;
-//  }
-//  await next(); // 次のミドルウェアに進む
-//});
-
 // 静的ファイルの提供
 app.use(koaStatic(staticDir, {
   maxage: 60 * 60 * 1000,  // キャッシュ有効期間（ミリ秒）
@@ -71,6 +62,26 @@ router.get('/huobi', async (ctx) => {
   }
 });
 
+// Bitpoint API
+router.get('/bitpoint', async (ctx) => {
+  const { pattern, callback } = ctx.query;
+
+  if (!callback || callback.trim() === "") {
+    ctx.status = 400;
+    ctx.body = '必須パラメータが不足しています: pattern または callback';
+    return;
+  }
+
+  try {
+    const data = await getPriceBitpoint(pattern);
+    ctx.contentType = 'application/javascript';  // JSONPのContent-Type
+    ctx.body = `${callback}(${JSON.stringify(data)})`;  // JSONP形式で返す
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = `Huobi APIエラー: ${error.message}`;
+  }
+});
+
 // Webhook - Upbitから価格を取得
 async function getPrice(markets) {
   const url = `https://api.upbit.com/v1/ticker?markets=${markets}`;
@@ -90,6 +101,17 @@ async function getPriceHuobi(pattern) {
     return response.data;
   } catch (error) {
     throw new Error('Huobiからデータを取得中にエラーが発生しました: ' + error.message);
+  }
+}
+
+// Webhook - Bitpointから価格を取得
+async function getPriceBitpoint(pattern) {
+  const url = `https://smartapi.bitpoint.co.jp/bpj-smart-api/api/ticker/24hr?symbol=${pattern}`;
+  try {
+    const response = await axios.get(url, { timeout: 5000 });  // タイムアウト設定（5秒）
+    return response.data;
+  } catch (error) {
+    throw new Error('Bitpointからデータを取得中にエラーが発生しました: ' + error.message);
   }
 }
 
