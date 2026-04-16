@@ -1628,12 +1628,13 @@ window.showTooltip_post = async (e) => {
 		for (let index = 0; index < imageList.length; index++) {
 			const imageUrl = imageList[index];
 			if(!imageUrl || imageUrl=='') continue;
-			tooltip.insertAdjacentHTML("beforeend", "<image src=https://steemitimages.com/0x128/" + imageUrl + " style='margin: 4px;'/>")
+			//tooltip.insertAdjacentHTML("beforeend", "<image src=https://steemitimages.com/0x128/" + imageUrl + " style='margin: 4px;'/>")
+			tooltip.insertAdjacentHTML("beforeend", "<image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>")
 			_sleep(10)
 			let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
 			if(e.pageX + 10 + tooltip_w > document_w - 40){
 				 tooltip.removeChild(tooltip.lastElementChild)
-				 tooltip.insertAdjacentHTML("beforeend", "<br/><image src=https://steemitimages.com/0x128/" + imageUrl + " style='margin: 4px;'/>")
+				 tooltip.insertAdjacentHTML("beforeend", "<br/><image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>")
 			}
 		}
 	}
