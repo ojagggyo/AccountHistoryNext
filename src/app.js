@@ -1647,39 +1647,53 @@ window.showTooltip_post = async (e) => {
     tooltip.style.left = e.pageX + 10 + 'px';
     tooltip.style.display = "block";
 
+    // コンテンツの情報を非同期で取得
     let o = await steem.api.callAsync('condenser_api.get_content', [author, permlink]);
 
-    tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<image src=https://steemitimages.com/u/" + author + "/avatar style='margin: 4px;'/>";
+    // タイトルとユーザー画像を動的に生成
+    tooltip.innerHTML = `
+        <b>${o.title}</b><br/>
+        <img src="https://steemitimages.com/u/${author}/avatar" style="margin: 4px;" />
+    `;
 
     let imageList = JSON.parse(o.json_metadata).image;
-    if (imageList) {
+    if (imageList && imageList.length > 0) {
+        // 画像を非同期で読み込む
         let document_w = document.documentElement.clientWidth;
 
-        // 画像を並列に読み込む
-        let imagePromises = imageList.map(imageUrl => {
-            if (imageUrl) {
-                return new Promise((resolve) => {
+        // 画像の読み込みを非同期で処理
+        let imagePromises = imageList.map((imageUrl) => {
+            return new Promise((resolve) => {
+                if (imageUrl) {
                     let img = new Image();
-                    img.src = imageUrl;
-                    img.onload = () => resolve(img);
-                });
-            }
+                    img.src = imageUrl; // 画像をプリロード
+                    img.onload = () => resolve(img); // 画像の読み込みが完了したらresolve
+                } else {
+                    resolve(null); // 画像URLが無い場合はnullを返す
+                }
+            });
         });
 
+        // 画像がすべて読み込まれるまで待機
         let loadedImages = await Promise.all(imagePromises);
 
-        loadedImages.forEach(img => {
-            tooltip.insertAdjacentHTML("beforeend", `<image src="${img.src}" style="margin: 4px; width: 128px;" />`);
+        // 読み込んだ画像をHTMLに追加
+        loadedImages.forEach((img) => {
+            if (img) {
+                tooltip.insertAdjacentHTML("beforeend", `<img src="${img.src}" style="margin: 4px; width: 128px;" />`);
 
-            // ツールチップの幅を確認して、画像の配置を調整
-            let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-            if (e.pageX + 10 + tooltip_w > document_w - 40) {
-                tooltip.removeChild(tooltip.lastElementChild);
-                tooltip.insertAdjacentHTML("beforeend", `<br/><image src="${img.src}" style="margin: 4px; width: 128px;" />`);
+                // ツールチップの幅を確認して、画像の配置を調整
+                let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+                if (e.pageX + 10 + tooltip_w > document_w - 40) {
+                    tooltip.removeChild(tooltip.lastElementChild);
+                    tooltip.insertAdjacentHTML("beforeend", `<br/><img src="${img.src}" style="margin: 4px; width: 128px;" />`);
+                }
             }
         });
     }
 };
+
+
 window.hideTooltip_post = async (e) => {
 	var tooltip = document.getElementById("tooltip")
 	tooltip.style.display = "none"
