@@ -1658,41 +1658,37 @@ window.showTooltip_post = async (e) => {
 
     let imageList = JSON.parse(o.json_metadata).image;
     if (imageList && imageList.length > 0) {
-        // 画像を非同期で読み込む
         let document_w = document.documentElement.clientWidth;
 
-        // 画像の読み込みを非同期で処理
-        let imagePromises = imageList.map((imageUrl) => {
+        // 画像を非同期で読み込む
+        let loadImageAsync = (imageUrl) => {
             return new Promise((resolve) => {
-                if (imageUrl) {
-                    let img = new Image();
-                    img.src = imageUrl; // 画像をプリロード
-                    img.onload = () => resolve(img); // 画像の読み込みが完了したらresolve
-                } else {
-                    resolve(null); // 画像URLが無い場合はnullを返す
-                }
+                let img = new Image();
+                img.src = imageUrl;
+                img.onload = () => resolve(img); // 画像が読み込まれたら解決
+                img.onerror = () => resolve(null); // エラーがあればnullを返す
             });
-        });
+        };
 
-        // 画像がすべて読み込まれるまで待機
-        let loadedImages = await Promise.all(imagePromises);
+        // 画像を非同期にロードしてからHTMLを挿入
+        for (let imageUrl of imageList) {
+            if (imageUrl) {
+                let img = await loadImageAsync(imageUrl); // 画像を非同期で読み込む
+                if (img) {
+                    // 画像を挿入
+                    tooltip.insertAdjacentHTML("beforeend", `<img src="${img.src}" style="margin: 4px; width: 128px;" />`);
 
-        // 読み込んだ画像をHTMLに追加
-        loadedImages.forEach((img) => {
-            if (img) {
-                tooltip.insertAdjacentHTML("beforeend", `<img src="${img.src}" style="margin: 4px; width: 128px;" />`);
-
-                // ツールチップの幅を確認して、画像の配置を調整
-                let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-                if (e.pageX + 10 + tooltip_w > document_w - 40) {
-                    tooltip.removeChild(tooltip.lastElementChild);
-                    tooltip.insertAdjacentHTML("beforeend", `<br/><img src="${img.src}" style="margin: 4px; width: 128px;" />`);
+                    // ツールチップの幅を確認して、画像の配置を調整
+                    let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+                    if (e.pageX + 10 + tooltip_w > document_w - 40) {
+                        tooltip.removeChild(tooltip.lastElementChild);
+                        tooltip.insertAdjacentHTML("beforeend", `<br/><img src="${img.src}" style="margin: 4px; width: 128px;" />`);
+                    }
                 }
             }
-        });
+        }
     }
 };
-
 
 window.hideTooltip_post = async (e) => {
 	var tooltip = document.getElementById("tooltip")
