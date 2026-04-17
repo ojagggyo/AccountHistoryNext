@@ -1610,7 +1610,7 @@ window.hideTooltip = async (e) => {
 
 /* --------------------------------------------------------------------- */
 
-if (typeof window !== 'undefined') {
+//if (typeof window !== 'undefined') {
 window.showTooltip_post = async (e) => {
     let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
@@ -1767,7 +1767,7 @@ window.hideTooltip_post = async (e) => {
 	var tooltip = document.getElementById("tooltip")
 	tooltip.style.display = "none"
 }
-}
+//}
 
 /* --------------------------------------------------------------------- */
 
