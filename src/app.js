@@ -696,25 +696,53 @@ function getReward_powerupdown(record){
 	
 	
 //---------- Price ----------
-async function getPrice(name, markets) {
-	console.log(`getPrice name=${name} markets=${markets}`);
+// async function getPrice(name, markets) {
+// 	console.log(`getPrice name=${name} markets=${markets}`);
     
+//     return new Promise((resolve, reject) => {
+
+// 		window['get'+name] = async function(data){
+
+// 			console.log("getPrice 2");
+// 			const jsonString = JSON.stringify(data);
+// 			let price = JSON.parse(jsonString)[0].trade_price
+// 			resolve(price);
+// 		}
+// 		let sc = document.createElement("script");
+// 		sc.id = name;
+// 		sc.src = "https://steememory.com/ah/upbit/?callback="+'get'+name+"&pattern=" + markets;
+// 		sc.type = "text/javascript";  // Explicitly set MIME type
+// 		document.body.appendChild(sc);
+// 		document.getElementById(sc.id).remove();
+// 	});
+// }
+async function getPrice(name, markets) {
+    console.log(`getPrice name=${name} markets=${markets}`);
+
     return new Promise((resolve, reject) => {
+        // JSONP の callback を定義
+        window['get' + name] = function(data) {
+            console.log("getPrice callback called");
 
-		window['get'+name] = async function(data){
+            try {
+                const price = data[0].trade_price; // JSONP のデータから価格を取得
+                resolve(price);
+            } catch (err) {
+                reject(err);
+            } finally {
+                // 使用済み callback と script を削除
+                delete window['get' + name];
+                const sc = document.getElementById(name);
+                if (sc) sc.remove();
+            }
+        };
 
-			console.log("getPrice 2");
-			const jsonString = JSON.stringify(data);
-			let price = JSON.parse(jsonString)[0].trade_price
-			resolve(price);
-		}
-		let sc = document.createElement("script");
-		sc.id = name;
-		sc.src = "https://steememory.com/ah/upbit/?callback="+'get'+name+"&pattern=" + markets;
-		sc.type = "text/javascript";  // Explicitly set MIME type
-		document.body.appendChild(sc);
-		document.getElementById(sc.id).remove();
-	});
+        // スクリプトを作成して body に追加
+        const sc = document.createElement("script");
+        sc.id = name;
+        sc.src = "https://steememory.com/ah/upbit/?callback=" + 'get' + name + "&pattern=" + markets;
+        document.body.appendChild(sc);
+    });
 }
 async function getPriceHuobi(name, markets) {
 	console.log(`getPriceHuobi name=${name} markets=${markets}`);
