@@ -711,6 +711,7 @@ async function getPrice(name, markets) {
 		let sc = document.createElement("script");
 		sc.id = name;
 		sc.src = "https://steememory.com/ah/upbit/?callback="+'get'+name+"&pattern=" + markets;
+		sc.type = "text/javascript";  // Explicitly set MIME type
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
@@ -730,6 +731,7 @@ async function getPriceHuobi(name, markets) {
 		let sc = document.createElement("script");
 		sc.id = name;
 		sc.src = "https://steememory.com/ah/huobi/?callback="+'get'+name+"&pattern=" + markets;
+		sc.type = "text/javascript";  // Explicitly set MIME type
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
@@ -758,6 +760,7 @@ async function getPriceBitpoint(name, markets) {
 		let sc = document.createElement("script");
 		sc.id = name;
 		sc.src = "https://steememory.com/ah/bitpoint/?callback="+'get'+name+"&pattern=" + markets;
+		sc.type = "text/javascript";  // Explicitly set MIME type
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
