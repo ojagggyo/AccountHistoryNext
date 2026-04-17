@@ -7,7 +7,15 @@
 <link rel="icon" href="favicon_ah.ico" id="favicon">
 <link rel="stylesheet" type="text/css" href="./ah.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>window.jdenticon_config = {replaceMode: "observe"};</script>
+<!--<script>window.jdenticon_config = {replaceMode: "observe"};</script>-->
+<script>
+window.jdenticon_config = { replaceMode: "observe" };
+document.addEventListener("DOMContentLoaded", () => {
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/jdenticon@3.1.1/dist/jdenticon.min.js";
+    document.body.appendChild(script);
+});
+</script>
 <!--<script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.1" async></script>-->
 <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.1/dist/jdenticon.min.js"></script>
 <!--<script src="https://cdn.jsdelivr.net/npm/@steemit/steem-js@1.0.15"></script>-->
