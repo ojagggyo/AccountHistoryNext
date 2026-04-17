@@ -1620,7 +1620,7 @@ window.showTooltip_post = async (e) => {
     tooltip.style.display = "block";
 
 
-console.log("imageList.length",imageList.length);
+console.log("*** imageshowTooltip_post ***");
 
 
     // 非同期のget_contentコールバック
