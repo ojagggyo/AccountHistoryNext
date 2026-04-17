@@ -1611,7 +1611,6 @@ window.hideTooltip = async (e) => {
 /* --------------------------------------------------------------------- */
 
 if (typeof window !== 'undefined') {
-
 window.showTooltip_post = (e) => {
     let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
@@ -1647,18 +1646,22 @@ window.showTooltip_post = (e) => {
                     img.src = imageUrl;
                     img.style.margin = '4px';
                     img.style.width = '128px';
-                    img.onload = () => resolve(img);
-                    tooltip.appendChild(img); // 最初にtooltipに追加
 
-                    // 次の画像が画面をはみ出す場合に後で追加
+                    // 画像がロードされた後に追加処理を行う
                     img.onload = () => {
+                        tooltip.appendChild(img); // 画像をtooltipに追加
+
+                        // ツールチップの幅をチェックし、はみ出す場合には改行を挿入
                         let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
                         if (e.pageX + 10 + tooltip_w > document_w - 40) {
+                            // ツールチップ内の最後の画像を削除して、新しい行を追加
                             tooltip.removeChild(img);  // 追加した画像を削除
                             let breakLine = document.createElement('br');
                             tooltip.appendChild(breakLine);  // 改行
                             tooltip.appendChild(img);  // 再度追加
                         }
+
+                        resolve(img);  // Promiseを解決
                     };
                 });
 
