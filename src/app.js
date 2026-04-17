@@ -1639,108 +1639,109 @@ window.hideTooltip = async (e) => {
 
 /* --------------------------------------------------------------------- */
 
-//if (typeof window !== 'undefined') {
-// window.showTooltip_post = async (e) => {
-//     let tooltip = document.getElementById("tooltip");
-//     let author = e.target.getAttribute('data-author');
-//     let permlink = e.target.getAttribute('data-permlink');
-//     tooltip.style.top = e.pageY + 10 + 'px';
-//     tooltip.style.left = e.pageX + 10 + 'px';
-//     tooltip.style.display = "block";
-
-
-// console.log("*** imageshowTooltip_post ***");
-
-
-//     // 非同期のget_contentコールバック
-//     steem.api.callAsync('condenser_api.get_content', [author, permlink], (err, o) => {
-//         if (err) {
-//             console.error(err);
-//             return;
-//         }
-
-//         tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<img src='https://steemitimages.com/u/" + author + "/avatar' style='margin: 4px;'/>";
-
-//         let imageList = JSON.parse(o.json_metadata).image;
-//         if (imageList) {
-//             let document_w = document.documentElement.clientWidth;
-//             let uniqueImages = new Set(); // Setを使ってユニークな画像を保持
-//             let promises = [];
-
-//             // 画像の非同期ロードをPromiseで処理
-
-// console.log("imageList.length",imageList.length);
-
-//             for (let index = 0; index < imageList.length; index++) {
-//                 const imageUrl = imageList[index];
-//                 if (!imageUrl || imageUrl === '' || uniqueImages.has(imageUrl)) continue; // 重複画像をスキップ
-
-//                 uniqueImages.add(imageUrl); // 画像URLをSetに追加して、重複を防止
-
-//                 let imageLoadPromise = new Promise((resolve) => {
-//                     let img = new Image();
-//                     img.src = imageUrl;
-//                     img.style.margin = '4px';
-//                     img.style.width = '128px';
-
-//                     // 画像がロードされた後に追加処理を行う
-//                     img.onload = () => {
-//                         tooltip.appendChild(img); // 画像をtooltipに追加
-
-//                         // ツールチップの幅をチェックし、はみ出す場合には改行を挿入
-//                         let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-//                         if (e.pageX + 10 + tooltip_w > document_w - 40) {
-//                             // ツールチップ内の最後の画像を削除して、新しい行を追加
-//                             tooltip.removeChild(img);  // 追加した画像を削除
-//                             let breakLine = document.createElement('br');
-//                             tooltip.appendChild(breakLine);  // 改行
-//                             tooltip.appendChild(img);  // 再度追加
-//                         }
-
-//                         resolve(img);  // Promiseを解決
-//                     };
-//                 });
-
-//                 promises.push(imageLoadPromise);
-//             }
-
-//             // すべての画像が読み込まれたら処理を続ける
-//             Promise.all(promises).then(() => {
-//                 // 画像が全てロードされた後の処理（必要に応じて）
-//             });
-//         }
-//     });
-// };
-
-
+if (typeof window !== 'undefined') {
 window.showTooltip_post = async (e) => {
-	let tooltip = document.getElementById("tooltip");
-	let author = e.target.getAttribute('data-author');
-	let permlink = e.target.getAttribute('data-permlink');
-	tooltip.style.top = e.pageY + 10 + 'px';
-	tooltip.style.left = e.pageX + 10 + 'px';
-	tooltip.style.display = "block";
-	//let o = await callAsync('condenser_api','get_content',[author, permlink] )
-	let o = await steem.api.callAsync('condenser_api.get_content',[author, permlink] )
+    let tooltip = document.getElementById("tooltip");
+    let author = e.target.getAttribute('data-author');
+    let permlink = e.target.getAttribute('data-permlink');
+    tooltip.style.top = e.pageY + 10 + 'px';
+    tooltip.style.left = e.pageX + 10 + 'px';
+    tooltip.style.display = "block";
+
+
+console.log("*** imageshowTooltip_post ***");
+
+
+    // 非同期のget_contentコールバック
+    steem.api.callAsync('condenser_api.get_content', [author, permlink], (err, o) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<img src='https://steemitimages.com/u/" + author + "/avatar' style='margin: 4px;'/>";
+
+        let imageList = JSON.parse(o.json_metadata).image;
+        if (imageList) {
+            let document_w = document.documentElement.clientWidth;
+            let uniqueImages = new Set(); // Setを使ってユニークな画像を保持
+            let promises = [];
+
+            // 画像の非同期ロードをPromiseで処理
+
+console.log("imageList.length",imageList.length);
+
+            for (let index = 0; index < imageList.length; index++) {
+                const imageUrl = imageList[index];
+                if (!imageUrl || imageUrl === '' || uniqueImages.has(imageUrl)) continue; // 重複画像をスキップ
+
+                uniqueImages.add(imageUrl); // 画像URLをSetに追加して、重複を防止
+
+                let imageLoadPromise = new Promise((resolve) => {
+                    let img = new Image();
+                    img.src = imageUrl;
+                    img.style.margin = '4px';
+                    img.style.width = '128px';
+
+                    // 画像がロードされた後に追加処理を行う
+                    img.onload = () => {
+                        tooltip.appendChild(img); // 画像をtooltipに追加
+
+                        // ツールチップの幅をチェックし、はみ出す場合には改行を挿入
+                        let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+                        if (e.pageX + 10 + tooltip_w > document_w - 40) {
+                            // ツールチップ内の最後の画像を削除して、新しい行を追加
+                            tooltip.removeChild(img);  // 追加した画像を削除
+                            let breakLine = document.createElement('br');
+                            tooltip.appendChild(breakLine);  // 改行
+                            tooltip.appendChild(img);  // 再度追加
+                        }
+
+                        resolve(img);  // Promiseを解決
+                    };
+                });
+
+                promises.push(imageLoadPromise);
+            }
+
+            // すべての画像が読み込まれたら処理を続ける
+            Promise.all(promises).then(() => {
+                // 画像が全てロードされた後の処理（必要に応じて）
+            });
+        }
+    });
+};
+
+
+// window.showTooltip_post = async (e) => {
+// 	let tooltip = document.getElementById("tooltip");
+// 	let author = e.target.getAttribute('data-author');
+// 	let permlink = e.target.getAttribute('data-permlink');
+// 	tooltip.style.top = e.pageY + 10 + 'px';
+// 	tooltip.style.left = e.pageX + 10 + 'px';
+// 	tooltip.style.display = "block";
+// 	//let o = await callAsync('condenser_api','get_content',[author, permlink] )
+// 	let o = await steem.api.callAsync('condenser_api.get_content',[author, permlink] )
 	
-	tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<image src=https://steemitimages.com/u/" + author + "/avatar style='margin: 4px;'/>"
-	let imageList = JSON.parse(o.json_metadata).image
-	if(imageList){
-		let document_w = document.documentElement.clientWidth
-		for (let index = 0; index < imageList.length; index++) {
-			const imageUrl = imageList[index];
-			if(!imageUrl || imageUrl=='') continue;
-			//tooltip.insertAdjacentHTML("beforeend", "<image src=https://steemitimages.com/0x128/" + imageUrl + " style='margin: 4px;'/>")
-			tooltip.insertAdjacentHTML("beforeend", "<image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>")
-			_sleep(10)
-			let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-			if(e.pageX + 10 + tooltip_w > document_w - 40){
-				 tooltip.removeChild(tooltip.lastElementChild)
-				 tooltip.insertAdjacentHTML("beforeend", "<br/><image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>")
-			}
-		}
-	}
-}
+// 	tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<image src=https://steemitimages.com/u/" + author + "/avatar style='margin: 4px;'/>"
+// 	let imageList = JSON.parse(o.json_metadata).image
+// 	if(imageList){
+// 		let document_w = document.documentElement.clientWidth
+// 		for (let index = 0; index < imageList.length; index++) {
+// 			const imageUrl = imageList[index];
+// 			if(!imageUrl || imageUrl=='') continue;
+// 			//tooltip.insertAdjacentHTML("beforeend", "<image src=https://steemitimages.com/0x128/" + imageUrl + " style='margin: 4px;'/>")
+// 			tooltip.insertAdjacentHTML("beforeend", "<image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>")
+// 			_sleep(10)
+// 			let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+// 			if(e.pageX + 10 + tooltip_w > document_w - 40){
+// 				 tooltip.removeChild(tooltip.lastElementChild)
+// 				 tooltip.insertAdjacentHTML("beforeend", "<br/><image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>")
+// 			}
+// 		}
+// 	}
+// }
+
 // window.showTooltip_post = async (e) => {
 //     let tooltip = document.getElementById("tooltip");
 //     let author = e.target.getAttribute('data-author');
@@ -1796,7 +1797,7 @@ window.hideTooltip_post = async (e) => {
 	var tooltip = document.getElementById("tooltip")
 	tooltip.style.display = "none"
 }
-//}
+}
 
 /* --------------------------------------------------------------------- */
 
