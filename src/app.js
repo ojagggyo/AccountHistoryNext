@@ -1632,12 +1632,15 @@ window.showTooltip_post = (e) => {
         let imageList = JSON.parse(o.json_metadata).image;
         if (imageList) {
             let document_w = document.documentElement.clientWidth;
+            let uniqueImages = new Set(); // Setを使ってユニークな画像を保持
             let promises = [];
 
             // 画像の非同期ロードをPromiseで処理
             for (let index = 0; index < imageList.length; index++) {
                 const imageUrl = imageList[index];
-                if (!imageUrl || imageUrl === '') continue;
+                if (!imageUrl || imageUrl === '' || uniqueImages.has(imageUrl)) continue; // 重複画像をスキップ
+
+                uniqueImages.add(imageUrl); // 画像URLをSetに追加して、重複を防止
 
                 let imageLoadPromise = new Promise((resolve) => {
                     let img = new Image();
