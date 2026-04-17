@@ -1611,13 +1611,17 @@ window.hideTooltip = async (e) => {
 /* --------------------------------------------------------------------- */
 
 if (typeof window !== 'undefined') {
-window.showTooltip_post = (e) => {
+window.showTooltip_post = async (e) => {
     let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
     tooltip.style.top = e.pageY + 10 + 'px';
     tooltip.style.left = e.pageX + 10 + 'px';
     tooltip.style.display = "block";
+
+
+console.log("imageList.length",imageList.length);
+
 
     // 非同期のget_contentコールバック
     steem.api.callAsync('condenser_api.get_content', [author, permlink], (err, o) => {
