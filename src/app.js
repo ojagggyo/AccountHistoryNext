@@ -1635,6 +1635,9 @@ window.showTooltip_post = (e) => {
             let promises = [];
 
             // 画像の非同期ロードをPromiseで処理
+
+console.log("imageList.length",imageList.length);
+
             for (let index = 0; index < imageList.length; index++) {
                 const imageUrl = imageList[index];
                 if (!imageUrl || imageUrl === '' || uniqueImages.has(imageUrl)) continue; // 重複画像をスキップ
