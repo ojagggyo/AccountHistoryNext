@@ -34,8 +34,9 @@ router.get('/upbit', async (ctx) => {
 
   try {
     const data = await getPrice(pattern);  // Upbitから価格を取得
-    ctx.contentType = 'application/javascript';  // JSONPのContent-Type
-    ctx.body = `${callback}(${JSON.stringify(data)})`;  // JSONP形式で返す
+    //ctx.contentType = 'application/javascript';  // JSONPのContent-Type
+    ctx.type = 'application/javascript';
+    ctx.body = `${callback}(${JSON.stringify(data)});`;  // JSONP形式で返す
   } catch (error) {
     ctx.status = 500;
     ctx.body = `Upbit APIエラー: ${error.message}`;
@@ -54,8 +55,10 @@ router.get('/huobi', async (ctx) => {
 
   try {
     const data = await getPriceHuobi(pattern);
-    ctx.contentType = 'application/javascript';  // JSONPのContent-Type
-    ctx.body = `${callback}(${JSON.stringify(data)})`;  // JSONP形式で返す
+    //ctx.contentType = 'application/javascript';  // JSONPのContent-Type
+    ctx.type = 'application/javascript';
+    ctx.body = `${callback}(${JSON.stringify(data)});`;  // JSONP形式で返す
+   
   } catch (error) {
     ctx.status = 500;
     ctx.body = `Huobi APIエラー: ${error.message}`;
@@ -74,8 +77,9 @@ router.get('/bitpoint', async (ctx) => {
 
   try {
     const data = await getPriceBitpoint(pattern);
-    ctx.contentType = 'application/javascript';  // JSONPのContent-Type
-    ctx.body = `${callback}(${JSON.stringify(data)})`;  // JSONP形式で返す
+    //ctx.contentType = 'application/javascript';  // JSONPのContent-Type
+    ctx.type = 'application/javascript';
+    ctx.body = `${callback}(${JSON.stringify(data)});`;  // JSONP形式で返す
   } catch (error) {
     ctx.status = 500;
     ctx.body = `Huobi APIエラー: ${error.message}`;
