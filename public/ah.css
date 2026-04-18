@@ -253,7 +253,7 @@ input[type=checkbox] {
     max-width: 300px;
     z-index: 1000;
     opacity: 0;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out, visibility 0s linear 0.2s; /* visibilityに遅延を加えて、opacityの後に切り替え */
     pointer-events: none; /* ツールチップは表示中のみインタラクション可能 */
 }
 
@@ -265,4 +265,6 @@ input[type=checkbox] {
 
 #tooltip.hide {
     opacity: 0;
+    visibility: hidden; /* 非表示状態に変更 */
+    pointer-events: none; /* 非表示時にはインタラクションできない */
 }

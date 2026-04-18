@@ -1650,71 +1650,35 @@ if (typeof window !== 'undefined') {
 
 
 
-let currentTooltipId = 0;
 
-window.showTooltip_post = (e) => {
-    const tooltip = document.getElementById("tooltip");
-    const tooltipId = ++currentTooltipId;
-    
-    // ツールチップが表示されるように
-    tooltip.innerHTML = `<div>ツールチップ表示中...</div>`;
-    tooltip.classList.remove("hide");
-    tooltip.classList.add("show");
-
-    // 初期位置設定 (画面内に表示されるように)
-    tooltip.style.top = `${e.pageY + 10}px`;
-    tooltip.style.left = `${e.pageX + 10}px`;
-    tooltip.style.visibility = 'visible';
-
-    console.log(`ツールチップID: ${tooltipId}`);
-
-    // 2秒後にツールチップを非表示にする処理
-    setTimeout(() => {
-        tooltip.classList.remove("show");
-        tooltip.classList.add("hide");
-    }, 2000); // 2秒後に非表示
-};
-
-// ツールチップ非表示
-let hideTooltipTimeout;
-window.hideTooltip_post = () => {
-    clearTimeout(hideTooltipTimeout);
-    hideTooltipTimeout = setTimeout(() => {
-        const tooltip = document.getElementById("tooltip");
-        tooltip.classList.remove("show");
-        tooltip.classList.add("hide");
-    }, 2000); // ツールチップが表示されている間に待機
-};
-
-
-// window.showTooltip_post = async (e) => {
-// 	let tooltip = document.getElementById("tooltip");
-// 	let author = e.target.getAttribute('data-author');
-// 	let permlink = e.target.getAttribute('data-permlink');
-// 	tooltip.style.top = e.pageY + 10 + 'px';
-// 	tooltip.style.left = e.pageX + 10 + 'px';
-// 	tooltip.style.display = "block";
-// 	//let o = await callAsync('condenser_api','get_content',[author, permlink] )
-// 	let o = await steem.api.callAsync('condenser_api.get_content',[author, permlink] )
+window.showTooltip_post = async (e) => {
+	let tooltip = document.getElementById("tooltip");
+	let author = e.target.getAttribute('data-author');
+	let permlink = e.target.getAttribute('data-permlink');
+	tooltip.style.top = e.pageY + 10 + 'px';
+	tooltip.style.left = e.pageX + 10 + 'px';
+	tooltip.style.display = "block";
+	//let o = await callAsync('condenser_api','get_content',[author, permlink] )
+	let o = await steem.api.callAsync('condenser_api.get_content',[author, permlink] )
 	
-// 	tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<image src=https://steemitimages.com/u/" + author + "/avatar style='margin: 4px;'/>"
-// 	let imageList = JSON.parse(o.json_metadata).image
-// 	if(imageList){
-// 		let document_w = document.documentElement.clientWidth
-// 		for (let index = 0; index < imageList.length; index++) {
-// 			const imageUrl = imageList[index];
-// 			if(!imageUrl || imageUrl=='') continue;
-// 			//tooltip.insertAdjacentHTML("beforeend", "<image src=https://steemitimages.com/0x128/" + imageUrl + " style='margin: 4px;'/>")
-// 			tooltip.insertAdjacentHTML("beforeend", "<image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>")
-// 			_sleep(10)
-// 			let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-// 			if(e.pageX + 10 + tooltip_w > document_w - 40){
-// 				 tooltip.removeChild(tooltip.lastElementChild)
-// 				 tooltip.insertAdjacentHTML("beforeend", "<br/><image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>")
-// 			}
-// 		}
-// 	}
-// }
+	tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<image src=https://steemitimages.com/u/" + author + "/avatar style='margin: 4px;'/>"
+	let imageList = JSON.parse(o.json_metadata).image
+	if(imageList){
+		let document_w = document.documentElement.clientWidth
+		for (let index = 0; index < imageList.length; index++) {
+			const imageUrl = imageList[index];
+			if(!imageUrl || imageUrl=='') continue;
+			//tooltip.insertAdjacentHTML("beforeend", "<image src=https://steemitimages.com/0x128/" + imageUrl + " style='margin: 4px;'/>")
+			tooltip.insertAdjacentHTML("beforeend", "<image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>")
+			_sleep(10)
+			let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+			if(e.pageX + 10 + tooltip_w > document_w - 40){
+				 tooltip.removeChild(tooltip.lastElementChild)
+				 tooltip.insertAdjacentHTML("beforeend", "<br/><image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>")
+			}
+		}
+	}
+}
 
 }
 
