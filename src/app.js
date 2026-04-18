@@ -1696,10 +1696,6 @@ function createTooltip(e, result, author) {
     let tooltipWidth = tooltip.offsetWidth;
     let tooltipHeight = tooltip.offsetHeight;
 
-	console.log(`${tooltip_w} ${tooltip_h}`);
-	console.log(`${document_w} ${document_h}`);
-	console.log(`${tooltipWidth} ${tooltipHeight}`);
-
     let tooltipX = e.pageX + 10;
     let tooltipY = e.pageY + 10;
 	
@@ -1735,6 +1731,11 @@ function createTooltip(e, result, author) {
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
 	tooltip.style.width = tooltipWidth + 'px';
+
+	console.log(`${tooltip_w} ${tooltip_h}`);
+	console.log(`${document_w} ${document_h}`);
+	console.log(`${tooltipWidth} ${tooltipHeight}`);
+
 }
 
 window.hideTooltip_post = async (e) => {
