@@ -242,3 +242,26 @@ input[type=checkbox] {
   /*-webkit-backdrop-filter: blur(8px);    /* Safari対応 */
   }
 
+/* --------------------------------------------------- */
+#tooltip {
+    position: absolute;
+    display: none;
+    padding: 8px;
+    background-color: rgba(0,0,0,0.85);
+    color: white;
+    border-radius: 4px;
+    max-width: 300px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    pointer-events: none; /* ツールチップ自体はマウスイベントを受けない */
+}
+
+#tooltip.show {
+    display: block;
+    opacity: 1;
+}
+
+#tooltip.hide {
+    opacity: 0;
+}
