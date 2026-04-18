@@ -1690,12 +1690,13 @@ function createTooltip(e, result, author) {
 
     // ツールチップの位置を調整（画面からはみ出さないように）
 	let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+	let tooltip_h = parseInt(window.getComputedStyle(tooltip).height);
     let document_w = document.documentElement.clientWidth;
     let document_h = document.documentElement.clientHeight;
     let tooltipWidth = tooltip.offsetWidth;
     let tooltipHeight = tooltip.offsetHeight;
 
-	console.log(tooltip_w);
+	console.log(`${tooltip_w} ${tooltip_h}`);
 	console.log(`${document_w} ${document_h}`);
 	console.log(`${tooltipWidth} ${tooltipHeight}`);
 
