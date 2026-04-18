@@ -1648,74 +1648,66 @@ window.hideTooltip = async (e) => {
 
 if (typeof window !== 'undefined') {
 
-
-	let _showTooltip_id = 0;
-
 window.showTooltip_post = async (e) => {
-
-	let tooltip = document.getElementById("tooltip");
+    let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
 
-	tooltip.innerHTML = "Loding..."
-	tooltip.style.top = e.pageX + 10;
-	tooltip.style.left = e.pageY + 10;
-	tooltip.style.display = "block";
+    // ツールチップにローディングメッセージを表示
+    tooltip.innerHTML = "Loading...";
+    tooltip.style.top = e.pageY + 10 + 'px';  // 位置にpx単位を追加
+    tooltip.style.left = e.pageX + 10 + 'px';  // 位置にpx単位を追加
+    tooltip.style.display = "block";
 
     // APIを呼び出し、投稿のメタデータを取得
-	steem.api.callAsync('condenser_api.get_content', [author, permlink])
-	.then(result => {
-		createTooltip(e,result,author);
-	})
-	.catch(error => {
+    steem.api.callAsync('condenser_api.get_content', [author, permlink])
+    .then(result => {
+        createTooltip(e, result, author);  // 結果を使ってツールチップを作成
+    })
+    .catch(error => {
         console.error("Error:", error);
     });
 }
 
-function createTooltip(e,o){
-	let _showTooltip_id_current = ++_showTooltip_id;
-	if(_showTooltip_id_current != _showTooltip_id) return;
+function createTooltip(e, result, author) {
+    let tooltip = document.getElementById("tooltip");
 
-	// ツールチップの表示位置を設定
-	let tooltipWidth = 300;  // 仮に幅を300pxとして設定（後で動的に変更可能）
-	let tooltipHeight = 200; // 高さを仮に200pxとして設定（後で動的に変更可能）
+    // 投稿のタイトルやメタデータをツールチップに追加
+    tooltip.innerHTML = "<b>" + result.title + "</b><br/>" + 
+                        "<img src='https://steemitimages.com/u/" + author + "/avatar' style='margin: 4px;'/>";
 
-	// ウィンドウのサイズを取得
-	let document_w = document.documentElement.clientWidth;
-	let document_h = document.documentElement.clientHeight;
+    // 投稿の画像がある場合、画像を表示
+    let imageList = JSON.parse(result.json_metadata).image;
+    if (imageList) {
+        imageList.forEach(imageUrl => {
+            if (imageUrl && imageUrl !== '') {
+                tooltip.insertAdjacentHTML("beforeend", "<img src='" + imageUrl + "' style='margin: 4px; width: 128px;'/>");
+            }
+        });
+    }
 
-	// ツールチップが画面からはみ出ないように位置を調整
-	let tooltipX = e.pageX + 10;
-	let tooltipY = e.pageY + 10;
+    // ツールチップの位置を調整（画面からはみ出さないように）
+    let document_w = document.documentElement.clientWidth;
+    let document_h = document.documentElement.clientHeight;
+    let tooltipWidth = tooltip.offsetWidth;
+    let tooltipHeight = tooltip.offsetHeight;
 
-	// ツールチップが画面右端を越さないように調整
-	if (tooltipX + tooltipWidth > document_w) {
-		tooltipX = e.pageX - tooltipWidth - 10;  // 画面左側にツールチップを表示
-	}
+    let tooltipX = e.pageX + 10;
+    let tooltipY = e.pageY + 10;
 
-	// ツールチップが画面下端を越さないように調整
-	if (tooltipY + tooltipHeight > document_h) {
-		tooltipY = e.pageY - tooltipHeight - 10;  // 画面上側にツールチップを表示
-	}
+    // ツールチップが画面右端を越さないように調整
+    if (tooltipX + tooltipWidth > document_w) {
+        tooltipX = e.pageX - tooltipWidth - 10;  // 画面左側にツールチップを表示
+    }
 
-	// ツールチップの位置を設定
-	tooltip.style.top = tooltipY + 'px';
-	tooltip.style.left = tooltipX + 'px';
-	tooltip.style.display = "block";
+    // ツールチップが画面下端を越さないように調整
+    if (tooltipY + tooltipHeight > document_h) {
+        tooltipY = e.pageY - tooltipHeight - 10;  // 画面上側にツールチップを表示
+    }
 
-	// ツールチップにタイトルと画像を追加
-	tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<image src=https://steemitimages.com/u/" + author + "/avatar style='margin: 4px;'/>";
-
-	let imageList = JSON.parse(o.json_metadata).image;
-	if (imageList) {
-		for (let index = 0; index < imageList.length; index++) {
-			if(_showTooltip_id_current != _showTooltip_id) return;
-			const imageUrl = imageList[index];
-			if (!imageUrl || imageUrl == '') continue;
-			tooltip.insertAdjacentHTML("beforeend", "<image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>");
-			_sleep(10); // 少し待機
-		}
-	}
+    // ツールチップの位置を更新
+    tooltip.style.top = tooltipY + 'px';
+    tooltip.style.left = tooltipX + 'px';
 }
 
 window.hideTooltip_post = async (e) => {
