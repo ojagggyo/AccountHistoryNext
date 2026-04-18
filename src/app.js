@@ -1648,26 +1648,30 @@ window.hideTooltip = async (e) => {
 
 if (typeof window !== 'undefined') {
 
-let tooltipCancelFlag = false;
+
+let currentTooltipId = 0; // 最新ツールチップの識別ID
+
 window.showTooltip_post = (e) => {
     const tooltip = document.getElementById("tooltip");
     const author = e.target.getAttribute('data-author');
     const permlink = e.target.getAttribute('data-permlink');
 
-    // キャンセルフラグリセット
-    tooltipCancelFlag = false;
+    // 新しいツールチップIDを発行
+    const tooltipId = ++currentTooltipId;
 
     // ツールチップ位置表示
     tooltip.style.top = `${e.pageY + 10}px`;
     tooltip.style.left = `${e.pageX + 10}px`;
     tooltip.style.display = "block";
-    tooltip.innerHTML = "";
+    tooltip.innerHTML = ""; // 初期化
 
-    console.log(`*** showTooltip_post author=${author} permlink=${permlink} ***`);
+    console.log(`*** showTooltip_post author=${author} permlink=${permlink} id=${tooltipId} ***`);
 
+    // 投稿内容を非同期取得
     steem.api.callAsync('condenser_api.get_content', [author, permlink])
         .then(o => {
-            if (tooltipCancelFlag) return; // マウスアウトでキャンセルされたら中止
+            // 最新ツールチップか確認。古い場合は中止
+            if (tooltipId !== currentTooltipId) return;
 
             console.log("*** callAsync after ***");
 
@@ -1686,9 +1690,6 @@ window.showTooltip_post = (e) => {
                 console.warn("JSON parse error:", jsonErr);
             }
 
-            console.log("o.json_metadata", o.json_metadata);
-            console.log("imageList", imageList);
-
             if (imageList.length > 0) {
                 const document_w = document.documentElement.clientWidth;
                 const uniqueImages = new Set();
@@ -1703,7 +1704,8 @@ window.showTooltip_post = (e) => {
                     img.style.width = '128px';
 
                     img.onload = () => {
-                        if (tooltipCancelFlag) return; // キャンセルされていたら追加しない
+                        // 最新ツールチップか確認
+                        if (tooltipId !== currentTooltipId) return;
 
                         tooltip.appendChild(img);
                         const tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
@@ -1720,21 +1722,20 @@ window.showTooltip_post = (e) => {
         .catch(err => console.error("Error fetching content:", err));
 };
 
-window.hideTooltip_post = (e) => {
+window.hideTooltip_post = () => {
     console.log("*** hideTooltip_post ***");
-    tooltipCancelFlag = true; // ここで画像追加などをキャンセル
+    currentTooltipId++; // 古いツールチップを無効化
     resetTooltip();
 };
 
 function resetTooltip() {
-    let tooltip = document.getElementById("tooltip");
+    const tooltip = document.getElementById("tooltip");
     if (!tooltip) return;
     tooltip.innerHTML = "";
     tooltip.style.position = "absolute";
     tooltip.style.display = "none";
     tooltip.className = "";
 }
-
 
 
 // window.showTooltip_post = async (e) => {
