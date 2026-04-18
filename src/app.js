@@ -1659,11 +1659,13 @@ console.log(`*** imageshowTooltip_post author=${author} permlink=${permlink} ***
             return;
         }
 
+console.log(`*** callAsync after ***`);
+
         tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<img src='https://steemitimages.com/u/" + author + "/avatar' style='margin: 4px;'/>";
 
         let imageList = JSON.parse(o.json_metadata).image;
 
-console.log(`*** imageshowTooltip_post imageList=${imageList} ***`);
+
 
         if (imageList) {
             let document_w = document.documentElement.clientWidth;
@@ -1797,7 +1799,7 @@ console.log("imageList.length",imageList.length);
 // };
 
 window.hideTooltip_post = async (e) => {
-	console.log("*** hideTooltip_post ***");
+	console.log("*** hide ***");
 
 	var tooltip = document.getElementById("tooltip")
 	tooltip.style.display = "none"
