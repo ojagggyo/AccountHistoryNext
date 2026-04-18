@@ -1649,31 +1649,31 @@ window.hideTooltip = async (e) => {
 if (typeof window !== 'undefined') {
 
 	
-
 let currentTooltipId = 0;
 
-// ツールチップ表示の関数
 window.showTooltip_post = (e) => {
     const tooltip = document.getElementById("tooltip");
     const author = e.target.getAttribute('data-author');
     const permlink = e.target.getAttribute('data-permlink');
     const tooltipId = ++currentTooltipId;
-    
+
     tooltip.innerHTML = `<div class="loading">⏳ Loading...</div>`;
     tooltip.classList.remove("hide");
     tooltip.classList.add("show");
 
-    // 一旦仮位置
+    // 初期位置の設定
     tooltip.style.top = '0px';
     tooltip.style.left = '0px';
     tooltip.style.visibility = 'visible';
-    
+
     console.log(`*** showTooltip_post author=${author} permlink=${permlink} id=${tooltipId} ***`);
 
+    // 非同期API呼び出し
     steem.api.callAsync('condenser_api.get_content', [author, permlink])
         .then(o => {
-            if (tooltipId !== currentTooltipId) return;
+            if (tooltipId !== currentTooltipId) return; // 最新のツールチップIDのみを表示
 
+            // ツールチップ内容を更新
             tooltip.innerHTML = `<b>${o.title}</b><br/> <img src='https://steemitimages.com/u/${author}/avatar' style='margin: 4px;'/>`;
             
             let imageList = [];
@@ -1686,12 +1686,13 @@ window.showTooltip_post = (e) => {
                 console.warn("JSON parse error:", err);
             }
 
+            // 画像の追加処理
             if (imageList.length > 0) {
                 const uniqueImages = new Set();
                 imageList.forEach(url => {
                     if (!url || uniqueImages.has(url)) return;
                     uniqueImages.add(url);
-                    
+
                     const img = new Image();
                     img.src = url;
                     img.style.margin = '4px';
@@ -1707,15 +1708,6 @@ window.showTooltip_post = (e) => {
                         }
                         tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
                         tooltip.appendChild(img);
-
-                        const tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-                        const docW = document.documentElement.clientWidth;
-
-                        if (e.pageX + 10 + tooltip_w > docW - 40) {
-                            tooltip.removeChild(img);
-                            tooltip.appendChild(document.createElement('br'));
-                            tooltip.appendChild(img);
-                        }
                     };
 
                     img.onerror = () => {
@@ -1724,7 +1716,7 @@ window.showTooltip_post = (e) => {
                 });
             }
 
-            // ツールチップ位置の調整
+            // ツールチップの位置調整
             const tooltipRect = tooltip.getBoundingClientRect();
             const docW = document.documentElement.clientWidth;
             const docH = document.documentElement.clientHeight;
@@ -1732,7 +1724,6 @@ window.showTooltip_post = (e) => {
             let top = e.pageY + 10;
             let left = e.pageX + 10;
 
-            // 画面端に出ないように位置調整
             if (left + tooltipRect.width > docW - 10) {
                 left = docW - tooltipRect.width - 10;
             }
@@ -1743,10 +1734,12 @@ window.showTooltip_post = (e) => {
             tooltip.style.top = `${top}px`;
             tooltip.style.left = `${left}px`;
         })
-        .catch(err => console.error("データ取得エラー:", err));
+        .catch(err => {
+            console.error("データ取得エラー:", err);
+        });
 };
 
-// ツールチップ非表示の関数
+// ツールチップ非表示
 let hideTooltipTimeout;
 window.hideTooltip_post = () => {
     clearTimeout(hideTooltipTimeout);
@@ -1759,7 +1752,7 @@ window.hideTooltip_post = () => {
     }, 300); // ツールチップが表示されるまで待機
 };
 
-// ツールチップのリセット
+// ツールチップリセット
 function resetTooltip() {
     const tooltip = document.getElementById("tooltip");
     if (!tooltip) return;
@@ -1768,8 +1761,6 @@ function resetTooltip() {
     tooltip.style.visibility = "hidden";
     tooltip.classList.remove("hide", "show");
 }
-
-
 
 // window.showTooltip_post = async (e) => {
 // 	let tooltip = document.getElementById("tooltip");
