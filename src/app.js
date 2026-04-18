@@ -1717,13 +1717,13 @@ function createTooltip(e, result, author) {
 		return;
 	}
 
-    let colCount = Math.floor((document_w - 40) / (128+4));
+    let colCount = Math.floor((document_w - 40) / (128+8));
 		
 	console.log(`imageList.length=${imageList.length}`);
 	console.log(`colCount=${colCount}`);
 
     if (colCount < imageList.length + 1 ) {
-		tooltipWidth = colCount * (128+4);
+		tooltipWidth = colCount * (128+8);
 		tooltipX = 20;
      }
 
