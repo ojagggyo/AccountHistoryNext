@@ -1704,15 +1704,26 @@ window.showTooltip_post = (e) => {
                     placeholder.textContent = "⏳";
                     tooltip.appendChild(placeholder);
 
-                    img.onload = () => {
-                        if (tooltipId !== currentTooltipId) {
-                            tooltip.removeChild(placeholder);
-                            return;
-                        }
-                        tooltip.removeChild(placeholder);
-                        tooltip.appendChild(img);
-                    };
-                    img.onerror = () => tooltip.removeChild(placeholder);
+img.onload = () => {
+    if (tooltipId !== currentTooltipId) {
+        tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
+        return;
+    }
+
+    tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
+    tooltip.appendChild(img);
+
+    const tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+    if (e.pageX + 10 + tooltip_w > document.documentElement.clientWidth - 40) {
+        tooltip.removeChild(img);
+        tooltip.appendChild(document.createElement('br'));
+        tooltip.appendChild(img);
+    }
+};
+
+img.onerror = () => {
+    tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
+};
                 });
             }
 
