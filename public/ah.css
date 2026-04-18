@@ -243,7 +243,8 @@ input[type=checkbox] {
   }
 
 /* --------------------------------------------------- */
-#tooltip {
+
+#xxxtooltip {
     position: absolute;
     visibility: hidden; /* 初期状態では非表示 */
     padding: 8px;
@@ -257,13 +258,13 @@ input[type=checkbox] {
     pointer-events: none; /* ツールチップは表示中のみインタラクション可能 */
 }
 
-#tooltip.show {
+#xxxtooltip.show {
     visibility: visible;
     opacity: 1;
     pointer-events: auto; /* ツールチップが表示されているときにインタラクション可能 */
 }
 
-#tooltip.hide {
+#xxxtooltip.hide {
     opacity: 0;
     visibility: hidden; /* 非表示状態に変更 */
     pointer-events: none; /* 非表示時にはインタラクションできない */
