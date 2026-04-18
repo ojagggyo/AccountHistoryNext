@@ -1649,7 +1649,8 @@ window.hideTooltip = async (e) => {
 if (typeof window !== 'undefined') {
 
 
-	let currentTooltipId = 0;
+
+let currentTooltipId = 0;
 
 window.showTooltip_post = (e) => {
     const tooltip = document.getElementById("tooltip");
@@ -1667,13 +1668,14 @@ window.showTooltip_post = (e) => {
 
     console.log(`ツールチップID: ${tooltipId}`);
 
-    // 1秒後にツールチップを非表示にする処理
+    // 2秒後にツールチップを非表示にする処理
     setTimeout(() => {
         tooltip.classList.remove("show");
         tooltip.classList.add("hide");
-    }, 1000); // 1000ms後に非表示
+    }, 2000); // 2秒後に非表示
 };
 
+// ツールチップ非表示
 let hideTooltipTimeout;
 window.hideTooltip_post = () => {
     clearTimeout(hideTooltipTimeout);
@@ -1681,9 +1683,8 @@ window.hideTooltip_post = () => {
         const tooltip = document.getElementById("tooltip");
         tooltip.classList.remove("show");
         tooltip.classList.add("hide");
-    }, 300);
+    }, 2000); // ツールチップが表示されている間に待機
 };
-
 
 
 // window.showTooltip_post = async (e) => {
