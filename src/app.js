@@ -1655,11 +1655,13 @@ window.showTooltip_post = async (e) => {
 	let tooltip = document.getElementById("tooltip");
 	let author = e.target.getAttribute('data-author');
 	let permlink = e.target.getAttribute('data-permlink');
+
+	//let o = await callAsync('condenser_api','get_content',[author, permlink] )
+	let o = await steem.api.callAsync('condenser_api.get_content',[author, permlink] )
+	
 	tooltip.style.top = e.pageY + 10 + 'px';
 	tooltip.style.left = e.pageX + 10 + 'px';
 	tooltip.style.display = "block";
-	//let o = await callAsync('condenser_api','get_content',[author, permlink] )
-	let o = await steem.api.callAsync('condenser_api.get_content',[author, permlink] )
 	
 	tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<image src=https://steemitimages.com/u/" + author + "/avatar style='margin: 4px;'/>"
 	let imageList = JSON.parse(o.json_metadata).image
@@ -1682,6 +1684,7 @@ window.showTooltip_post = async (e) => {
 window.hideTooltip_post = async (e) => {
 	var tooltip = document.getElementById("tooltip")
 	tooltip.style.display = "none"
+	tooltip.innerHTML = "";
 }
 
 }
