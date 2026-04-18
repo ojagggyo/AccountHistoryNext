@@ -1653,12 +1653,6 @@ window.showTooltip_post = async (e) => {
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
 
-    // ツールチップにローディングメッセージを表示
-    tooltip.innerHTML = "Loading...";
-    tooltip.style.top = e.pageY + 10 + 'px';  // 位置にpx単位を追加
-    tooltip.style.left = e.pageX + 10 + 'px';  // 位置にpx単位を追加
-    tooltip.style.display = "block";
-
     // APIを呼び出し、投稿のメタデータを取得
     steem.api.callAsync('condenser_api.get_content', [author, permlink])
     .then(result => {
@@ -1667,6 +1661,12 @@ window.showTooltip_post = async (e) => {
     .catch(error => {
         console.error("Error:", error);
     });
+
+	// ツールチップにローディングメッセージを表示
+    tooltip.innerHTML = "Loading...";
+    tooltip.style.top = e.pageY + 10 + 'px';  // 位置にpx単位を追加
+    tooltip.style.left = e.pageX + 10 + 'px';  // 位置にpx単位を追加
+    tooltip.style.display = "block";
 }
 
 function createTooltip(e, result, author) {
