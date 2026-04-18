@@ -1703,8 +1703,6 @@ function createTooltip(e, result, author) {
     let tooltipX = e.pageX + 10;
     let tooltipY = e.pageY + 10;
 	
-	//if(e.pageX + 10 + tooltip_w > document_w - 40){
-
     // // ツールチップが画面右端を越さないように調整
     // if (tooltipX + tooltipWidth > document_w) {
     //     tooltipX = e.pageX - tooltipWidth - 10;  // 画面左側にツールチップを表示
@@ -1725,7 +1723,6 @@ function createTooltip(e, result, author) {
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
-	tooltip.style.width = tooltipWidth + 'px';
 }
 
 window.hideTooltip_post = async (e) => {
