@@ -1711,7 +1711,6 @@ function createTooltip(e, result, author) {
 }
 
 window.hideTooltip_post = async (e) => {
-	++_showTooltip_id;
     var tooltip = document.getElementById("tooltip");
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
