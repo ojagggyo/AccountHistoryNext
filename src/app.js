@@ -1648,16 +1648,17 @@ window.hideTooltip = async (e) => {
 
 if (typeof window !== 'undefined') {
 
+	
 
 let currentTooltipId = 0;
 
+// ツールチップ表示の関数
 window.showTooltip_post = (e) => {
     const tooltip = document.getElementById("tooltip");
     const author = e.target.getAttribute('data-author');
     const permlink = e.target.getAttribute('data-permlink');
-
     const tooltipId = ++currentTooltipId;
-
+    
     tooltip.innerHTML = `<div class="loading">⏳ Loading...</div>`;
     tooltip.classList.remove("hide");
     tooltip.classList.add("show");
@@ -1665,19 +1666,16 @@ window.showTooltip_post = (e) => {
     // 一旦仮位置
     tooltip.style.top = '0px';
     tooltip.style.left = '0px';
-    tooltip.style.display = 'block';
-
+    tooltip.style.visibility = 'visible';
+    
     console.log(`*** showTooltip_post author=${author} permlink=${permlink} id=${tooltipId} ***`);
 
     steem.api.callAsync('condenser_api.get_content', [author, permlink])
         .then(o => {
             if (tooltipId !== currentTooltipId) return;
 
-            tooltip.innerHTML = `
-                <b>${o.title}</b><br/>
-                <img src='https://steemitimages.com/u/${author}/avatar' style='margin: 4px;'/>
-            `;
-
+            tooltip.innerHTML = `<b>${o.title}</b><br/> <img src='https://steemitimages.com/u/${author}/avatar' style='margin: 4px;'/>`;
+            
             let imageList = [];
             try {
                 const jsonMeta = JSON.parse(o.json_metadata);
@@ -1690,44 +1688,43 @@ window.showTooltip_post = (e) => {
 
             if (imageList.length > 0) {
                 const uniqueImages = new Set();
-
                 imageList.forEach(url => {
                     if (!url || uniqueImages.has(url)) return;
                     uniqueImages.add(url);
-
+                    
                     const img = new Image();
                     img.src = url;
                     img.style.margin = '4px';
                     img.style.width = '128px';
-
                     const placeholder = document.createElement('span');
                     placeholder.textContent = "⏳";
                     tooltip.appendChild(placeholder);
 
-img.onload = () => {
-    if (tooltipId !== currentTooltipId) {
-        tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
-        return;
-    }
+                    img.onload = () => {
+                        if (tooltipId !== currentTooltipId) {
+                            tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
+                            return;
+                        }
+                        tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
+                        tooltip.appendChild(img);
 
-    tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
-    tooltip.appendChild(img);
+                        const tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+                        const docW = document.documentElement.clientWidth;
 
-    const tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-    if (e.pageX + 10 + tooltip_w > document.documentElement.clientWidth - 40) {
-        tooltip.removeChild(img);
-        tooltip.appendChild(document.createElement('br'));
-        tooltip.appendChild(img);
-    }
-};
+                        if (e.pageX + 10 + tooltip_w > docW - 40) {
+                            tooltip.removeChild(img);
+                            tooltip.appendChild(document.createElement('br'));
+                            tooltip.appendChild(img);
+                        }
+                    };
 
-img.onerror = () => {
-    tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
-};
+                    img.onerror = () => {
+                        tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
+                    };
                 });
             }
 
-            // 位置調整：画面端にはみ出さないように
+            // ツールチップ位置の調整
             const tooltipRect = tooltip.getBoundingClientRect();
             const docW = document.documentElement.clientWidth;
             const docH = document.documentElement.clientHeight;
@@ -1735,6 +1732,7 @@ img.onerror = () => {
             let top = e.pageY + 10;
             let left = e.pageX + 10;
 
+            // 画面端に出ないように位置調整
             if (left + tooltipRect.width > docW - 10) {
                 left = docW - tooltipRect.width - 10;
             }
@@ -1745,9 +1743,10 @@ img.onerror = () => {
             tooltip.style.top = `${top}px`;
             tooltip.style.left = `${left}px`;
         })
-        .catch(err => console.error("Error fetching content:", err));
+        .catch(err => console.error("データ取得エラー:", err));
 };
 
+// ツールチップ非表示の関数
 let hideTooltipTimeout;
 window.hideTooltip_post = () => {
     clearTimeout(hideTooltipTimeout);
@@ -1756,15 +1755,17 @@ window.hideTooltip_post = () => {
         const tooltip = document.getElementById("tooltip");
         tooltip.classList.remove("show");
         tooltip.classList.add("hide");
-        setTimeout(() => resetTooltip(), 200);
-    }, 150); // 150ms 待機してから非表示
+        setTimeout(() => resetTooltip(), 300); // 300ms後にリセット
+    }, 300); // ツールチップが表示されるまで待機
 };
 
+// ツールチップのリセット
 function resetTooltip() {
     const tooltip = document.getElementById("tooltip");
     if (!tooltip) return;
+
     tooltip.innerHTML = "";
-    tooltip.style.display = "none";
+    tooltip.style.visibility = "hidden";
     tooltip.classList.remove("hide", "show");
 }
 

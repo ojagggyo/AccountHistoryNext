@@ -243,9 +243,10 @@ input[type=checkbox] {
   }
 
 /* --------------------------------------------------- */
+
 #tooltip {
     position: absolute;
-    display: none;
+    visibility: hidden; /* 初期状態では非表示 */
     padding: 8px;
     background-color: rgba(0,0,0,0.85);
     color: white;
@@ -254,18 +255,15 @@ input[type=checkbox] {
     z-index: 1000;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
-    pointer-events: none; /* ツールチップ自体はマウスイベントを受けない */
+    pointer-events: none; /* ツールチップは表示中のみインタラクション可能 */
 }
 
 #tooltip.show {
-    display: block;
+    visibility: visible; /* 表示時に有効 */
     opacity: 1;
+    pointer-events: auto; /* ツールチップが表示されているときにインタラクション可能 */
 }
 
 #tooltip.hide {
     opacity: 0;
-}
-
-#tooltip {
-    pointer-events: auto; /* これでツールチップ上でもマウスが検知可能 */
 }
