@@ -1649,13 +1649,19 @@ window.hideTooltip = async (e) => {
 if (typeof window !== 'undefined') {
 
 
+	let _showTooltip_id = 0;
+
 window.showTooltip_post = async (e) => {
+	let _showTooltip_id_current = ++_showTooltip_id;
+
     let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
 
     // APIを呼び出し、投稿のメタデータを取得
     let o = await steem.api.callAsync('condenser_api.get_content', [author, permlink]);
+
+	if(_showTooltip_id_current != _showTooltip_id) return;
 
     // ツールチップの表示位置を設定
     let tooltipWidth = 300;  // 仮に幅を300pxとして設定（後で動的に変更可能）
@@ -1690,6 +1696,7 @@ window.showTooltip_post = async (e) => {
     let imageList = JSON.parse(o.json_metadata).image;
     if (imageList) {
         for (let index = 0; index < imageList.length; index++) {
+			if(_showTooltip_id_current != _showTooltip_id) return;
             const imageUrl = imageList[index];
             if (!imageUrl || imageUrl == '') continue;
             tooltip.insertAdjacentHTML("beforeend", "<image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>");
@@ -1699,6 +1706,7 @@ window.showTooltip_post = async (e) => {
 }
 
 window.hideTooltip_post = async (e) => {
+	++_showTooltip_id;
     var tooltip = document.getElementById("tooltip");
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
