@@ -1659,6 +1659,8 @@ window.showTooltip_post = (e) => {
     // 新しいツールチップIDを発行
     const tooltipId = ++currentTooltipId;
 
+console.log(`*** showTooltip_post currentTooltipId=${currentTooltipId} ***`);
+
     // ツールチップ位置表示
     tooltip.style.top = `${e.pageY + 10}px`;
     tooltip.style.left = `${e.pageX + 10}px`;
