@@ -1748,15 +1748,16 @@ img.onerror = () => {
         .catch(err => console.error("Error fetching content:", err));
 };
 
+let hideTooltipTimeout;
 window.hideTooltip_post = () => {
-    console.log("*** hideTooltip_post ***");
-    currentTooltipId++;
-
-    const tooltip = document.getElementById("tooltip");
-    tooltip.classList.remove("show");
-    tooltip.classList.add("hide");
-
-    setTimeout(() => resetTooltip(), 200);
+    clearTimeout(hideTooltipTimeout);
+    hideTooltipTimeout = setTimeout(() => {
+        currentTooltipId++;
+        const tooltip = document.getElementById("tooltip");
+        tooltip.classList.remove("show");
+        tooltip.classList.add("hide");
+        setTimeout(() => resetTooltip(), 200);
+    }, 150); // 150ms 待機してから非表示
 };
 
 function resetTooltip() {

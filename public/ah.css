@@ -265,3 +265,7 @@ input[type=checkbox] {
 #tooltip.hide {
     opacity: 0;
 }
+
+#tooltip {
+    pointer-events: auto; /* これでツールチップ上でもマウスが検知可能 */
+}
