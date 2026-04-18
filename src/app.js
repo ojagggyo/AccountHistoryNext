@@ -1713,16 +1713,24 @@ function createTooltip(e, result, author) {
     //     tooltipY = e.pageY - tooltipHeight - 10;  // 画面上側にツールチップを表示
     // }
 
-	let tooltipW
+	
     // ツールチップが画面右端を越さないように調整
-    if (tooltipX + tooltipWidth > document_w - 40) {
-         tooltipX = 40;  // 画面左側にツールチップを表示
-     }
+	if(imageList.length == 0){
+		tooltip.style.top = tooltipY + 'px';
+    	tooltip.style.left = tooltipX + 'px';
+		return;
+	}
 
+    let colCount = Math.floor((document_w - 40) / 128);
+    if (colCount >  imageList.length ) {
+		tooltipWidth = colCount * 128;
+		tooltipX = 20;
+     }
 
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
+	tooltip.style.width = tooltipWidth;
 }
 
 window.hideTooltip_post = async (e) => {
