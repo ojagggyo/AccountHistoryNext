@@ -243,12 +243,11 @@ input[type=checkbox] {
   }
 
 /* --------------------------------------------------- */
-
 #tooltip {
     position: absolute;
     visibility: hidden; /* 初期状態では非表示 */
     padding: 8px;
-    background-color: rgba(0,0,0,0.85);
+    background-color: rgba(0, 0, 0, 0.85);
     color: white;
     border-radius: 4px;
     max-width: 300px;
@@ -259,7 +258,7 @@ input[type=checkbox] {
 }
 
 #tooltip.show {
-    visibility: visible; /* 表示時に有効 */
+    visibility: visible;
     opacity: 1;
     pointer-events: auto; /* ツールチップが表示されているときにインタラクション可能 */
 }

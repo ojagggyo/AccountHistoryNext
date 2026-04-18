@@ -1648,119 +1648,43 @@ window.hideTooltip = async (e) => {
 
 if (typeof window !== 'undefined') {
 
-	
-let currentTooltipId = 0;
+
+	let currentTooltipId = 0;
 
 window.showTooltip_post = (e) => {
     const tooltip = document.getElementById("tooltip");
-    const author = e.target.getAttribute('data-author');
-    const permlink = e.target.getAttribute('data-permlink');
     const tooltipId = ++currentTooltipId;
-
-    tooltip.innerHTML = `<div class="loading">⏳ Loading...</div>`;
+    
+    // ツールチップが表示されるように
+    tooltip.innerHTML = `<div>ツールチップ表示中...</div>`;
     tooltip.classList.remove("hide");
     tooltip.classList.add("show");
 
-    // 初期位置の設定
-    tooltip.style.top = '0px';
-    tooltip.style.left = '0px';
+    // 初期位置設定 (画面内に表示されるように)
+    tooltip.style.top = `${e.pageY + 10}px`;
+    tooltip.style.left = `${e.pageX + 10}px`;
     tooltip.style.visibility = 'visible';
 
-    console.log(`*** showTooltip_post author=${author} permlink=${permlink} id=${tooltipId} ***`);
+    console.log(`ツールチップID: ${tooltipId}`);
 
-    // 非同期API呼び出し
-    steem.api.callAsync('condenser_api.get_content', [author, permlink])
-        .then(o => {
-            if (tooltipId !== currentTooltipId) return; // 最新のツールチップIDのみを表示
-
-            // ツールチップ内容を更新
-            tooltip.innerHTML = `<b>${o.title}</b><br/> <img src='https://steemitimages.com/u/${author}/avatar' style='margin: 4px;'/>`;
-            
-            let imageList = [];
-            try {
-                const jsonMeta = JSON.parse(o.json_metadata);
-                if (jsonMeta?.image && Array.isArray(jsonMeta.image)) {
-                    imageList = jsonMeta.image;
-                }
-            } catch (err) {
-                console.warn("JSON parse error:", err);
-            }
-
-            // 画像の追加処理
-            if (imageList.length > 0) {
-                const uniqueImages = new Set();
-                imageList.forEach(url => {
-                    if (!url || uniqueImages.has(url)) return;
-                    uniqueImages.add(url);
-
-                    const img = new Image();
-                    img.src = url;
-                    img.style.margin = '4px';
-                    img.style.width = '128px';
-                    const placeholder = document.createElement('span');
-                    placeholder.textContent = "⏳";
-                    tooltip.appendChild(placeholder);
-
-                    img.onload = () => {
-                        if (tooltipId !== currentTooltipId) {
-                            tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
-                            return;
-                        }
-                        tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
-                        tooltip.appendChild(img);
-                    };
-
-                    img.onerror = () => {
-                        tooltip.contains(placeholder) && tooltip.removeChild(placeholder);
-                    };
-                });
-            }
-
-            // ツールチップの位置調整
-            const tooltipRect = tooltip.getBoundingClientRect();
-            const docW = document.documentElement.clientWidth;
-            const docH = document.documentElement.clientHeight;
-
-            let top = e.pageY + 10;
-            let left = e.pageX + 10;
-
-            if (left + tooltipRect.width > docW - 10) {
-                left = docW - tooltipRect.width - 10;
-            }
-            if (top + tooltipRect.height > docH - 10) {
-                top = docH - tooltipRect.height - 10;
-            }
-
-            tooltip.style.top = `${top}px`;
-            tooltip.style.left = `${left}px`;
-        })
-        .catch(err => {
-            console.error("データ取得エラー:", err);
-        });
+    // 1秒後にツールチップを非表示にする処理
+    setTimeout(() => {
+        tooltip.classList.remove("show");
+        tooltip.classList.add("hide");
+    }, 1000); // 1000ms後に非表示
 };
 
-// ツールチップ非表示
 let hideTooltipTimeout;
 window.hideTooltip_post = () => {
     clearTimeout(hideTooltipTimeout);
     hideTooltipTimeout = setTimeout(() => {
-        currentTooltipId++;
         const tooltip = document.getElementById("tooltip");
         tooltip.classList.remove("show");
         tooltip.classList.add("hide");
-        setTimeout(() => resetTooltip(), 300); // 300ms後にリセット
-    }, 300); // ツールチップが表示されるまで待機
+    }, 300);
 };
 
-// ツールチップリセット
-function resetTooltip() {
-    const tooltip = document.getElementById("tooltip");
-    if (!tooltip) return;
 
-    tooltip.innerHTML = "";
-    tooltip.style.visibility = "hidden";
-    tooltip.classList.remove("hide", "show");
-}
 
 // window.showTooltip_post = async (e) => {
 // 	let tooltip = document.getElementById("tooltip");
