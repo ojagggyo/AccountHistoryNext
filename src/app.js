@@ -1654,6 +1654,9 @@ if (typeof window !== 'undefined') {
 window.showTooltip_post = async (e) => {
 
 	let tooltip = document.getElementById("tooltip");
+    let author = e.target.getAttribute('data-author');
+    let permlink = e.target.getAttribute('data-permlink');
+
 	tooltip.innerHTML = "Loding..."
 	tooltip.style.top = e.pageX + 10;
 	tooltip.style.left = e.pageY + 10;
@@ -1662,7 +1665,7 @@ window.showTooltip_post = async (e) => {
     // APIを呼び出し、投稿のメタデータを取得
 	steem.api.callAsync('condenser_api.get_content', [author, permlink])
 	.then(result => {
-		createTooltip(e,result);
+		createTooltip(e,result,author);
 	})
 	.catch(error => {
         console.error("Error:", error);
@@ -1671,11 +1674,6 @@ window.showTooltip_post = async (e) => {
 
 function createTooltip(e,o){
 	let _showTooltip_id_current = ++_showTooltip_id;
-
-	let tooltip = document.getElementById("tooltip");
-    let author = e.target.getAttribute('data-author');
-    let permlink = e.target.getAttribute('data-permlink');
-
 	if(_showTooltip_id_current != _showTooltip_id) return;
 
 	// ツールチップの表示位置を設定
