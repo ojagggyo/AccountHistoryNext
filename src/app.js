@@ -1726,7 +1726,7 @@ function createTooltip(e, result, author) {
 	console.log(`imageList.length=${imageList.length}`);
 	console.log(`colCount=${colCount}`);
 
-    if (colCount < imageList.length ) {
+    if (colCount < imageList.length + 1 ) {
 		tooltipWidth = colCount * 128;
 		tooltipX = 20;
      }
@@ -1734,7 +1734,7 @@ function createTooltip(e, result, author) {
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
-	tooltip.style.width = tooltipWidth;
+	tooltip.style.width = tooltipWidth + 'px';
 }
 
 window.hideTooltip_post = async (e) => {
