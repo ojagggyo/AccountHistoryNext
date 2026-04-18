@@ -1647,7 +1647,7 @@ window.hideTooltip = async (e) => {
 
 if (typeof window !== 'undefined') {
 window.showTooltip_post = async (e) => {
-    let tooltip = document.getElementById("tooltip");
+    let tooltip = document.getElementById("tooltip_post");
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
     tooltip.style.top = e.pageY + 10 + 'px';
@@ -1807,7 +1807,7 @@ console.log("imageList.length",imageList.length);
 window.hideTooltip_post = async (e) => {
 	console.log("*** hideTooltip_post ***");
 
-	var tooltip = document.getElementById("tooltip")
+	var tooltip = document.getElementById("tooltip_post")
 	tooltip.style.display = "none"
 }
 }
