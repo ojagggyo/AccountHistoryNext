@@ -1718,8 +1718,7 @@ function createTooltip(e, result, author) {
 	let tooltipW
     // ツールチップが画面右端を越さないように調整
     if (tooltipX + tooltipWidth > document_w - 40) {
-         tooltipX = document_w - 40 - tooltipWidth;  // 画面左側にツールチップを表示
-		 tooltipWidth = tooltipWidth -40;
+         tooltipX = 40;  // 画面左側にツールチップを表示
      }
 
 
