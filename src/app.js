@@ -1726,20 +1726,20 @@ function createTooltip(e, result, author) {
 
 		let rowCount =  Math.ceil(((imageList.length + 1) / colCount));
 		tooltipWidth = Math.ceil((imageList.length + 1) / rowCount) * (128+8);//tooltipWidth = colCount * (128+8);
-		tooltipX = document_w - 40 - tooltipWidth;
      }
 	 else{
 		tooltipWidth = (imageList.length + 1 ) * (128+8);
 	 }
+	 tooltipX = document_w - 40 - tooltipWidth;
 
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
 	tooltip.style.width = tooltipWidth + 'px';
 
-	console.log(`${tooltip_w} ${tooltip_h}`);
-	console.log(`${document_w} ${document_h}`);
-	console.log(`${tooltipWidth} ${tooltipHeight}`);
+	//console.log(`${tooltip_w} ${tooltip_h}`);
+	//console.log(`${document_w} ${document_h}`);
+	//console.log(`${tooltipWidth} ${tooltipHeight}`);
 
 }
 
