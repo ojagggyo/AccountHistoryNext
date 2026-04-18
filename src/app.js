@@ -1672,6 +1672,7 @@ console.log(`*** callAsync after ***`);
 
         let imageList = JSON.parse(o.json_metadata).image;
 
+console.log("o.json_metadata", o.json_metadata);
 
 
         if (imageList) {
@@ -1680,9 +1681,6 @@ console.log(`*** callAsync after ***`);
             let promises = [];
 
             // 画像の非同期ロードをPromiseで処理
-
-console.log("imageList.length",imageList.length);
-
             for (let index = 0; index < imageList.length; index++) {
                 const imageUrl = imageList[index];
                 if (!imageUrl || imageUrl === '' || uniqueImages.has(imageUrl)) continue; // 重複画像をスキップ
