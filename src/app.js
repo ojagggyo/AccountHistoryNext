@@ -1723,7 +1723,11 @@ function createTooltip(e, result, author) {
 	console.log(`colCount=${colCount}`);
 
     if (colCount < imageList.length + 1 ) {
-		tooltipWidth = colCount * (128+8);
+
+		let rowCount =  Math.ceil(((imageList.length + 1) / colCount));
+		tooltipWidth = Math.ceil((imageList.length + 1) / rowCount) * (128+8);
+		
+		//tooltipWidth = colCount * (128+8);
 		tooltipX = 20;
      }
 	 else{
