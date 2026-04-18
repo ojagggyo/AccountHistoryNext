@@ -1722,6 +1722,10 @@ function createTooltip(e, result, author) {
 	}
 
     let colCount = Math.floor((document_w - 40) / 128);
+		
+	console.log(`imageList.length=${imageList.length}`);
+	console.log(`colCount=${colCount}`);
+
     if (colCount >  imageList.length ) {
 		tooltipWidth = colCount * 128;
 		tooltipX = 20;
