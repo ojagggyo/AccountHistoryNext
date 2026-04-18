@@ -1724,6 +1724,7 @@ function createTooltip(e, result, author) {
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
+	tooltip.style.width = tooltipWidth - 40;
 }
 
 window.hideTooltip_post = async (e) => {
