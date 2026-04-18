@@ -1679,6 +1679,10 @@ window.showTooltip_post = async (e) => {
 		}
 	}
 }
+window.hideTooltip_post = async (e) => {
+	var tooltip = document.getElementById("tooltip")
+	tooltip.style.display = "none"
+}
 
 }
 
