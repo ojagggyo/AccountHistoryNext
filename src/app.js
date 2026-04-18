@@ -1649,7 +1649,7 @@ window.showTooltip_post = async (e) => {
     tooltip.style.display = "block";
 
 
-console.log("*** imageshowTooltip_post ***");
+console.log(`*** imageshowTooltip_post author=${author} permlink=${permlink} ***`);
 
 
     // 非同期のget_contentコールバック
@@ -1662,6 +1662,9 @@ console.log("*** imageshowTooltip_post ***");
         tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<img src='https://steemitimages.com/u/" + author + "/avatar' style='margin: 4px;'/>";
 
         let imageList = JSON.parse(o.json_metadata).image;
+
+console.log(`*** imageshowTooltip_post imageList=${imageList} ***`);
+
         if (imageList) {
             let document_w = document.documentElement.clientWidth;
             let uniqueImages = new Set(); // Setを使ってユニークな画像を保持
@@ -1794,6 +1797,8 @@ console.log("imageList.length",imageList.length);
 // };
 
 window.hideTooltip_post = async (e) => {
+	console.log("*** hideTooltip_post ***");
+
 	var tooltip = document.getElementById("tooltip")
 	tooltip.style.display = "none"
 }
