@@ -1606,6 +1606,9 @@ window.onload = function() {
 
 
 window.showTooltip = async (e) => {
+
+console.log("*** showTooltip ***");
+
 	let tooltip = document.getElementById("tooltip");
 	let username = e.target.getAttribute('data-username');
 		
@@ -1632,6 +1635,9 @@ window.showTooltip = async (e) => {
 function moveTooltip(e) {
 }
 window.hideTooltip = async (e) => {
+
+	console.log("*** hideTooltip ***");
+
 	var tooltip = document.getElementById("tooltip");
 	tooltip.style.display = "none";
 }
@@ -1799,7 +1805,7 @@ console.log("imageList.length",imageList.length);
 // };
 
 window.hideTooltip_post = async (e) => {
-	console.log("*** hide ***");
+	console.log("*** hideTooltip_post ***");
 
 	var tooltip = document.getElementById("tooltip")
 	tooltip.style.display = "none"
