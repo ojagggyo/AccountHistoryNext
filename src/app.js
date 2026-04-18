@@ -1726,6 +1726,9 @@ function createTooltip(e, result, author) {
 		tooltipWidth = colCount * (128+8);
 		tooltipX = 20;
      }
+	 else{
+		tooltipWidth = (imageList.length + 1 ) * (128+8);
+	 }
 
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
