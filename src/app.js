@@ -1639,8 +1639,8 @@ window.hideTooltip = async (e) => {
 	console.log("*** hideTooltip ***");
 
 	var tooltip = document.getElementById("tooltip");
-	//tooltip.style.display = "none";
-	resetTooltip();
+	tooltip.style.display = "none";
+	//resetTooltip();
 }
 }
 
