@@ -1702,16 +1702,24 @@ function createTooltip(e, result, author) {
 
     let tooltipX = e.pageX + 10;
     let tooltipY = e.pageY + 10;
+	
+	//if(e.pageX + 10 + tooltip_w > document_w - 40){
+
+    // // ツールチップが画面右端を越さないように調整
+    // if (tooltipX + tooltipWidth > document_w) {
+    //     tooltipX = e.pageX - tooltipWidth - 10;  // 画面左側にツールチップを表示
+    // }
+
+    // // ツールチップが画面下端を越さないように調整
+    // if (tooltipY + tooltipHeight > document_h) {
+    //     tooltipY = e.pageY - tooltipHeight - 10;  // 画面上側にツールチップを表示
+    // }
 
     // ツールチップが画面右端を越さないように調整
-    if (tooltipX + tooltipWidth > document_w) {
-        tooltipX = e.pageX - tooltipWidth - 10;  // 画面左側にツールチップを表示
-    }
+    if (tooltipX + tooltipWidth > document_w - 40) {
+         tooltipX = document_w - 40 - tooltipWidth;  // 画面左側にツールチップを表示
+     }
 
-    // ツールチップが画面下端を越さないように調整
-    if (tooltipY + tooltipHeight > document_h) {
-        tooltipY = e.pageY - tooltipHeight - 10;  // 画面上側にツールチップを表示
-    }
 
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
