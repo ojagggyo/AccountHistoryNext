@@ -1652,6 +1652,13 @@ if (typeof window !== 'undefined') {
 	let _showTooltip_id = 0;
 
 window.showTooltip_post = async (e) => {
+
+	let tooltip = document.getElementById("tooltip");
+	tooltip.innerHTML = "Loding..."
+	tooltip.style.top = e.pageX + 10;
+	tooltip.style.left = e.pageY + 10;
+	tooltip.style.display = "block";
+
     // APIを呼び出し、投稿のメタデータを取得
 	steem.api.callAsync('condenser_api.get_content', [author, permlink])
 	.then(result => {
