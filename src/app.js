@@ -1647,31 +1647,35 @@ window.hideTooltip = async (e) => {
 /* --------------------------------------------------------------------- */
 
 if (typeof window !== 'undefined') {
+
+let tooltipCancelFlag = false;
 window.showTooltip_post = (e) => {
     const tooltip = document.getElementById("tooltip");
     const author = e.target.getAttribute('data-author');
     const permlink = e.target.getAttribute('data-permlink');
 
-    // ツールチップの位置を設定して表示
+    // キャンセルフラグリセット
+    tooltipCancelFlag = false;
+
+    // ツールチップ位置表示
     tooltip.style.top = `${e.pageY + 10}px`;
     tooltip.style.left = `${e.pageX + 10}px`;
     tooltip.style.display = "block";
-    tooltip.innerHTML = ""; // 初期化
+    tooltip.innerHTML = "";
 
     console.log(`*** showTooltip_post author=${author} permlink=${permlink} ***`);
 
-    // 投稿内容を非同期取得（Promise then チェーン）
     steem.api.callAsync('condenser_api.get_content', [author, permlink])
         .then(o => {
+            if (tooltipCancelFlag) return; // マウスアウトでキャンセルされたら中止
+
             console.log("*** callAsync after ***");
 
-            // ツールチップ基本内容
             tooltip.innerHTML = `
                 <b>${o.title}</b><br/>
                 <img src='https://steemitimages.com/u/${author}/avatar' style='margin: 4px;'/>
             `;
 
-            // JSONパース（画像リスト）
             let imageList = [];
             try {
                 const jsonMeta = JSON.parse(o.json_metadata);
@@ -1685,51 +1689,53 @@ window.showTooltip_post = (e) => {
             console.log("o.json_metadata", o.json_metadata);
             console.log("imageList", imageList);
 
-            // 画像がある場合は非同期ロード
             if (imageList.length > 0) {
                 const document_w = document.documentElement.clientWidth;
                 const uniqueImages = new Set();
-                const loadPromises = [];
 
                 imageList.forEach(url => {
                     if (!url || uniqueImages.has(url)) return;
                     uniqueImages.add(url);
 
-                    const imgPromise = new Promise(resolve => {
-                        const img = new Image();
-                        img.src = url;
-                        img.style.margin = '4px';
-                        img.style.width = '128px';
+                    const img = new Image();
+                    img.src = url;
+                    img.style.margin = '4px';
+                    img.style.width = '128px';
 
-                        img.onload = () => {
+                    img.onload = () => {
+                        if (tooltipCancelFlag) return; // キャンセルされていたら追加しない
+
+                        tooltip.appendChild(img);
+                        const tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+                        if (e.pageX + 10 + tooltip_w > document_w - 40) {
+                            tooltip.removeChild(img);
+                            tooltip.appendChild(document.createElement('br'));
                             tooltip.appendChild(img);
-
-                            const tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-                            if (e.pageX + 10 + tooltip_w > document_w - 40) {
-                                tooltip.removeChild(img);
-                                tooltip.appendChild(document.createElement('br'));
-                                tooltip.appendChild(img);
-                            }
-                            resolve(img);
-                        };
-
-                        img.onerror = resolve; // エラーでも次へ
-                    });
-
-                    loadPromises.push(imgPromise);
-                });
-
-                // 全画像ロード完了後の処理
-                Promise.all(loadPromises).then(() => {
-                    console.log("All images loaded");
+                        }
+                    };
                 });
             }
 
         })
-        .catch(err => {
-            console.error("Error fetching content:", err);
-        });
+        .catch(err => console.error("Error fetching content:", err));
 };
+
+window.hideTooltip_post = (e) => {
+    console.log("*** hideTooltip_post ***");
+    tooltipCancelFlag = true; // ここで画像追加などをキャンセル
+    resetTooltip();
+};
+
+function resetTooltip() {
+    let tooltip = document.getElementById("tooltip");
+    if (!tooltip) return;
+    tooltip.innerHTML = "";
+    tooltip.style.position = "absolute";
+    tooltip.style.display = "none";
+    tooltip.className = "";
+}
+
+
 
 // window.showTooltip_post = async (e) => {
 // 	let tooltip = document.getElementById("tooltip");
@@ -1759,75 +1765,6 @@ window.showTooltip_post = (e) => {
 // 		}
 // 	}
 // }
-
-// window.showTooltip_post = async (e) => {
-//     let tooltip = document.getElementById("tooltip");
-//     let author = e.target.getAttribute('data-author');
-//     let permlink = e.target.getAttribute('data-permlink');
-//     tooltip.style.top = e.pageY + 10 + 'px';
-//     tooltip.style.left = e.pageX + 10 + 'px';
-//     tooltip.style.display = "block";
-
-//     // コンテンツの情報を非同期で取得
-//     let o = await steem.api.callAsync('condenser_api.get_content', [author, permlink]);
-
-//     // タイトルとユーザー画像を動的に生成
-//     tooltip.innerHTML = `
-//         <b>${o.title}</b><br/>
-//         <img src="https://steemitimages.com/u/${author}/avatar" style="margin: 4px;" />
-//     `;
-
-//     let imageList = JSON.parse(o.json_metadata).image;
-//     if (imageList && imageList.length > 0) {
-//         let document_w = document.documentElement.clientWidth;
-
-//         // 画像を非同期で読み込む
-//         let loadImageAsync = (imageUrl) => {
-//             return new Promise((resolve) => {
-//                 let img = new Image();
-//                 img.src = imageUrl;
-//                 img.onload = () => resolve(img); // 画像が読み込まれたら解決
-//                 img.onerror = () => resolve(null); // エラーがあればnullを返す
-//             });
-//         };
-
-//         // 画像を非同期にロードしてからHTMLを挿入
-//         for (let imageUrl of imageList) {
-//             if (imageUrl) {
-//                 let img = await loadImageAsync(imageUrl); // 画像を非同期で読み込む
-//                 if (img) {
-//                     // 画像を挿入
-//                     tooltip.insertAdjacentHTML("beforeend", `<img src="${img.src}" style="margin: 4px; width: 128px;" />`);
-
-//                     // ツールチップの幅を確認して、画像の配置を調整
-//                     let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-//                     if (e.pageX + 10 + tooltip_w > document_w - 40) {
-//                         tooltip.removeChild(tooltip.lastElementChild);
-//                         tooltip.insertAdjacentHTML("beforeend", `<br/><img src="${img.src}" style="margin: 4px; width: 128px;" />`);
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// };
-
-window.hideTooltip_post = async (e) => {
-	console.log("*** hideTooltip_post ***");
-	var tooltip = document.getElementById("tooltip")
-	//tooltip.style.display = "none"
-	resetTooltip();
-}
-function resetTooltip() {
-    let tooltip = document.getElementById("tooltip");
-    if (!tooltip) return; // tooltip が存在しなければ何もしない
-    // 内容を空にする
-    tooltip.innerHTML = "";
-    // 初期スタイルに戻す
-    tooltip.style.position = "absolute";
-    tooltip.style.display = "none";
-    // クラスもリセット（必要な場合）
-    tooltip.className = "";
-}
 
 }
 
