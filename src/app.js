@@ -1639,7 +1639,8 @@ window.hideTooltip = async (e) => {
 	console.log("*** hideTooltip ***");
 
 	var tooltip = document.getElementById("tooltip");
-	tooltip.style.display = "none";
+	//tooltip.style.display = "none";
+	resetTooltip();
 }
 }
 
@@ -1647,7 +1648,7 @@ window.hideTooltip = async (e) => {
 
 if (typeof window !== 'undefined') {
 window.showTooltip_post = async (e) => {
-    let tooltip = document.getElementById("tooltip_post");
+    let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
     tooltip.style.top = e.pageY + 10 + 'px';
@@ -1806,10 +1807,22 @@ console.log("imageList.length",imageList.length);
 
 window.hideTooltip_post = async (e) => {
 	console.log("*** hideTooltip_post ***");
-
-	var tooltip = document.getElementById("tooltip_post")
-	tooltip.style.display = "none"
+	var tooltip = document.getElementById("tooltip")
+	//tooltip.style.display = "none"
+	resetTooltip();
 }
+function resetTooltip() {
+    let tooltip = document.getElementById("tooltip");
+    if (!tooltip) return; // tooltip が存在しなければ何もしない
+    // 内容を空にする
+    tooltip.innerHTML = "";
+    // 初期スタイルに戻す
+    tooltip.style.position = "absolute";
+    tooltip.style.display = "none";
+    // クラスもリセット（必要な場合）
+    tooltip.className = "";
+}
+
 }
 
 /* --------------------------------------------------------------------- */
