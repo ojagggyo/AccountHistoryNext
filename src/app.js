@@ -1652,57 +1652,65 @@ if (typeof window !== 'undefined') {
 	let _showTooltip_id = 0;
 
 window.showTooltip_post = async (e) => {
+    // APIを呼び出し、投稿のメタデータを取得
+	steem.api.callAsync('condenser_api.get_content', [author, permlink])
+	.then(result => {
+		createTooltip(e,result);
+	})
+	.catch(error => {
+        console.error("Error:", error);
+    });
+}
+
+function createTooltip(e,o){
 	let _showTooltip_id_current = ++_showTooltip_id;
 
-    let tooltip = document.getElementById("tooltip");
+	let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
 
-    // APIを呼び出し、投稿のメタデータを取得
-    let o = await steem.api.callAsync('condenser_api.get_content', [author, permlink]);
-
 	if(_showTooltip_id_current != _showTooltip_id) return;
 
-    // ツールチップの表示位置を設定
-    let tooltipWidth = 300;  // 仮に幅を300pxとして設定（後で動的に変更可能）
-    let tooltipHeight = 200; // 高さを仮に200pxとして設定（後で動的に変更可能）
+	// ツールチップの表示位置を設定
+	let tooltipWidth = 300;  // 仮に幅を300pxとして設定（後で動的に変更可能）
+	let tooltipHeight = 200; // 高さを仮に200pxとして設定（後で動的に変更可能）
 
-    // ウィンドウのサイズを取得
-    let document_w = document.documentElement.clientWidth;
-    let document_h = document.documentElement.clientHeight;
+	// ウィンドウのサイズを取得
+	let document_w = document.documentElement.clientWidth;
+	let document_h = document.documentElement.clientHeight;
 
-    // ツールチップが画面からはみ出ないように位置を調整
-    let tooltipX = e.pageX + 10;
-    let tooltipY = e.pageY + 10;
+	// ツールチップが画面からはみ出ないように位置を調整
+	let tooltipX = e.pageX + 10;
+	let tooltipY = e.pageY + 10;
 
-    // ツールチップが画面右端を越さないように調整
-    if (tooltipX + tooltipWidth > document_w) {
-        tooltipX = e.pageX - tooltipWidth - 10;  // 画面左側にツールチップを表示
-    }
+	// ツールチップが画面右端を越さないように調整
+	if (tooltipX + tooltipWidth > document_w) {
+		tooltipX = e.pageX - tooltipWidth - 10;  // 画面左側にツールチップを表示
+	}
 
-    // ツールチップが画面下端を越さないように調整
-    if (tooltipY + tooltipHeight > document_h) {
-        tooltipY = e.pageY - tooltipHeight - 10;  // 画面上側にツールチップを表示
-    }
+	// ツールチップが画面下端を越さないように調整
+	if (tooltipY + tooltipHeight > document_h) {
+		tooltipY = e.pageY - tooltipHeight - 10;  // 画面上側にツールチップを表示
+	}
 
-    // ツールチップの位置を設定
-    tooltip.style.top = tooltipY + 'px';
-    tooltip.style.left = tooltipX + 'px';
-    tooltip.style.display = "block";
+	// ツールチップの位置を設定
+	tooltip.style.top = tooltipY + 'px';
+	tooltip.style.left = tooltipX + 'px';
+	tooltip.style.display = "block";
 
-    // ツールチップにタイトルと画像を追加
-    tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<image src=https://steemitimages.com/u/" + author + "/avatar style='margin: 4px;'/>";
+	// ツールチップにタイトルと画像を追加
+	tooltip.innerHTML = "<b>" + o.title + "</b><br/>" + "<image src=https://steemitimages.com/u/" + author + "/avatar style='margin: 4px;'/>";
 
-    let imageList = JSON.parse(o.json_metadata).image;
-    if (imageList) {
-        for (let index = 0; index < imageList.length; index++) {
+	let imageList = JSON.parse(o.json_metadata).image;
+	if (imageList) {
+		for (let index = 0; index < imageList.length; index++) {
 			if(_showTooltip_id_current != _showTooltip_id) return;
-            const imageUrl = imageList[index];
-            if (!imageUrl || imageUrl == '') continue;
-            tooltip.insertAdjacentHTML("beforeend", "<image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>");
-            _sleep(10); // 少し待機
-        }
-    }
+			const imageUrl = imageList[index];
+			if (!imageUrl || imageUrl == '') continue;
+			tooltip.insertAdjacentHTML("beforeend", "<image src=" + imageUrl + " style='margin: 4px; width: 128px;'/>");
+			_sleep(10); // 少し待機
+		}
+	}
 }
 
 window.hideTooltip_post = async (e) => {
