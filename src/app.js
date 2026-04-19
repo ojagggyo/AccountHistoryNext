@@ -1706,13 +1706,13 @@ function createTooltip(e, result, author) {
 		return;
 	}
 
-	//横に並べられる最大の数
+	//横に並べられる最大の数（切捨て）
     let colCount = Math.floor((document_w - 40) / (128+8));
+	//行数を求める。（切り上げ）
+	let rowCount =  Math.ceil(((imageList.length + 1) / colCount));
 
 	//表示した画像が、1行に入りきれない場合
-    if (colCount < imageList.length + 1 ) {
-		//行数を求める。
-		let rowCount =  Math.ceil(((imageList.length + 1) / colCount));
+    if (colCount < imageList.length + 1 ) {	
 		//幅を求める。
 		tooltipWidth = Math.ceil((imageList.length + 1) / rowCount) * (128+8);//tooltipWidth = colCount * (128+8);
 		//幅がマウス位置より大きい場合は、入るように表示位置を左にずらす。
