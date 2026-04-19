@@ -1648,6 +1648,7 @@ window.hideTooltip = async (e) => {
 
 if (typeof window !== 'undefined') {
 
+
 window.showTooltip_post = async (e) => {
     let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
@@ -1685,17 +1686,17 @@ function createTooltip(e, result, author) {
         });
     }
 
-    // スクロールを考慮した相対位置を計算
-    let relativeY = e.pageY - window.scrollY;
-    let relativeX = e.pageX - window.scrollX;
+    // スクロール位置を考慮した相対位置を計算
+    let relativeY = e.pageY - window.scrollY;  // スクロールを引いて相対的な位置を取得
+    let relativeX = e.pageX - window.scrollX;  // 同様にX座標も補正
 
     let document_w = document.documentElement.clientWidth;
     let document_h = document.documentElement.clientHeight;
     let tooltipWidth = tooltip.offsetWidth;
     let tooltipHeight = tooltip.offsetHeight;
 
-    let tooltipX = relativeX + 10;
-    let tooltipY = relativeY + 10;
+    let tooltipX = relativeX + 10;  // カーソル位置に対して10pxの余白を追加
+    let tooltipY = relativeY + 10;  // カーソル位置に対して10pxの余白を追加
 
     // 横に並べられる最大の数（切捨て）
     let colCount = Math.floor((document_w - 40) / (128 + 8));
@@ -1746,6 +1747,11 @@ window.hideTooltip_post = async (e) => {
 function _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
+
+
+
 
 // window.showTooltip_post = async (e) => {
 // 	let tooltip = document.getElementById("tooltip");
