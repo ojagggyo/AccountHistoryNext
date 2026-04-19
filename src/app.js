@@ -1699,32 +1699,23 @@ function createTooltip(e, result, author) {
     let tooltipX = e.pageX + 10;
     let tooltipY = e.pageY + 10;
 	
-    // // ツールチップが画面右端を越さないように調整
-    // if (tooltipX + tooltipWidth > document_w) {
-    //     tooltipX = e.pageX - tooltipWidth - 10;  // 画面左側にツールチップを表示
-    // }
-
-    // // ツールチップが画面下端を越さないように調整
-    // if (tooltipY + tooltipHeight > document_h) {
-    //     tooltipY = e.pageY - tooltipHeight - 10;  // 画面上側にツールチップを表示
-    // }
-
-	
-    // ツールチップが画面右端を越さないように調整
+    // プロフィール写真の場合は、ここで終了
 	if(imageList.length == 0){
 		tooltip.style.top = tooltipY + 'px';
     	tooltip.style.left = tooltipX + 'px';
 		return;
 	}
 
+	//横に並べられる最大の数
     let colCount = Math.floor((document_w - 40) / (128+8));
-		
-	console.log(`imageList.length=${imageList.length}`);
-	console.log(`colCount=${colCount}`);
 
+	//表示した画像が、1行に入りきれない場合
     if (colCount < imageList.length + 1 ) {
+		//行数を求める。
 		let rowCount =  Math.ceil(((imageList.length + 1) / colCount));
+		//幅を求める。
 		tooltipWidth = Math.ceil((imageList.length + 1) / rowCount) * (128+8);//tooltipWidth = colCount * (128+8);
+		//幅がマウス位置より大きい場合は、入るように表示位置を左にずらす。
 		if(document_w - 40 - tooltipWidth < tooltipX){
 			tooltipX = document_w - 40 - tooltipWidth;
 		}
@@ -1735,17 +1726,11 @@ function createTooltip(e, result, author) {
 			tooltipX = document_w - 40 - tooltipWidth;
 		}
 	 }
-	 
 
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
 	tooltip.style.width = tooltipWidth + 'px';
-
-	//console.log(`${tooltip_w} ${tooltip_h}`);
-	//console.log(`${document_w} ${document_h}`);
-	//console.log(`${tooltipWidth} ${tooltipHeight}`);
-
 }
 
 window.hideTooltip_post = async (e) => {
