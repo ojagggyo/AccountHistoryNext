@@ -1667,11 +1667,11 @@ window.showTooltip_post = async (e) => {
     .catch(error => {
         console.error("Error:", error);
     });
-
-
 }
 
 function createTooltip(e, result, author) {
+
+	console.log("*** createTooltip start ***");
     let tooltip = document.getElementById("tooltip");
 
     // 投稿のタイトルやメタデータをツールチップに追加
@@ -1689,8 +1689,8 @@ function createTooltip(e, result, author) {
     }
 
     // ツールチップの位置を調整（画面からはみ出さないように）
-	let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-	let tooltip_h = parseInt(window.getComputedStyle(tooltip).height);
+	//let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+	//let tooltip_h = parseInt(window.getComputedStyle(tooltip).height);
     let document_w = document.documentElement.clientWidth;
     let document_h = document.documentElement.clientHeight;
     let tooltipWidth = tooltip.offsetWidth;
@@ -1737,12 +1737,16 @@ function createTooltip(e, result, author) {
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
 	tooltip.style.width = tooltipWidth + 'px';
+
+	console.log("*** createTooltip end ***");
 }
 
 window.hideTooltip_post = async (e) => {
+	console.log("*** hideTooltip_post start ***");
     var tooltip = document.getElementById("tooltip");
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
+	console.log("*** hideTooltip_post end ***");
 }
 
 // _sleep 関数（ミリ秒で指定した時間だけ待機する）
