@@ -1655,6 +1655,8 @@ window.showTooltip_post = async (e) => {
     let permlink = e.target.getAttribute('data-permlink');
 
     // ツールチップにローディングメッセージを表示
+	tooltip.style.top = (e.pageY + 10)  + 'px';
+    tooltip.style.left = (e.pageX + 10) + 'px';
     tooltip.innerHTML = "Loading...";
     tooltip.style.display = "block";
 
