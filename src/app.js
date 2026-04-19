@@ -1727,9 +1727,11 @@ function createTooltip(e, result, author) {
     // 下に十分なスペースがある場合はそのまま下に表示
     if (document_height - rel_pageY - 20 > tooltip_height) {
         tooltip_top = rel_pageY;  // マウスの下に表示
+		console.log(`1`);
     } else {
         // 下に隠れる場合は上に表示
         tooltip_top = rel_pageY - tooltip_height;
+		console.log(`2`);
         // 上にも隠れる場合は画面内に収める
         //if (tooltipY < 10) {
         //    tooltipY = 10;  // 上端からはみ出さないように
@@ -1738,8 +1740,9 @@ function createTooltip(e, result, author) {
 	console.log(`document_height=${document_height}`);
 	console.log(`rel_pageY=${rel_pageY}`);
 	console.log(`tooltip_height=${tooltip_height}`);
+	console.log(`tooltip_top=${tooltip_top}`);
 	// console.log(`e.pageY=${e.pageY}`);
-	// console.log(`tooltipY=${tooltipY}`);
+	
 	
 	
 
