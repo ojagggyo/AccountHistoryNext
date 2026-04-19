@@ -1653,7 +1653,12 @@ window.showTooltip_post = async (e) => {
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
 
-		// ツールチップにローディングメッセージを表示
+    // ツールチップがすでに表示されている場合、非表示にする
+    tooltip.style.display = "none";
+    tooltip.innerHTML = "";
+	
+
+	// ツールチップにローディングメッセージを表示
     tooltip.innerHTML = "Loading...";
     tooltip.style.top = e.pageY + 10 + 'px';  // 位置にpx単位を追加
     tooltip.style.left = e.pageX + 10 + 'px';  // 位置にpx単位を追加

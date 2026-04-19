@@ -140,4 +140,4 @@ vite.config.ts.timestamp-*
 public/bundle.js
 bk
 package-lock.json
-public/bundle.js
+.vscode/launch.json
