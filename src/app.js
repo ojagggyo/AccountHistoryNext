@@ -1693,17 +1693,17 @@ function createTooltip(e, result, author) {
     }
 
     // スクロールを考慮した相対位置を計算
-    let relativeY = e.pageY - window.scrollY;
-    let relativeX = e.pageX - window.scrollX;
+    let rel_y = e.pageY - window.scrollY;
+    let rel_x = e.pageX - window.scrollX;
 
     // ツールチップの位置を調整（画面からはみ出さないように）
     let document_w = document.documentElement.clientWidth;
     let document_h = document.documentElement.clientHeight;
-    let tooltipWidth = tooltip.offsetWidth;
-    let tooltipHeight = tooltip.offsetHeight;
+    let tooltip_w = tooltip.offsetWidth;
+    let tooltip_h = tooltip.offsetHeight;
 
-    let tooltipX = relativeX + 10;
-    let tooltipY = relativeY + 10;
+    let tooltipX = e.pageY + 10;
+    let tooltipY = e.pageX + 10;
 
     // 横に並べられる最大の数（切捨て）
     let colCount = Math.floor((document_w - 40) / (128 + 8));
@@ -1712,38 +1712,40 @@ function createTooltip(e, result, author) {
 
     // 表示した画像が、1行に入りきれない場合
     if (colCount < imageList.length + 1) {    
-        tooltipWidth = Math.ceil((imageList.length + 1) / rowCount) * (128 + 8);
-        if (document_w - 40 - tooltipWidth < tooltipX) {
-            tooltipX = document_w - 40 - tooltipWidth;
+        tooltip_w = Math.ceil((imageList.length + 1) / rowCount) * (128 + 8);
+        if (document_w - 40 - tooltip_w < tooltipX) {
+            tooltipX = document_w - 40 - tooltip_w;
         }
     } else {
-        tooltipWidth = (imageList.length + 1) * (128 + 8);
-        if (document_w - 40 - tooltipWidth < tooltipX) {
-            tooltipX = document_w - 40 - tooltipWidth;
+        tooltip_w = (imageList.length + 1) * (128 + 8);
+        if (document_w - 40 - tooltip_w < tooltipX) {
+            tooltipX = document_w - 40 - tooltip_w;
         }
     }
 
+	/*
     // 下に十分なスペースがある場合はそのまま下に表示
-    if (document_h - relativeY > tooltipHeight + 10) {
+    if (document_h - relativeY > tooltip_h + 10) {
         tooltipY = relativeY + 10;  // マウスの下に表示
     } else {
         // 下に隠れる場合は上に表示
-        tooltipY = relativeY - tooltipHeight - 10;
+        tooltipY = relativeY - tooltip_h - 10;
         // 上にも隠れる場合は画面内に収める
         if (tooltipY < 10) {
             tooltipY = 10;  // 上端からはみ出さないように
         }
     }
 	console.log(`document_h=${document_h}`);
-	console.log(`tooltipHeight=${tooltipHeight}`);
+	console.log(`tooltipHeight=${tooltip_h}`);
 	console.log(`e.pageY=${e.pageY}`);
 	console.log(`tooltipY=${tooltipY}`);
 	console.log(`relativeY=${relativeY}`);
+	*/
 
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
-    tooltip.style.width = tooltipWidth + 'px';
+    tooltip.style.width = tooltip_w + 'px';
 
     console.log("*** createTooltip end ***");
 }
