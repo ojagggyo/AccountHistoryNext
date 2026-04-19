@@ -32,6 +32,11 @@ async function getTick(){
 //-----------------------------------------------------------------------
 
 const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+//function _sleep(ms) {
+//    return new Promise(resolve => setTimeout(resolve, ms));
+//}
+
 //-----------------------------------------------------------------------
 
 function numberWithCommas(x) {
