@@ -1716,23 +1716,22 @@ function createTooltip(e, result, author) {
     }
 
 	
-	/*
+	
     // 下に十分なスペースがある場合はそのまま下に表示
 	// スクロール位置を考慮した相対位置を計算
     let relativeY = e.pageY - window.scrollY;  // スクロールを引いて相対的な位置を取得
     if (document_h - relativeY > tooltipHeight + 20) {
 		console.log("1");
-        tooltipY =  window.scrollY + relativeY + 20;  // マウスの下に表示
     } else {
 		console.log("2");
         // 下に隠れる場合は上に表示
-        tooltipY = window.scrollY + relativeY - tooltipHeight - 20;
+        tooltipY = window.scrollY + document_h - tooltipHeight - 10;
         // 上にも隠れる場合は画面内に収める
-        if (tooltipY < 20) {
+        if (tooltipY - window.scrollY < 20) {
             tooltipY = window.scrollY + 20;  // 上端からはみ出さないように
         }
     }
-*/
+
 
     // ツールチップの位置と幅を更新
     tooltip.style.top = tooltipY + 'px';
