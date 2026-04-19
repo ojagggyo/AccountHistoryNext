@@ -1684,11 +1684,6 @@ window.hideTooltip_post = async (e) => {
     //console.log("*** hideTooltip_post end ***");
 }
 
-// _sleep 関数（ミリ秒で指定した時間だけ待機する）
-function _sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 
 
 
