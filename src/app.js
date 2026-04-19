@@ -1586,8 +1586,13 @@ window.hideTooltip = async (e) => {
 
 //if (typeof window !== 'undefined') {
 
+let isTooltipVisible = false;  // ツールチップ表示中かどうかを追跡するフラグ
 
 window.showTooltip_post = async (e) => {
+    if (isTooltipVisible) return;  // ツールチップが表示中なら何もしない
+
+    isTooltipVisible = true;  // ツールチップ表示中とマーク
+
     let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
@@ -1598,15 +1603,16 @@ window.showTooltip_post = async (e) => {
     tooltip.innerHTML = "Loading...";
     tooltip.style.display = "block";
 
-	
-
     // APIを呼び出し、投稿のメタデータを取得
     steem.api.callAsync('condenser_api.get_content', [author, permlink])
     .then(result => {
+		        if (!isTooltipVisible) return;  // ツールチップが非表示になっていたら何もしない
+
         createTooltip(e, result, author);  // 結果を使ってツールチップを作成
     })
     .catch(error => {
         console.error("Error:", error);
+		    let tooltip = document.getElementById("tooltip");
     });
 }
 
@@ -1678,6 +1684,7 @@ function createTooltip(e, result, author) {
 
 window.hideTooltip_post = async (e) => {
     //console.log("*** hideTooltip_post start ***");
+	    isTooltipVisible = false;  // ツールチップを非表示にマーク
     var tooltip = document.getElementById("tooltip");
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
