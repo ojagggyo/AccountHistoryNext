@@ -1719,10 +1719,10 @@ function createTooltip(e, result, author) {
         }
     }
 
-    // ツールチップが画面の下に隠れないように調整
-	if (document_h - tooltipY < tooltipHeight) {
-		tooltipY = e.pageY - tooltipHeight - 10;  // 画面の下に隠れる場合は上にずらす
-	}
+    // // ツールチップが画面の下に隠れないように調整
+	// if (document_h - tooltipY < tooltipHeight) {
+	// 	tooltipY = e.pageY - tooltipHeight - 10;  // 画面の下に隠れる場合は上にずらす
+	// }
 
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
