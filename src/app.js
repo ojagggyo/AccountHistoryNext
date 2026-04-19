@@ -1676,14 +1676,14 @@ function createTooltip(e, result, author) {
 
     // 投稿のタイトルやメタデータをツールチップに追加
     tooltip.innerHTML = "<b>" + result.title + "</b><br/>" + 
-                        "<img src='https://steemitimages.com/u/" + author + "/avatar' style='margin: 4px;'/>";
+                        "<img src='https://steemitimages.com/u/" + author + "/avatar' style='margin: 4px; width: 128px; height: 128px; object-fit: cover;'/>";
 
     // 投稿の画像がある場合、画像を表示
     let imageList = JSON.parse(result.json_metadata).image;
     if (imageList) {
         imageList.forEach(imageUrl => {
             if (imageUrl && imageUrl !== '') {
-                tooltip.insertAdjacentHTML("beforeend", "<img src='" + imageUrl + "' style='margin: 4px; width: 128px;'/>");
+                tooltip.insertAdjacentHTML("beforeend", "<img src='" + imageUrl + "' style='margin: 4px; width: 128px; height: 128px; object-fit: cover;'/>");
             }
         });
     }
@@ -1725,7 +1725,9 @@ function createTooltip(e, result, author) {
     if (colCount < imageList.length + 1 ) {
 		let rowCount =  Math.ceil(((imageList.length + 1) / colCount));
 		tooltipWidth = Math.ceil((imageList.length + 1) / rowCount) * (128+8);//tooltipWidth = colCount * (128+8);
-    	tooltipX = document_w - 40 - tooltipWidth; 
+		if(document_w - 40 - tooltipWidth < tooltipX){
+			tooltipX = document_w - 40 - tooltipWidth;
+		}
 	}
 	 else{
 		tooltipWidth = (imageList.length + 1 ) * (128+8);
