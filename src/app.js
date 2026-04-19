@@ -1606,7 +1606,7 @@ window.showTooltip_post = async (e) => {
     // APIを呼び出し、投稿のメタデータを取得
     steem.api.callAsync('condenser_api.get_content', [author, permlink])
     .then(result => {
-		        if (!isTooltipVisible) return;  // ツールチップが非表示になっていたら何もしない
+		if (!isTooltipVisible) return;  // ツールチップが非表示になっていたら何もしない
 
         createTooltip(e, result, author);  // 結果を使ってツールチップを作成
     })
