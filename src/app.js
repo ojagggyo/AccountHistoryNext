@@ -1702,8 +1702,8 @@ function createTooltip(e, result, author) {
     let tooltip_w = tooltip.offsetWidth;
     let tooltip_h = tooltip.offsetHeight;
 
-    let tooltipX = e.pageY + 10;
-    let tooltipY = e.pageX + 10;
+    let tooltipX = e.pageX + 10;
+    let tooltipY = e.pageY + 10;
 
     // 横に並べられる最大の数（切捨て）
     let colCount = Math.floor((document_w - 40) / (128 + 8));
