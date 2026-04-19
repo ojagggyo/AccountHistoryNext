@@ -1648,20 +1648,13 @@ window.hideTooltip = async (e) => {
 
 if (typeof window !== 'undefined') {
 
-
 window.showTooltip_post = async (e) => {
     let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
 
-    // ツールチップがすでに表示されている場合、非表示にする
-    //tooltip.style.display = "none";
-    //tooltip.innerHTML = "";
-
     // ツールチップにローディングメッセージを表示
     tooltip.innerHTML = "Loading...";
-    tooltip.style.top = e.pageY + 10 + 'px';  // 位置にpx単位を追加
-    tooltip.style.left = e.pageX + 10 + 'px';  // 位置にpx単位を追加
     tooltip.style.display = "block";
 
     // APIを呼び出し、投稿のメタデータを取得
@@ -1692,21 +1685,23 @@ function createTooltip(e, result, author) {
         });
     }
 
-    // ツールチップの位置を調整（画面からはみ出さないように）
+    // スクロールを考慮した相対位置を計算
+    let relativeY = e.pageY - window.scrollY;
+    let relativeX = e.pageX - window.scrollX;
+
     let document_w = document.documentElement.clientWidth;
     let document_h = document.documentElement.clientHeight;
     let tooltipWidth = tooltip.offsetWidth;
     let tooltipHeight = tooltip.offsetHeight;
 
-    let tooltipX = e.pageX + 10;
-    let tooltipY = e.pageY + 10;
+    let tooltipX = relativeX + 10;
+    let tooltipY = relativeY + 10;
 
     // 横に並べられる最大の数（切捨て）
     let colCount = Math.floor((document_w - 40) / (128 + 8));
-    // 行数を求める。（切り上げ）
     let rowCount = Math.ceil(((imageList.length + 1) / colCount));
 
-    // 表示した画像が、1行に入りきれない場合
+    // 画像が多い場合のツールチップの幅調整
     if (colCount < imageList.length + 1) {    
         tooltipWidth = Math.ceil((imageList.length + 1) / rowCount) * (128 + 8);
         if (document_w - 40 - tooltipWidth < tooltipX) {
@@ -1719,7 +1714,19 @@ function createTooltip(e, result, author) {
         }
     }
 
-    // ツールチップの位置を更新
+    // 下に十分なスペースがある場合はそのまま下に表示
+    if (document_h - relativeY > tooltipHeight + 10) {
+        tooltipY = relativeY + 10;  // マウスの下に表示
+    } else {
+        // 下に隠れる場合は上に表示
+        tooltipY = relativeY - tooltipHeight - 10;
+        // 上にも隠れる場合は画面内に収める
+        if (tooltipY < 10) {
+            tooltipY = 10;  // 上端からはみ出さないように
+        }
+    }
+
+    // ツールチップの位置と幅を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
     tooltip.style.width = tooltipWidth + 'px';
@@ -1739,7 +1746,6 @@ window.hideTooltip_post = async (e) => {
 function _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 // window.showTooltip_post = async (e) => {
 // 	let tooltip = document.getElementById("tooltip");
