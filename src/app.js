@@ -1731,6 +1731,7 @@ function createTooltip(e, result, author) {
             tooltipY = 10;  // 上端からはみ出さないように
         }
     }
+	console.log(`document_h=${document_h}`);
 	console.log(`tooltipHeight=${tooltipHeight}`);
 	console.log(`e.pageY=${e.pageY}`);
 	console.log(`tooltipY=${tooltipY}`);
