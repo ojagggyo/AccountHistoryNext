@@ -1687,16 +1687,16 @@ function createTooltip(e, result, author) {
     }
 
     // スクロール位置を考慮した相対位置を計算
-    let relativeY = e.pageY - window.scrollY;  // スクロールを引いて相対的な位置を取得
-    let relativeX = e.pageX - window.scrollX;  // 同様にX座標も補正
+    //let relativeY = e.pageY - window.scrollY;  // スクロールを引いて相対的な位置を取得
+    //let relativeX = e.pageX - window.scrollX;  // 同様にX座標も補正
 
     let document_w = document.documentElement.clientWidth;
     let document_h = document.documentElement.clientHeight;
     let tooltipWidth = tooltip.offsetWidth;
     let tooltipHeight = tooltip.offsetHeight;
 
-    let tooltipX = relativeX + 10;  // カーソル位置に対して10pxの余白を追加
-    let tooltipY = relativeY + 10;  // カーソル位置に対して10pxの余白を追加
+    let tooltipX = e.pageY  + 10;  // カーソル位置に対して10pxの余白を追加
+    let tooltipY = e.pageX  + 10;  // カーソル位置に対して10pxの余白を追加
 
     // 横に並べられる最大の数（切捨て）
     let colCount = Math.floor((document_w - 40) / (128 + 8));
@@ -1715,6 +1715,7 @@ function createTooltip(e, result, author) {
         }
     }
 
+	/*
     // 下に十分なスペースがある場合はそのまま下に表示
     if (document_h - relativeY > tooltipHeight + 10) {
 		console.log("1");
@@ -1732,8 +1733,8 @@ function createTooltip(e, result, author) {
         }
 		console.log(`tooltipY=${tooltipY} after`);
     }
-	
 	tooltipY = tooltipY + window.scrollY;
+	*/
 
     // ツールチップの位置と幅を更新
     tooltip.style.top = tooltipY + 'px';
