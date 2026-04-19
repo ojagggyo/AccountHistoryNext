@@ -1694,8 +1694,8 @@ function createTooltip(e, result, author) {
     }
 
     // ツールチップの位置を調整（画面からはみ出さないように）
-	//let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-	//let tooltip_h = parseInt(window.getComputedStyle(tooltip).height);
+	let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+	let tooltip_h = parseInt(window.getComputedStyle(tooltip).height);
     let document_w = document.documentElement.clientWidth;
     let document_h = document.documentElement.clientHeight;
     let tooltipWidth = tooltip.offsetWidth;
@@ -1735,8 +1735,9 @@ function createTooltip(e, result, author) {
 	//  if(document_h - 40 - tooltipY < rowCount * (128+8)){
 	// 	tooltipY = tooltipY -  rowCount * (128+8) - 40;
 	//  }
-	 console.log(`document_h=${document_h}`);
-	 console.log(`tooltipY=${tooltipY}`);
+	console.log(`document_h=${document_h}`);
+	console.log(`tooltipY=${tooltipY}`);
+	console.log(`tooltip_h=${tooltip_h}`);
 
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
