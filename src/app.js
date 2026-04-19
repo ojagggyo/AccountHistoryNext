@@ -1648,6 +1648,7 @@ window.hideTooltip = async (e) => {
 
 if (typeof window !== 'undefined') {
 
+
 window.showTooltip_post = async (e) => {
     let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
@@ -1656,9 +1657,8 @@ window.showTooltip_post = async (e) => {
     // ツールチップがすでに表示されている場合、非表示にする
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
-	
 
-	// ツールチップにローディングメッセージを表示
+    // ツールチップにローディングメッセージを表示
     tooltip.innerHTML = "Loading...";
     tooltip.style.top = e.pageY + 10 + 'px';  // 位置にpx単位を追加
     tooltip.style.left = e.pageX + 10 + 'px';  // 位置にpx単位を追加
@@ -1675,8 +1675,7 @@ window.showTooltip_post = async (e) => {
 }
 
 function createTooltip(e, result, author) {
-
-	console.log("*** createTooltip start ***");
+    console.log("*** createTooltip start ***");
     let tooltip = document.getElementById("tooltip");
 
     // 投稿のタイトルやメタデータをツールチップに追加
@@ -1694,7 +1693,6 @@ function createTooltip(e, result, author) {
     }
 
     // ツールチップの位置を調整（画面からはみ出さないように）
-
     let document_w = document.documentElement.clientWidth;
     let document_h = document.documentElement.clientHeight;
     let tooltipWidth = tooltip.offsetWidth;
@@ -1702,67 +1700,51 @@ function createTooltip(e, result, author) {
 
     let tooltipX = e.pageX + 10;
     let tooltipY = e.pageY + 10;
-	
-    // プロフィール写真の場合は、ここで終了
-	if (imageList) {
-		if(imageList.length == 0){
-			tooltip.style.top = tooltipY + 'px';
-			tooltip.style.left = tooltipX + 'px';
-			return;
-		}
-	}
 
-	//横に並べられる最大の数（切捨て）
-    let colCount = Math.floor((document_w - 40) / (128+8));
-	//行数を求める。（切り上げ）
-	let rowCount = Math.ceil(((imageList.length + 1) / colCount));
+    // 横に並べられる最大の数（切捨て）
+    let colCount = Math.floor((document_w - 40) / (128 + 8));
+    // 行数を求める。（切り上げ）
+    let rowCount = Math.ceil(((imageList.length + 1) / colCount));
 
-	//表示した画像が、1行に入りきれない場合
-    if (colCount < imageList.length + 1 ) {	
-		//幅を求める。
-		tooltipWidth = Math.ceil((imageList.length + 1) / rowCount) * (128+8);//tooltipWidth = colCount * (128+8);
-		//幅がマウス位置より大きい場合は、入るように表示位置を左にずらす。
-		if(document_w - 40 - tooltipWidth < tooltipX){
-			tooltipX = document_w - 40 - tooltipWidth;
-		}
-	}
-	 else{
-		tooltipWidth = (imageList.length + 1 ) * (128+8);
-		if(document_w - 40 - tooltipWidth < tooltipX){
-			tooltipX = document_w - 40 - tooltipWidth;
-		}
-	 }
+    // 表示した画像が、1行に入りきれない場合
+    if (colCount < imageList.length + 1) {    
+        tooltipWidth = Math.ceil((imageList.length + 1) / rowCount) * (128 + 8);
+        if (document_w - 40 - tooltipWidth < tooltipX) {
+            tooltipX = document_w - 40 - tooltipWidth;
+        }
+    } else {
+        tooltipWidth = (imageList.length + 1) * (128 + 8);
+        if (document_w - 40 - tooltipWidth < tooltipX) {
+            tooltipX = document_w - 40 - tooltipWidth;
+        }
+    }
 
-	//  if(document_h - 40 - tooltipY < rowCount * (128+8)){
-	// 	tooltipY = tooltipY -  rowCount * (128+8) - 40;
-	//  }
-	console.log(`document_h=${document_h}`);
-	console.log(`tooltipY=${tooltipY}`);
-
-	//let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-	let tooltip_h = parseInt(window.getComputedStyle(tooltip).height);
-	console.log(`tooltip_h=${tooltip_h}`);
+    // ツールチップが画面の下に隠れないように調整
+    if (document_h - 40 - tooltipY < tooltipHeight) {
+        tooltipY = tooltipY - tooltipHeight - 40;  // 画面の下に隠れる場合は上にずらす
+    }
 
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
-	tooltip.style.width = tooltipWidth + 'px';
+    tooltip.style.width = tooltipWidth + 'px';
 
-	console.log("*** createTooltip end ***");
+    console.log("*** createTooltip end ***");
 }
 
 window.hideTooltip_post = async (e) => {
-	console.log("*** hideTooltip_post start ***");
+    console.log("*** hideTooltip_post start ***");
     var tooltip = document.getElementById("tooltip");
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
-	console.log("*** hideTooltip_post end ***");
+    console.log("*** hideTooltip_post end ***");
 }
 
 // _sleep 関数（ミリ秒で指定した時間だけ待機する）
 function _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 
 // window.showTooltip_post = async (e) => {
 // 	let tooltip = document.getElementById("tooltip");
