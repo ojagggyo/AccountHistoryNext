@@ -1719,7 +1719,7 @@ function createTooltip(e, result, author) {
     if (document_h - relativeY > tooltipHeight + 10) {
 		console.log("1");
 		console.log(`tooltipY=${tooltipY} before`);
-        tooltipY = relativeY + 10;  // マウスの下に表示
+        tooltipY =  relativeY + 10;  // マウスの下に表示
 		console.log(`tooltipY=${tooltipY} after`);
     } else {
 		console.log("2");
@@ -1732,6 +1732,8 @@ function createTooltip(e, result, author) {
         }
 		console.log(`tooltipY=${tooltipY} after`);
     }
+	
+	tooltipY = tooltipY + window.scrollY;
 
     // ツールチップの位置と幅を更新
     tooltip.style.top = tooltipY + 'px';
