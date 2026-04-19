@@ -204,17 +204,6 @@ function effectivepower(username,id1, id2, id3){
 	});	
 }
 
-/*
-async function getVotingPower(username) {
-	return new Promise((resolve, reject) => {
-		client.rc.getVPMana(username).then(vPMana =>
-			{			
-				resolve(vPMana.percentage / 100) 
-			}
-		)
-	});
-}
-*/
 async function getVotingPower(username) {
 	return new Promise((resolve, reject) => {
 	    steem.api.getAccountsAsync([username]).then(accounts =>{
@@ -262,9 +251,7 @@ function steemAmountFormat(steem, sbd, sp, v = 3) {
 	
 function krwAmountFormat(steemAmount, sbdAmount, spAmount, krw_steem, krw_sbd) {
 	if(krw_steem == 0) return "";
-	// return ' <a class=gray>(' 
-	// 	+ numberWithCommas((steemAmount * krw_steem + sbdAmount * krw_sbd + spAmount * krw_steem).toFixed(0)) //★
-	// 	+ ' KRW)</a>';
+
 	return ' <a class="red">('
 	+ '<span class=under1>'
 	+ '₩' 
@@ -341,7 +328,7 @@ async function getProxy(username){
 	});
 }
 
-if (typeof window !== 'undefined') {
+//if (typeof window !== 'undefined') {
 window.jumpRanking = function(witness) {
 	var a = document.createElement('a');
 	a.href = `https://steememory.com/chart/ranking.html?user=${witness}`
@@ -350,7 +337,7 @@ window.jumpRanking = function(witness) {
 	a.click();
 	document.body.removeChild(a);
 }
-}
+//}
 
 function makeRanking(witnessList){
 	let str=""
@@ -429,39 +416,6 @@ function diffYMDH(from, to) {
   return { years, months, days, hours };
 }  
 
-/*
-function diffYMD(from, to) {
-  // Dateオブジェクトに変換
-  let start = new Date(from);
-  let end = new Date(to);
-
-  // 順序を保証
-  if (start > end) {
-    [start, end] = [end, start];
-  }
-
-  let years = end.getFullYear() - start.getFullYear();
-  let months = end.getMonth() - start.getMonth();
-  let days = end.getDate() - start.getDate();
-
-  // 日がマイナスなら前月から借りる
-  if (days < 0) {
-    months--;
-
-    // 前月の最終日
-    const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0);
-    days += prevMonth.getDate();
-  }
-
-  // 月がマイナスなら前年から借りる
-  if (months < 0) {
-    years--;
-    months += 12;
-  }
-
-  return { years, months, days };
-}
-*/
 function formatDate(date) {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -694,28 +648,7 @@ function getReward_powerupdown(record){
 	return true;
 }
 	
-	
-//---------- Price ----------
-// async function getPrice(name, markets) {
-// 	console.log(`getPrice name=${name} markets=${markets}`);
-    
-//     return new Promise((resolve, reject) => {
 
-// 		window['get'+name] = async function(data){
-
-// 			console.log("getPrice 2");
-// 			const jsonString = JSON.stringify(data);
-// 			let price = JSON.parse(jsonString)[0].trade_price
-// 			resolve(price);
-// 		}
-// 		let sc = document.createElement("script");
-// 		sc.id = name;
-// 		sc.src = "https://steememory.com/ah/upbit/?callback="+'get'+name+"&pattern=" + markets;
-// 		sc.type = "text/javascript";  // Explicitly set MIME type
-// 		document.body.appendChild(sc);
-// 		document.getElementById(sc.id).remove();
-// 	});
-// }
 async function getPrice(name, markets) {
     console.log(`getPrice name=${name} markets=${markets}`);
 
@@ -860,7 +793,7 @@ function getTransferAmount(record){
 
 // ---------- ----------
 
-if (typeof window !== 'undefined') {
+//if (typeof window !== 'undefined') {
 window.clickBtn = async (days) => {
 	
 	let username = document.getElementById("username").value.trimEnd();
@@ -921,14 +854,13 @@ window.clickBtn = async (days) => {
 		alert(err);
 	});
 }
-}
+//}
 
-if (typeof window !== 'undefined') {
-//function inputChange(event){
+//if (typeof window !== 'undefined') {
 window.inputChange = async (event) => {	
     jdenticon.update("#identicon", document.getElementById("username").value);
 }
-}
+//}
 
 /* ---------------------------------------------------------------------- */
 
@@ -1515,23 +1447,23 @@ async function aaa(days){
 	return out;
 };
 
-if (typeof window !== 'undefined') {
+//if (typeof window !== 'undefined') {
 window.clickUserLink = async (username) => {
 	document.getElementById("username").value = username;
 	clickBtn(1);
 }
-}
+//}
 
 
 //---------------------------------------------------------------------------------------------------------
 var result_copy;
-if (typeof window !== 'undefined') {
+//if (typeof window !== 'undefined') {
 window.checkbox = function() {	
 	makeTable(result_copy);
 }
-}
+//}
 
-if (typeof window !== 'undefined') {
+//if (typeof window !== 'undefined') {
 window.changecheckbox = function(checkbox) {
 	if(document.getElementById(checkbox.id).checked){
 		["history_upvote","history_reward","history_transfer","history_comment","history_witness","history_account","history_delegate","history_withdraw"].forEach(element => {
@@ -1542,9 +1474,9 @@ window.changecheckbox = function(checkbox) {
 	}
 	makeTable(result_copy);
 }
-}
+//}
 
-if (typeof window !== 'undefined') {
+//if (typeof window !== 'undefined') {
 window.clickAppLink = function(appname) {
 	username = document.getElementById("username").value;
 	//location.href = appname + username;
@@ -1556,8 +1488,9 @@ window.clickAppLink = function(appname) {
 	a.click();
 	document.body.removeChild(a);
 }
+//}
 
-if (typeof window !== 'undefined') {
+
 window.onload = function() {
 
 	let username = getUserName();
@@ -1600,7 +1533,7 @@ window.onload = function() {
 		clickBtn(1);
 	}
 };
-}
+
 
 /* --------------------------------------------------------------------- */
 
@@ -1642,11 +1575,11 @@ window.hideTooltip = async (e) => {
 	tooltip.style.display = "none";
 	//resetTooltip();
 }
-}
+//}
 
 /* --------------------------------------------------------------------- */
 
-if (typeof window !== 'undefined') {
+//if (typeof window !== 'undefined') {
 
 
 window.showTooltip_post = async (e) => {
@@ -1660,6 +1593,8 @@ window.showTooltip_post = async (e) => {
     tooltip.innerHTML = "Loading...";
     tooltip.style.display = "block";
 
+	
+
     // APIを呼び出し、投稿のメタデータを取得
     steem.api.callAsync('condenser_api.get_content', [author, permlink])
     .then(result => {
@@ -1671,7 +1606,7 @@ window.showTooltip_post = async (e) => {
 }
 
 function createTooltip(e, result, author) {
-    console.log("*** createTooltip start ***");
+    //console.log("*** createTooltip start ***");
     let tooltip = document.getElementById("tooltip");
 
     // 投稿のタイトルやメタデータをツールチップに追加
@@ -1682,13 +1617,12 @@ function createTooltip(e, result, author) {
     let imageList = JSON.parse(result.json_metadata).image;
     if (imageList) {
         imageList.forEach(imageUrl => {
+
             if (imageUrl && imageUrl !== '') {
                 tooltip.insertAdjacentHTML("beforeend", "<img src='" + imageUrl + "' style='margin: 4px; width: 128px; height: 128px; object-fit: cover;'/>");
             }
         });
     }
-
-
 
     let document_w = document.documentElement.clientWidth;
     let document_h = document.documentElement.clientHeight;
@@ -1714,16 +1648,12 @@ function createTooltip(e, result, author) {
             tooltipX = document_w - 40 - tooltipWidth;
         }
     }
-
-	
 	
     // 下に十分なスペースがある場合はそのまま下に表示
 	// スクロール位置を考慮した相対位置を計算
     let relativeY = e.pageY - window.scrollY;  // スクロールを引いて相対的な位置を取得
     if (document_h - relativeY > tooltipHeight + 20) {
-		console.log("1");
     } else {
-		console.log("2");
         // 下に隠れる場合は上に表示
         tooltipY = window.scrollY + document_h - tooltipHeight - 10;
         // 上にも隠れる場合は画面内に収める
@@ -1732,21 +1662,21 @@ function createTooltip(e, result, author) {
         }
     }
 
-
     // ツールチップの位置と幅を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
     tooltip.style.width = tooltipWidth + 'px';
 
-    console.log("*** createTooltip end ***");
+	
+    //console.log("*** createTooltip end ***");
 }
 
 window.hideTooltip_post = async (e) => {
-    console.log("*** hideTooltip_post start ***");
+    //console.log("*** hideTooltip_post start ***");
     var tooltip = document.getElementById("tooltip");
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
-    console.log("*** hideTooltip_post end ***");
+    //console.log("*** hideTooltip_post end ***");
 }
 
 // _sleep 関数（ミリ秒で指定した時間だけ待機する）
@@ -1795,12 +1725,12 @@ function _sleep(ms) {
 // 	tooltip.innerHTML = "";
 // }
 
-}
+//}
 
 /* --------------------------------------------------------------------- */
 
 
-if (typeof window !== 'undefined') {
+//if (typeof window !== 'undefined') {
 	/*スクロール対応*/
 window.addEventListener('load', function() {
     const nav = document.querySelector('.top-nav');
@@ -1810,4 +1740,4 @@ window.addEventListener('resize', function() {
     const nav = document.querySelector('.top-nav');
     document.body.style.marginTop = nav.offsetHeight + 'px';
 });
-}
+//}
