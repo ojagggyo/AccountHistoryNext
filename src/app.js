@@ -1694,8 +1694,7 @@ function createTooltip(e, result, author) {
     }
 
     // ツールチップの位置を調整（画面からはみ出さないように）
-	let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
-	let tooltip_h = parseInt(window.getComputedStyle(tooltip).height);
+
     let document_w = document.documentElement.clientWidth;
     let document_h = document.documentElement.clientHeight;
     let tooltipWidth = tooltip.offsetWidth;
@@ -1705,10 +1704,12 @@ function createTooltip(e, result, author) {
     let tooltipY = e.pageY + 10;
 	
     // プロフィール写真の場合は、ここで終了
-	if(imageList.length == 0){
-		tooltip.style.top = tooltipY + 'px';
-    	tooltip.style.left = tooltipX + 'px';
-		return;
+	if (imageList) {
+		if(imageList.length == 0){
+			tooltip.style.top = tooltipY + 'px';
+			tooltip.style.left = tooltipX + 'px';
+			return;
+		}
 	}
 
 	//横に並べられる最大の数（切捨て）
@@ -1737,6 +1738,9 @@ function createTooltip(e, result, author) {
 	//  }
 	console.log(`document_h=${document_h}`);
 	console.log(`tooltipY=${tooltipY}`);
+
+	//let tooltip_w = parseInt(window.getComputedStyle(tooltip).width);
+	let tooltip_h = parseInt(window.getComputedStyle(tooltip).height);
 	console.log(`tooltip_h=${tooltip_h}`);
 
     // ツールチップの位置を更新
