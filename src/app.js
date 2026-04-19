@@ -1719,16 +1719,23 @@ function createTooltip(e, result, author) {
         }
     }
 
-    // ツールチップが画面の下に隠れないように調整
-    if (document_h - tooltipY < tooltipHeight) {
-        // 下に収まりきらない場合は、上にずらす
+
+    // 下に十分なスペースがある場合はそのまま下に表示
+    if (document_h - e.pageY > tooltipHeight + 10) {
+        tooltipY = e.pageY + 10;  // マウスの下に表示
+    } else {
+        // 下に隠れる場合は上に表示
         tooltipY = e.pageY - tooltipHeight - 10;
-        
-        // 上にずらしても画面外に出る場合は、位置を調整
+        // 上にも隠れる場合は画面内に収める
         if (tooltipY < 10) {
-            tooltipY = 10; // 上端からはみ出さないように
+            tooltipY = 10;  // 上端からはみ出さないように
         }
     }
+	console.log(`tooltipHeight=${tooltipHeight}`);
+	console.log(`e.pageY=${e.pageY}`);
+	console.log(`tooltipY=${tooltipY}`);
+
+
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
