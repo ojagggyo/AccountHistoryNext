@@ -1727,6 +1727,10 @@ function createTooltip(e, result, author) {
 		}
 	 }
 
+	 if(document_h - 40 - tooltipY < rowCount * (128+8)){
+		tooltipY = tooltipY -  rowCount * (128+8);
+	 }
+
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.left = tooltipX + 'px';
