@@ -1717,14 +1717,20 @@ function createTooltip(e, result, author) {
 
     // 下に十分なスペースがある場合はそのまま下に表示
     if (document_h - relativeY > tooltipHeight + 10) {
+		console.log("1");
+		console.log(`tooltipY=${tooltipY} before`);
         tooltipY = relativeY + 10;  // マウスの下に表示
+		console.log(`tooltipY=${tooltipY} after`);
     } else {
+		console.log("2");
+		console.log(`tooltipY=${tooltipY} before`);
         // 下に隠れる場合は上に表示
         tooltipY = relativeY - tooltipHeight - 10;
         // 上にも隠れる場合は画面内に収める
         if (tooltipY < 10) {
             tooltipY = 10;  // 上端からはみ出さないように
         }
+		console.log(`tooltipY=${tooltipY} after`);
     }
 
     // ツールチップの位置と幅を更新
