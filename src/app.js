@@ -1709,7 +1709,7 @@ function createTooltip(e, result, author) {
 	//横に並べられる最大の数（切捨て）
     let colCount = Math.floor((document_w - 40) / (128+8));
 	//行数を求める。（切り上げ）
-	let rowCount =  Math.ceil(((imageList.length + 1) / colCount));
+	let rowCount = Math.ceil(((imageList.length + 1) / colCount));
 
 	//表示した画像が、1行に入りきれない場合
     if (colCount < imageList.length + 1 ) {	
@@ -1728,8 +1728,10 @@ function createTooltip(e, result, author) {
 	 }
 
 	 if(document_h - 40 - tooltipY < rowCount * (128+8)){
-		tooltipY = tooltipY -  rowCount * (128+8);
+		tooltipY = tooltipY -  rowCount * (128+8) - 40;
 	 }
+	 console.log(`document_h=${document_h}`);
+	 console.log(`tooltipY=${tooltipY}`);
 
     // ツールチップの位置を更新
     tooltip.style.top = tooltipY + 'px';
