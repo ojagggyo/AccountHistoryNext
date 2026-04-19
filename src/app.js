@@ -1716,6 +1716,7 @@ function createTooltip(e, result, author) {
     }
 
 	
+	/*
     // 下に十分なスペースがある場合はそのまま下に表示
 	// スクロール位置を考慮した相対位置を計算
     let relativeY = e.pageY - window.scrollY;  // スクロールを引いて相対的な位置を取得
@@ -1731,7 +1732,7 @@ function createTooltip(e, result, author) {
             tooltipY = window.scrollY + 20;  // 上端からはみ出さないように
         }
     }
-
+*/
 
     // ツールチップの位置と幅を更新
     tooltip.style.top = tooltipY + 'px';
