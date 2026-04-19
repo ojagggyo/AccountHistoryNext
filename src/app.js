@@ -1735,11 +1735,12 @@ function createTooltip(e, result, author) {
         //    tooltipY = 10;  // 上端からはみ出さないように
         //}
     }
-	// console.log(`document_h=${document_h}`);
-	// console.log(`tooltipHeight=${tooltip_h}`);
+	console.log(`document_height=${document_height}`);
+	console.log(`rel_pageY=${rel_pageY}`);
+	console.log(`tooltip_height=${tooltip_height}`);
 	// console.log(`e.pageY=${e.pageY}`);
 	// console.log(`tooltipY=${tooltipY}`);
-	// console.log(`relativeY=${relativeY}`);
+	
 	
 
     // ツールチップの位置を更新
