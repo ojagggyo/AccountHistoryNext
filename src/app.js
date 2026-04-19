@@ -1693,59 +1693,59 @@ function createTooltip(e, result, author) {
     }
 
     // スクロールを考慮した相対位置を計算
-    let rel_y = e.pageY - window.scrollY;
-    let rel_x = e.pageX - window.scrollX;
+    let rel_pageY = e.pageY - window.scrollY;
+    let rel_pageX = e.pageX - window.scrollX;
 
     // ツールチップの位置を調整（画面からはみ出さないように）
-    let document_w = document.documentElement.clientWidth;
-    let document_h = document.documentElement.clientHeight;
-    let tooltip_w = tooltip.offsetWidth;
-    let tooltip_h = tooltip.offsetHeight;
+    let document_width = document.documentElement.clientWidth;
+    let document_height = document.documentElement.clientHeight;
+    let tooltip_width = tooltip.offsetWidth;
+    let tooltip_height = tooltip.offsetHeight;
 
-    let tooltipX = e.pageX + 10;
-    let tooltipY = e.pageY + 10;
+    let tooltip_left = e.pageX + 10;
+    let tooltip_top = e.pageY + 10;
 
     // 横に並べられる最大の数（切捨て）
-    let colCount = Math.floor((document_w - 40) / (128 + 8));
+    let colCount = Math.floor((document_width - 40) / (128 + 8));
     // 行数を求める。（切り上げ）
     let rowCount = Math.ceil(((imageList.length + 1) / colCount));
 
     // 表示した画像が、1行に入りきれない場合
     if (colCount < imageList.length + 1) {    
-        tooltip_w = Math.ceil((imageList.length + 1) / rowCount) * (128 + 8);
-        if (document_w - 40 - tooltip_w < tooltipX) {
-            tooltipX = document_w - 40 - tooltip_w;
+        tooltip_width = Math.ceil((imageList.length + 1) / rowCount) * (128 + 8);
+        if (document_width - 40 - tooltip_width < tooltip_left) {
+            tooltip_left = document_width - 40 - tooltip_width;
         }
     } else {
-        tooltip_w = (imageList.length + 1) * (128 + 8);
-        if (document_w - 40 - tooltip_w < tooltipX) {
-            tooltipX = document_w - 40 - tooltip_w;
+        tooltip_width = (imageList.length + 1) * (128 + 8);
+        if (document_width - 40 - tooltip_width < tooltip_left) {
+            tooltip_left = document_width - 40 - tooltip_width;
         }
     }
 
-	/*
+	
     // 下に十分なスペースがある場合はそのまま下に表示
-    if (document_h - relativeY > tooltip_h + 10) {
-        tooltipY = relativeY + 10;  // マウスの下に表示
+    if (document_height - rel_pageY - 20 > tooltip_height) {
+        tooltip_top = rel_pageY;  // マウスの下に表示
     } else {
         // 下に隠れる場合は上に表示
-        tooltipY = relativeY - tooltip_h - 10;
+        tooltip_top = rel_pageY - tooltip_height;
         // 上にも隠れる場合は画面内に収める
-        if (tooltipY < 10) {
-            tooltipY = 10;  // 上端からはみ出さないように
-        }
+        //if (tooltipY < 10) {
+        //    tooltipY = 10;  // 上端からはみ出さないように
+        //}
     }
-	console.log(`document_h=${document_h}`);
-	console.log(`tooltipHeight=${tooltip_h}`);
-	console.log(`e.pageY=${e.pageY}`);
-	console.log(`tooltipY=${tooltipY}`);
-	console.log(`relativeY=${relativeY}`);
-	*/
+	// console.log(`document_h=${document_h}`);
+	// console.log(`tooltipHeight=${tooltip_h}`);
+	// console.log(`e.pageY=${e.pageY}`);
+	// console.log(`tooltipY=${tooltipY}`);
+	// console.log(`relativeY=${relativeY}`);
+	
 
     // ツールチップの位置を更新
-    tooltip.style.top = tooltipY + 'px';
-    tooltip.style.left = tooltipX + 'px';
-    tooltip.style.width = tooltip_w + 'px';
+    tooltip.style.top = tooltip_top + 'px';
+    tooltip.style.left = tooltip_left + 'px';
+    tooltip.style.width = tooltip_width + 'px';
 
     console.log("*** createTooltip end ***");
 }
