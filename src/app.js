@@ -1732,9 +1732,9 @@ function createTooltip(e, result, author) {
 		}
 	 }
 
-	 if(document_h - 40 - tooltipY < rowCount * (128+8)){
-		tooltipY = tooltipY -  rowCount * (128+8) - 40;
-	 }
+	//  if(document_h - 40 - tooltipY < rowCount * (128+8)){
+	// 	tooltipY = tooltipY -  rowCount * (128+8) - 40;
+	//  }
 	 console.log(`document_h=${document_h}`);
 	 console.log(`tooltipY=${tooltipY}`);
 
