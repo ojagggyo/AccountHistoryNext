@@ -1596,10 +1596,13 @@ window.showTooltip_post = async (e) => {
     let tooltip = document.getElementById("tooltip");
     let author = e.target.getAttribute('data-author');
     let permlink = e.target.getAttribute('data-permlink');
-
+	let pageX  = e.pageX;
+	let pageY  = e.pageY;
+	let scrollY = window.scrollY;
+	
     // ツールチップにローディングメッセージを表示
-	tooltip.style.top = (e.pageY + 10)  + 'px';
-    tooltip.style.left = (e.pageX + 10) + 'px';
+	tooltip.style.top = (pageY + 10)  + 'px';
+    tooltip.style.left = (pageX + 10) + 'px';
     tooltip.innerHTML = "Loading...";
     tooltip.style.display = "block";
 
@@ -1608,7 +1611,7 @@ window.showTooltip_post = async (e) => {
     .then(result => {
 		if (!isTooltipVisible) return;  // ツールチップが非表示になっていたら何もしない
 
-        createTooltip(e, result, author);  // 結果を使ってツールチップを作成
+        createTooltip(pageX, pageY, scrollY, result, author);  // 結果を使ってツールチップを作成
     })
     .catch(error => {
         console.error("Error:", error);
@@ -1616,7 +1619,7 @@ window.showTooltip_post = async (e) => {
     });
 }
 
-function createTooltip(e, result, author) {
+function createTooltip(pageX, pageY, scrollY, result, author) {
     //console.log("*** createTooltip start ***");
     let tooltip = document.getElementById("tooltip");
 
@@ -1640,8 +1643,8 @@ function createTooltip(e, result, author) {
     let tooltipWidth = tooltip.offsetWidth;
     let tooltipHeight = tooltip.offsetHeight;
 
-    let tooltipX = e.pageX  + 10;  // カーソル位置に対して10pxの余白を追加
-    let tooltipY = e.pageY  + 10;  // カーソル位置に対して10pxの余白を追加
+    let tooltipX = pageX  + 10;  // カーソル位置に対して10pxの余白を追加
+    let tooltipY = pageY  + 10;  // カーソル位置に対して10pxの余白を追加
 
     // 横に並べられる最大の数（切捨て）
     let colCount = Math.floor((document_w - 40) / (128 + 8));
@@ -1662,14 +1665,13 @@ function createTooltip(e, result, author) {
 	
     // 下に十分なスペースがある場合はそのまま下に表示
 	// スクロール位置を考慮した相対位置を計算
-    let relativeY = e.pageY - window.scrollY;  // スクロールを引いて相対的な位置を取得
-    if (document_h - relativeY > tooltipHeight + 20) {
+    if (document_h - (pageY - scrollY) > tooltipHeight + 20) {
     } else {
         // 下に隠れる場合は上に表示
-        tooltipY = window.scrollY + document_h - tooltipHeight - 10;
+        tooltipY = scrollY + document_h - tooltipHeight - 10;
         // 上にも隠れる場合は画面内に収める
-        if (tooltipY - window.scrollY < 20) {
-            tooltipY = window.scrollY + 20;  // 上端からはみ出さないように
+        if (tooltipY - scrollY < 20) {
+            tooltipY = scrollY + 20;  // 上端からはみ出さないように
         }
     }
 
@@ -1684,7 +1686,7 @@ function createTooltip(e, result, author) {
 
 window.hideTooltip_post = async (e) => {
     //console.log("*** hideTooltip_post start ***");
-	    isTooltipVisible = false;  // ツールチップを非表示にマーク
+	isTooltipVisible = false;  // ツールチップを非表示にマーク
     var tooltip = document.getElementById("tooltip");
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
