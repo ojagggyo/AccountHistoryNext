@@ -1669,7 +1669,7 @@ function createTooltip(pageX, pageY, scrollY, result, author) {
 		//そのまま
     } else {
         // 下に隠れる場合は上に表示
-        tooltipY = scrollY + document_h - tooltipHeight - 10;
+        tooltipY = scrollY + document_h - tooltipHeight - 20;
         // 上にも隠れる場合は画面内に収める
         //if (tooltipY - scrollY < 40) {
         //    tooltipY = scrollY + 40;  // 上端からはみ出さないように
