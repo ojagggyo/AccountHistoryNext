@@ -1643,8 +1643,8 @@ function createTooltip(pageX, pageY, scrollY, result, author) {
     let tooltipWidth = tooltip.offsetWidth;
     let tooltipHeight = tooltip.offsetHeight;
 
-    let tooltipX = pageX  + 10;  // カーソル位置に対して10pxの余白を追加
-    let tooltipY = pageY  + 10;  // カーソル位置に対して10pxの余白を追加
+    let tooltipX = pageX;  // カーソル位置に対して10pxの余白を追加
+    let tooltipY = pageY;  // カーソル位置に対して10pxの余白を追加
 
     // 横に並べられる最大の数（切捨て）
     let colCount = Math.floor((document_w - 40) / (128 + 8));
@@ -1666,12 +1666,13 @@ function createTooltip(pageX, pageY, scrollY, result, author) {
     // 下に十分なスペースがある場合はそのまま下に表示
 	// スクロール位置を考慮した相対位置を計算
     if (document_h - (pageY - scrollY) > tooltipHeight + 20) {
+		//そのまま
     } else {
         // 下に隠れる場合は上に表示
         tooltipY = scrollY + document_h - tooltipHeight - 10;
         // 上にも隠れる場合は画面内に収める
-        if (tooltipY - scrollY < 20) {
-            tooltipY = scrollY + 20;  // 上端からはみ出さないように
+        if (tooltipY - scrollY < 40) {
+            tooltipY = scrollY + 40;  // 上端からはみ出さないように
         }
     }
 
