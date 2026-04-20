@@ -1663,6 +1663,7 @@ function createTooltip(pageX, pageY, scrollY, result, author) {
         }
     }
 	
+	/*
     // 下に十分なスペースがある場合はそのまま下に表示
 	// スクロール位置を考慮した相対位置を計算
     if (document_h - (pageY - scrollY) > tooltipHeight + 20) {
@@ -1670,11 +1671,8 @@ function createTooltip(pageX, pageY, scrollY, result, author) {
     } else {
         // 下に隠れる場合は上に表示
         tooltipY = scrollY + document_h - tooltipHeight - 20;
-        // 上にも隠れる場合は画面内に収める
-        //if (tooltipY - scrollY < 40) {
-        //    tooltipY = scrollY + 40;  // 上端からはみ出さないように
-        //}
     }
+	*/
 
     // ツールチップの位置と幅を更新
     tooltip.style.top = tooltipY + 'px';
