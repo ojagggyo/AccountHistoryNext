@@ -1648,21 +1648,19 @@ function createTooltip(pageX, pageY, result, author) {
     //          style="margin:4px;width:128px;height:128px;object-fit:cover;" />`;
 
 	let html = `<b>${result.title}</b><br/>`;
-	html += `<div class="image-container" style="display: flex; flex-wrap: wrap;">`;
+    html += `<div class="image-container" style="display: flex; flex-wrap: wrap;">`;
 	html += createImageHTML_avatar(author);
-	html += `</div>`;
 
     // 画像を横並びに配置
     if (imageList.length > 0) {
-        html += `<div class="image-container" style="display: flex; flex-wrap: wrap;">`;
+
         imageList.forEach(url => {
             if (url) {
                 html += createImageHTML(url);
             }
         });
-        html += `</div>`;
     }
-
+	html += `</div>`;
     tooltip.innerHTML = html;
 
     // ツールチップのサイズ計算
