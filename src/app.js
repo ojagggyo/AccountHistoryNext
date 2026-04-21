@@ -1712,6 +1712,13 @@ function calculateTooltipPosition(pageX, pageY, tooltipWidth, tooltipHeight) {
   return { tooltipX, tooltipY };
 }
 
+// ツールチップの位置とサイズを計算する
+function calculatePositionAndSize(pageX, pageY, imageCount) {
+  const { tooltipWidth, tooltipHeight } = calculateTooltipSize(imageCount);
+  const { tooltipX, tooltipY } = calculateTooltipPosition(pageX, pageY, tooltipWidth, tooltipHeight);
+  return { tooltipWidth, tooltipHeight, tooltipX, tooltipY };
+}
+
 // ツールチップを非表示にする
 window.hideTooltip_post = () => {
   // もしツールチップが表示されていない場合は何もしない
