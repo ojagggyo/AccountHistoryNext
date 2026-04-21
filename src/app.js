@@ -1593,151 +1593,135 @@ let isTooltipVisible = false;
 let currentRequestId = 0;
 
 window.showTooltip_post = async (e) => {
-    const requestId = ++currentRequestId;
+  const requestId = ++currentRequestId;
+  
+  // ツールチップがすでに表示中ならば何もしない
+  if (isTooltipVisible) return;
+  isTooltipVisible = true;
 
-    // ツールチップがすでに表示中ならば何もしない
-    if (isTooltipVisible) return;
-    isTooltipVisible = true;
+  const tooltip = document.getElementById("tooltip");
+  const author = e.target.getAttribute('data-author');
+  const permlink = e.target.getAttribute('data-permlink');
+  const pageX = e.pageX;
+  const pageY = e.pageY;
 
-    let tooltip = document.getElementById("tooltip");
+  // 初期表示
+  tooltip.style.top = (pageY + 10) + 'px';
+  tooltip.style.left = (pageX + 10) + 'px';
+  tooltip.innerHTML = "Loading...";
+  tooltip.style.display = "block";
 
-    let author = e.target.getAttribute('data-author');
-    let permlink = e.target.getAttribute('data-permlink');
+  try {
+    const result = await steem.api.callAsync('condenser_api.get_content', [author, permlink]);
 
-    let pageX = e.pageX;
-    let pageY = e.pageY;
+    // 非同期ズレ防止
+    if (!isTooltipVisible || requestId !== currentRequestId) return;
 
-    // 初期表示
-    tooltip.style.top = (pageY + 10) + 'px';
-    tooltip.style.left = (pageX + 10) + 'px';
-    tooltip.innerHTML = "Loading...";
-    tooltip.style.display = "block";
-
-    try {
-        const result = await steem.api.callAsync(
-            'condenser_api.get_content',
-            [author, permlink]
-        );
-
-        // 非同期ズレ防止
-        if (!isTooltipVisible || requestId !== currentRequestId) return;
-
-        createTooltip(pageX, pageY, result, author);
-
-    } catch (error) {
-        console.error("Error:", error);
-        tooltip.innerHTML = "Failed to load content.";
-    }
+    createTooltip(pageX, pageY, result, author);
+  } catch (error) {
+    console.error("Error:", error);
+    tooltip.innerHTML = "Failed to load content.";
+  }
 };
 
 // ツールチップを作成
 function createTooltip(pageX, pageY, result, author) {
-    let tooltip = document.getElementById("tooltip");
+  const tooltip = document.getElementById("tooltip");
 
-    // 安全に imageList を取得
-    let imageList = [];
-    try {
-        imageList = JSON.parse(result.json_metadata).image || [];
-    } catch (e) {
-        imageList = [];
-    }
+  // 安全に imageList を取得
+  let imageList = [];
+  try {
+    imageList = JSON.parse(result.json_metadata).image || [];
+  } catch (e) {
+    imageList = [];
+  }
 
-    // HTML生成
-    //let html = `<b>${result.title}</b><br/>`;
-    //html += `<img src="https://steemitimages.com/u/${author}/avatar"
-    //          style="margin:4px;width:128px;height:128px;object-fit:cover;" />`;
+  // HTML生成
+  const html = generateTooltipHTML(result, author, imageList);
+  tooltip.innerHTML = html;
 
-	let html = `<b>${result.title}</b><br/>`;
-    html += `<div class="image-container" style="display: flex; flex-wrap: wrap;">`;
-	html += createImageHTML_avatar(author);
+  // ツールチップのサイズ計算
+  const { tooltipWidth, tooltipHeight, tooltipX, tooltipY } = calculatePositionAndSize(pageX, pageY, imageList.length);
 
-    // 画像を横並びに配置
-    if (imageList.length > 0) {
+  // 反映
+  tooltip.style.left = tooltipX + 'px';
+  tooltip.style.top = tooltipY + 'px';
+  tooltip.style.width = tooltipWidth + 'px';
+}
 
-        imageList.forEach(url => {
-            if (url) {
-                html += createImageHTML(url);
-            }
-        });
-    }
-	html += `</div>`;
-    tooltip.innerHTML = html;
+// ツールチップ用のHTML生成
+function generateTooltipHTML(result, author, imageList) {
+  let html = `<b>${result.title}</b><br/>`;
+  html += `<div class="image-container" style="display: flex; flex-wrap: nowrap;">`;  // 横並びにする
+  html += createImageHTML_avatar(author); // アバター
+  if (imageList.length > 0) {
+    imageList.forEach(url => { html += createImageHTML(url); });
+  }
+  html += `</div>`;
+  return html;
+}
 
-    // ツールチップのサイズ計算
-    let { tooltipWidth, tooltipHeight } = calculateTooltipSize(imageList.length);
-
-    // ツールチップ位置の計算
-    let { tooltipX, tooltipY } = calculateTooltipPosition(pageX, pageY, tooltipWidth, tooltipHeight);
-
-    // 反映
-    tooltip.style.left = tooltipX + 'px';
-    tooltip.style.top = tooltipY + 'px';
-    tooltip.style.width = tooltipWidth + 'px';
+// アバター画像のHTMLを作成
+function createImageHTML_avatar(author) {
+  return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
+            <img src="https://steemitimages.com/u/${author}/avatar" 
+                 style="width:100%;height:100%;object-fit:cover;" 
+                 onload="this.classList.add('loaded');" 
+                 onerror="this.classList.add('error');" />
+          </div>`;
 }
 
 // 画像のHTMLを作成
-function createImageHTML_avatar(author) {
-    return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
-                <img src="https://steemitimages.com/u/${author}/avatar"
-                     style="width:100%;height:100%;object-fit:cover;" 
-                     onload="this.classList.add('loaded');" 
-                     onerror="this.classList.add('error');" />
-            </div>`;
-}
 function createImageHTML(url) {
-    return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
-                <img src="${url}" 
-                     style="width:100%;height:100%;object-fit:cover;" 
-                     onload="this.classList.add('loaded');" 
-                     onerror="this.classList.add('error');" />
-            </div>`;
+  return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
+            <img src="${url}" style="width:100%;height:100%;object-fit:cover;" 
+                 onload="this.classList.add('loaded');" 
+                 onerror="this.classList.add('error');" />
+          </div>`;
 }
 
 // ツールチップのサイズ計算
 function calculateTooltipSize(imageCount) {
-    let document_w = document.documentElement.clientWidth;
+  const document_w = document.documentElement.clientWidth;
+  const colCount = Math.max(1, Math.floor((document_w - 40) / (128 + 8)));
+  const totalItems = imageCount + 1; // 画像+アバター
+  const rowCount = Math.ceil(totalItems / colCount);
+  const tooltipWidth = colCount < totalItems ? Math.ceil(totalItems / rowCount) * (128 + 8) : totalItems * (128 + 8);
+  const tooltipHeight = rowCount * (128 + 8);
 
-    let colCount = Math.max(1, Math.floor((document_w - 40) / (128 + 8)));
-    let totalItems = imageCount + 1;
-    let rowCount = Math.ceil(totalItems / colCount);
-
-    let tooltipWidth = colCount < totalItems ? Math.ceil(totalItems / rowCount) * (128 + 8) : totalItems * (128 + 8);
-    let tooltipHeight = rowCount * (128 + 8);
-
-    return { tooltipWidth, tooltipHeight };
+  return { tooltipWidth, tooltipHeight };
 }
 
 // ツールチップの位置計算
 function calculateTooltipPosition(pageX, pageY, tooltipWidth, tooltipHeight) {
-    let document_w = document.documentElement.clientWidth;
-    let document_h = document.documentElement.clientHeight;
+  const document_w = document.documentElement.clientWidth;
+  const document_h = document.documentElement.clientHeight;
 
-    let tooltipX = pageX + 10;
-    let tooltipY = pageY + 10;
+  let tooltipX = pageX + 10;
+  let tooltipY = pageY + 10;
 
-    // 画面幅を超えないように調整
-    if (document_w - 40 - tooltipWidth < tooltipX) {
-        tooltipX = document_w - 40 - tooltipWidth;
-    }
+  // 画面幅を超えないように調整
+  if (document_w - 40 - tooltipWidth < tooltipX) {
+    tooltipX = document_w - 40 - tooltipWidth;
+  }
 
-    // 画面下部に収まらない場合は上に表示
-    if (document_h - (pageY - window.scrollY) <= tooltipHeight + 40) {
-        tooltipY = window.scrollY + document_h - tooltipHeight - 40;
-    }
+  // 画面下部に収まらない場合は上に表示
+  if (document_h - (pageY - window.scrollY) <= tooltipHeight + 40) {
+    tooltipY = window.scrollY + document_h - tooltipHeight - 40;
+  }
 
-    return { tooltipX, tooltipY };
+  return { tooltipX, tooltipY };
 }
 
 // ツールチップを非表示にする
 window.hideTooltip_post = () => {
-    // もしツールチップが表示されていない場合は何もしない
-    if (!isTooltipVisible) return;
+  // もしツールチップが表示されていない場合は何もしない
+  if (!isTooltipVisible) return;
+  isTooltipVisible = false;
 
-    isTooltipVisible = false;
-
-    let tooltip = document.getElementById("tooltip");
-    tooltip.style.display = "none";
-    tooltip.innerHTML = "";
+  const tooltip = document.getElementById("tooltip");
+  tooltip.style.display = "none";
+  tooltip.innerHTML = "";
 };
 
 

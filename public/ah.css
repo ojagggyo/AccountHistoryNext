@@ -253,3 +253,15 @@ input[type=checkbox] {
   z-index: 9999;
   pointer-events: none; 
 }
+
+.image-container {
+  display: flex;
+  flex-wrap: nowrap;  /* 画像とアバターを横並び */
+  gap: 8px; /* アイテム間のスペース */
+}
+
+.image-placeholder {
+  width: 128px;
+  height: 128px;
+  margin: 4px;
+}
