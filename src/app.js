@@ -1679,7 +1679,7 @@ function createTooltip(pageX, pageY, result, author) {
 function createImageHTML_avatar() {
     return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
                 <img src="https://steemitimages.com/u/${author}/avatar"
-                     style="width:100%;height:100%;object-fit:cover;" 
+                     style="width:128px;height:128px;object-fit:cover;" 
                      onload="this.classList.add('loaded');" 
                      onerror="this.classList.add('error');" />
             </div>`;
@@ -1687,7 +1687,7 @@ function createImageHTML_avatar() {
 function createImageHTML(url) {
     return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
                 <img src="${url}" 
-                     style="width:100%;height:100%;object-fit:cover;" 
+                     style="width:128px;height:128pxobject-fit:cover;" 
                      onload="this.classList.add('loaded');" 
                      onerror="this.classList.add('error');" />
             </div>`;
