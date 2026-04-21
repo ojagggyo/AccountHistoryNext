@@ -281,10 +281,11 @@ input[type=checkbox] {
   pointer-events: none; // ← これでイベントループ防止
 }
 
-
+/*
 #tooltip img {
   margin: 4px;
   width: 128px;
   height: 128px;
   object-fit: cover;
 }
+  */
