@@ -1588,7 +1588,6 @@ window.hideTooltip = async (e) => {
 
 
 
-
 let isTooltipVisible = false;
 let currentRequestId = 0;
 
@@ -1648,8 +1647,12 @@ function createTooltip(pageX, pageY, result, author) {
 
     imageList.forEach(url => {
         if (url) {
-            html += `<img src="${url}"
-                     style="margin:4px;width:128px;height:128px;object-fit:cover;" />`;
+            html += `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
+                        <img src="${url}" 
+                             style="width:100%;height:100%;object-fit:cover;" 
+                             onload="this.style.opacity = 1;" 
+                             onerror="this.style.opacity = 0;" />
+                    </div>`;
         }
     });
 
@@ -1694,7 +1697,6 @@ window.hideTooltip_post = () => {
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
 };
-
 
 
 
