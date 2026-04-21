@@ -1585,6 +1585,9 @@ window.hideTooltip = async (e) => {
 /* --------------------------------------------------------------------- */
 
 //if (typeof window !== 'undefined') {
+l
+
+
 let isTooltipVisible = false;
 let currentRequestId = 0;
 
@@ -1635,17 +1638,10 @@ function createTooltip(pageX, pageY, result, author) {
         imageList = [];
     }
 
-    // HTML生成
+    // 最初の部分（タイトル、ユーザー情報）
     let html = `<b>${result.title}</b><br/>`;
     html += `<img src="https://steemitimages.com/u/${author}/avatar"
               style="margin:4px;width:128px;height:128px;object-fit:cover;" />`;
-
-    imageList.forEach(url => {
-        if (url) {
-            html += `<img src="${url}"
-                     style="margin:4px;width:128px;height:128px;object-fit:cover;" />`;
-        }
-    });
 
     tooltip.innerHTML = html;
 
@@ -1675,6 +1671,26 @@ function createTooltip(pageX, pageY, result, author) {
     tooltip.style.left = tooltipX + 'px';
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.width = tooltipWidth + 'px';
+
+    // 画像を非同期で読み込む
+    let imagePromises = imageList.map(url => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = url;
+            img.onload = () => {
+                tooltip.appendChild(img); // 画像を追加
+                resolve(img); // 読み込み完了
+            };
+            img.onerror = reject; // 失敗時
+        });
+    });
+
+    // 全ての画像が読み込まれたら
+    Promise.all(imagePromises).then(() => {
+        // 読み込み完了後の処理（必要であれば追加）
+    }).catch(err => {
+        console.error('画像読み込みエラー:', err);
+    });
 }
 
 window.hideTooltip_post = () => {
@@ -1684,7 +1700,6 @@ window.hideTooltip_post = () => {
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
 };
-
 
 
 

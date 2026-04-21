@@ -270,6 +270,7 @@ input[type=checkbox] {
     pointer-events: none; /* 非表示時にはインタラクションできない */
 }
 
+/*
 #tooltip {
   position: absolute;
   display: none;
@@ -277,5 +278,22 @@ input[type=checkbox] {
   border: 1px solid #ccc;
   padding: 8px;
   z-index: 9999;
-  pointer-events: none; /* ← これでイベントループ防止 */
+  pointer-events: none; // ← これでイベントループ防止
+}
+*/
+#tooltip {
+  position: absolute;
+  display: none;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 8px;
+  z-index: 9999;
+  pointer-events: none;
+  max-width: 300px;
+}
+#tooltip img {
+  margin: 4px;
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
 }
