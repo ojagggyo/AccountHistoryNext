@@ -1648,7 +1648,9 @@ function createTooltip(pageX, pageY, result, author) {
     //          style="margin:4px;width:128px;height:128px;object-fit:cover;" />`;
 
 	let html = `<b>${result.title}</b><br/>`;
+	html += `<div class="image-container" style="display: flex; flex-wrap: wrap;">`;
 	html += createImageHTML_avatar();
+	html += `</div>`;
 
     // 画像を横並びに配置
     if (imageList.length > 0) {
@@ -1679,7 +1681,7 @@ function createTooltip(pageX, pageY, result, author) {
 function createImageHTML_avatar() {
     return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
                 <img src="https://steemitimages.com/u/${author}/avatar"
-                     style="width:128px;height:128px;object-fit:cover;" 
+                     style="width:100%;height:100%;object-fit:cover;" 
                      onload="this.classList.add('loaded');" 
                      onerror="this.classList.add('error');" />
             </div>`;
@@ -1687,7 +1689,7 @@ function createImageHTML_avatar() {
 function createImageHTML(url) {
     return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
                 <img src="${url}" 
-                     style="width:128px;height:128pxobject-fit:cover;" 
+                     style="width:100%;height:100%;object-fit:cover;" 
                      onload="this.classList.add('loaded');" 
                      onerror="this.classList.add('error');" />
             </div>`;
