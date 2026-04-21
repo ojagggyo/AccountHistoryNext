@@ -244,33 +244,6 @@ input[type=checkbox] {
 
 /* --------------------------------------------------- */
 
-#xxxtooltip {
-    position: absolute;
-    visibility: hidden; /* 初期状態では非表示 */
-    padding: 8px;
-    background-color: rgba(0, 0, 0, 0.85);
-    color: white;
-    border-radius: 4px;
-    max-width: 300px;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out, visibility 0s linear 0.2s; /* visibilityに遅延を加えて、opacityの後に切り替え */
-    pointer-events: none; /* ツールチップは表示中のみインタラクション可能 */
-}
-
-#xxxtooltip.show {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto; /* ツールチップが表示されているときにインタラクション可能 */
-}
-
-#xxxtooltip.hide {
-    opacity: 0;
-    visibility: hidden; /* 非表示状態に変更 */
-    pointer-events: none; /* 非表示時にはインタラクションできない */
-}
-
-
 #tooltip {
   position: absolute;
   display: none;
@@ -278,14 +251,5 @@ input[type=checkbox] {
   border: 1px solid #ccc;
   padding: 8px;
   z-index: 9999;
-  pointer-events: none; // ← これでイベントループ防止
+  pointer-events: none; 
 }
-
-/*
-#tooltip img {
-  margin: 4px;
-  width: 128px;
-  height: 128px;
-  object-fit: cover;
-}
-  */
