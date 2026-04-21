@@ -1588,13 +1588,12 @@ window.hideTooltip = async (e) => {
 
 
 
-
 let isTooltipVisible = false;
 let currentRequestId = 0;
 
 window.showTooltip_post = async (e) => {
   const requestId = ++currentRequestId;
-  
+
   // ツールチップがすでに表示中ならば何もしない
   if (isTooltipVisible) return;
   isTooltipVisible = true;
@@ -1723,7 +1722,6 @@ window.hideTooltip_post = () => {
   tooltip.style.display = "none";
   tooltip.innerHTML = "";
 };
-
 
 
 
