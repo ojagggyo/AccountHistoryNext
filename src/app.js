@@ -1587,6 +1587,8 @@ window.hideTooltip = async (e) => {
 //if (typeof window !== 'undefined') {
 
 
+
+
 let isTooltipVisible = false;
 let currentRequestId = 0;
 
@@ -1645,11 +1647,16 @@ function createTooltip(pageX, pageY, result, author) {
     html += `<img src="https://steemitimages.com/u/${author}/avatar"
               style="margin:4px;width:128px;height:128px;object-fit:cover;" />`;
 
-    imageList.forEach(url => {
-        if (url) {
-            html += createImageHTML(url);
-        }
-    });
+    // 画像を横並びに配置
+    if (imageList.length > 0) {
+        html += `<div class="image-container" style="display: flex; flex-wrap: wrap;">`;
+        imageList.forEach(url => {
+            if (url) {
+                html += createImageHTML(url);
+            }
+        });
+        html += `</div>`;
+    }
 
     tooltip.innerHTML = html;
 
@@ -1721,6 +1728,8 @@ window.hideTooltip_post = () => {
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
 };
+
+
 
 
 // window.showTooltip_post = async (e) => {
