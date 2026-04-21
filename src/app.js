@@ -1587,7 +1587,6 @@ window.hideTooltip = async (e) => {
 //if (typeof window !== 'undefined') {
 
 
-
 let isTooltipVisible = false;
 let currentRequestId = 0;
 
@@ -1625,6 +1624,7 @@ window.showTooltip_post = async (e) => {
 
     } catch (error) {
         console.error("Error:", error);
+        tooltip.innerHTML = "Failed to load content.";
     }
 };
 
@@ -1647,43 +1647,67 @@ function createTooltip(pageX, pageY, result, author) {
 
     imageList.forEach(url => {
         if (url) {
-            html += `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
-                        <img src="${url}" 
-                             style="width:100%;height:100%;object-fit:cover;" 
-                             onload="this.style.opacity = 1;" 
-                             onerror="this.style.opacity = 0;" />
-                    </div>`;
+            html += createImageHTML(url);
         }
     });
 
     tooltip.innerHTML = html;
 
-    // サイズ計算
-    let document_w = document.documentElement.clientWidth;
+    // ツールチップのサイズ計算
+    let { tooltipWidth, tooltipHeight } = calculateTooltipSize(imageList.length);
 
-    let colCount = Math.max(1, Math.floor((document_w - 40) / (128 + 8)));
-    let totalItems = imageList.length + 1;
-    let rowCount = Math.ceil(totalItems / colCount);
-
-    let tooltipWidth;
-
-    if (colCount < totalItems) {
-        tooltipWidth = Math.ceil(totalItems / rowCount) * (128 + 8);
-    } else {
-        tooltipWidth = totalItems * (128 + 8);
-    }
-
-    let tooltipX = pageX + 10;
-    let tooltipY = pageY + 10;
-
-    if (document_w - 40 - tooltipWidth < tooltipX) {
-        tooltipX = document_w - 40 - tooltipWidth;
-    }
+    // ツールチップ位置の計算
+    let { tooltipX, tooltipY } = calculateTooltipPosition(pageX, pageY, tooltipWidth, tooltipHeight);
 
     // 反映
     tooltip.style.left = tooltipX + 'px';
     tooltip.style.top = tooltipY + 'px';
     tooltip.style.width = tooltipWidth + 'px';
+}
+
+// 画像のHTMLを作成
+function createImageHTML(url) {
+    return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
+                <img src="${url}" 
+                     style="width:100%;height:100%;object-fit:cover;" 
+                     onload="this.classList.add('loaded');" 
+                     onerror="this.classList.add('error');" />
+            </div>`;
+}
+
+// ツールチップのサイズ計算
+function calculateTooltipSize(imageCount) {
+    let document_w = document.documentElement.clientWidth;
+
+    let colCount = Math.max(1, Math.floor((document_w - 40) / (128 + 8)));
+    let totalItems = imageCount + 1;
+    let rowCount = Math.ceil(totalItems / colCount);
+
+    let tooltipWidth = colCount < totalItems ? Math.ceil(totalItems / rowCount) * (128 + 8) : totalItems * (128 + 8);
+    let tooltipHeight = rowCount * (128 + 8);
+
+    return { tooltipWidth, tooltipHeight };
+}
+
+// ツールチップの位置計算
+function calculateTooltipPosition(pageX, pageY, tooltipWidth, tooltipHeight) {
+    let document_w = document.documentElement.clientWidth;
+    let document_h = document.documentElement.clientHeight;
+
+    let tooltipX = pageX + 10;
+    let tooltipY = pageY + 10;
+
+    // 画面幅を超えないように調整
+    if (document_w - 40 - tooltipWidth < tooltipX) {
+        tooltipX = document_w - 40 - tooltipWidth;
+    }
+
+    // 画面下部に収まらない場合は上に表示
+    if (document_h - (pageY - window.scrollY) <= tooltipHeight + 20) {
+        tooltipY = window.scrollY + document_h - tooltipHeight - 20;
+    }
+
+    return { tooltipX, tooltipY };
 }
 
 // ツールチップを非表示にする
@@ -1697,7 +1721,6 @@ window.hideTooltip_post = () => {
     tooltip.style.display = "none";
     tooltip.innerHTML = "";
 };
-
 
 
 // window.showTooltip_post = async (e) => {
