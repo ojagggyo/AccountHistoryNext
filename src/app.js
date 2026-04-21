@@ -1587,7 +1587,6 @@ window.hideTooltip = async (e) => {
 //if (typeof window !== 'undefined') {
 
 
-
 let isTooltipVisible = false;
 let currentRequestId = 0;
 
@@ -1729,7 +1728,6 @@ window.hideTooltip_post = () => {
   tooltip.style.display = "none";
   tooltip.innerHTML = "";
 };
-
 
 
 // window.showTooltip_post = async (e) => {
