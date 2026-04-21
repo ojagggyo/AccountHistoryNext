@@ -1649,7 +1649,7 @@ function createTooltip(pageX, pageY, result, author) {
 
 	let html = `<b>${result.title}</b><br/>`;
 	html += `<div class="image-container" style="display: flex; flex-wrap: wrap;">`;
-	html += createImageHTML_avatar();
+	html += createImageHTML_avatar(author);
 	html += `</div>`;
 
     // 画像を横並びに配置
@@ -1678,7 +1678,7 @@ function createTooltip(pageX, pageY, result, author) {
 }
 
 // 画像のHTMLを作成
-function createImageHTML_avatar() {
+function createImageHTML_avatar(author) {
     return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
                 <img src="https://steemitimages.com/u/${author}/avatar"
                      style="width:100%;height:100%;object-fit:cover;" 
