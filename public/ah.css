@@ -269,3 +269,13 @@ input[type=checkbox] {
     visibility: hidden; /* 非表示状態に変更 */
     pointer-events: none; /* 非表示時にはインタラクションできない */
 }
+
+#tooltip {
+  position: absolute;
+  display: none;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 8px;
+  z-index: 9999;
+  pointer-events: none; /* ← これでイベントループ防止 */
+}
