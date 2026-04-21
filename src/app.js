@@ -1721,8 +1721,8 @@ function calculateTooltipPosition(pageX, pageY, tooltipWidth, tooltipHeight) {
     }
 
     // 画面下部に収まらない場合は上に表示
-    if (document_h - (pageY - window.scrollY) <= tooltipHeight + 20) {
-        tooltipY = window.scrollY + document_h - tooltipHeight - 20;
+    if (document_h - (pageY - window.scrollY) <= tooltipHeight + 40) {
+        tooltipY = window.scrollY + document_h - tooltipHeight - 40;
     }
 
     return { tooltipX, tooltipY };
