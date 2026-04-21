@@ -1643,9 +1643,12 @@ function createTooltip(pageX, pageY, result, author) {
     }
 
     // HTML生成
-    let html = `<b>${result.title}</b><br/>`;
-    html += `<img src="https://steemitimages.com/u/${author}/avatar"
-              style="margin:4px;width:128px;height:128px;object-fit:cover;" />`;
+    //let html = `<b>${result.title}</b><br/>`;
+    //html += `<img src="https://steemitimages.com/u/${author}/avatar"
+    //          style="margin:4px;width:128px;height:128px;object-fit:cover;" />`;
+
+	let html = `<b>${result.title}</b><br/>`;
+	html += createImageHTML_avatar();
 
     // 画像を横並びに配置
     if (imageList.length > 0) {
@@ -1673,6 +1676,14 @@ function createTooltip(pageX, pageY, result, author) {
 }
 
 // 画像のHTMLを作成
+function createImageHTML_avatar() {
+    return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
+                <img src="https://steemitimages.com/u/${author}/avatar"
+                     style="width:100%;height:100%;object-fit:cover;" 
+                     onload="this.classList.add('loaded');" 
+                     onerror="this.classList.add('error');" />
+            </div>`;
+}
 function createImageHTML(url) {
     return `<div class="image-placeholder" style="width:128px;height:128px;margin:4px;">
                 <img src="${url}" 
