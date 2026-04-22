@@ -257,7 +257,7 @@ input[type=checkbox] {
 .image-container {
   display: flex;
   flex-wrap: wrap;  /* 画像とアバターを横並び */
-  gap: 8px; /* アイテム間のスペース */
+  gap: 0px; /* アイテム間のスペース */
 }
 
 .image-placeholder {
