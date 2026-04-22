@@ -6,20 +6,11 @@ html {
  }
 body { 
   font-size: 1rem; 
-  background-image: url("background2.jpg");
+
+  /*background-image: url("background2.jpg");*/
   background-attachment: scroll; /* デフォルト（背景はコンテンツに追従してスクロール） */
 
-  /*
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.9;
-  position: relative;
-  z-index: 9999;
-  width: 100%;
-  height: 100vh;*/
-
-    background-size: 100vw auto; /* 横幅をビューポートの100%に、高さは自動調整 */
+  background-size: 100vw auto; /* 横幅をビューポートの100%に、高さは自動調整 */
   /*background-repeat: no-repeat; /* 画像の繰り返しをなしに */
 
   background-position: center top; /* 画像の位置を中央上部に */
