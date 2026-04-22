@@ -1650,7 +1650,7 @@ function createTooltip(pageX, pageY, result, author) {
 // ツールチップ用のHTML生成
 function generateTooltipHTML(result, author, imageList) {
   let html = `<b>${result.title}</b><br/>`;
-  html += `<div class="image-container" style="display: flex; flex-wrap: nowrap;">`;  // 横並びにする
+  html += `<div class="image-container" style="display: flex; flex-wrap: wrap;">`;  // 横並びにする
   html += createImageHTML_avatar(author); // アバター
   if (imageList.length > 0) {
     imageList.forEach(url => { html += createImageHTML(url); });
