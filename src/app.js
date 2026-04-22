@@ -1684,7 +1684,7 @@ function calculateTooltipSize(imageCount) {
   const colCount = Math.max(1, Math.floor((document_w - 40) / (128 + 8)));
   const totalItems = imageCount + 1; // 画像+アバター
   const rowCount = Math.ceil(totalItems / colCount);
-  const tooltipWidth = colCount < totalItems ? Math.ceil(totalItems / rowCount) * (128 + 8) : totalItems * (128 + 8);
+  const tooltipWidth = colCount <= totalItems ? Math.ceil(totalItems / rowCount) * (128 + 8) : totalItems * (128 + 8);
   const tooltipHeight = rowCount * (128 + 8);
 
   return { tooltipWidth, tooltipHeight };
