@@ -265,3 +265,19 @@ input[type=checkbox] {
   height: 128px;
   margin: 4px;
 }
+
+/* 画像読み込み前の透明状態 */
+.image-placeholder img {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* 画像が読み込まれたらフェードイン */
+.image-placeholder img.loaded {
+  opacity: 1;
+}
+
+/* 画像読み込みエラー時 */
+.image-placeholder img.error {
+  border: 2px solid red; /* エラー画像に赤い枠 */
+}
