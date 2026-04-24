@@ -5,7 +5,8 @@
         "request": "launch",
         "type": "chrome",
         "url": "https://steememory.com/ah/#yasu",
-        "webRoot": "${workspaceFolder}"
+        "webRoot": "${workspaceFolder}/",
+
     }
     ]
 }
