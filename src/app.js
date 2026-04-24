@@ -1672,7 +1672,9 @@ function createImageHTML_avatar(author) {
 // 画像のHTMLを作成
 function createImageHTML(url) {
 	//const str = "https://steemitimages.com/640x0/https://example.com/image.jpg";
-	const url2 = url.replace("https://steemitimages.com/640x0/", "");
+	//const url2 = url.replace("https://steemitimages.com/640x0/", "");
+	const regex = "/https:\/\/steemitimages\.com\/(0x0|640x0)\//g";
+	const url2 = url.replace(regex, '');
 	return `<div class="image-placeholder">
             <div class="loader"></div>
             <img src="${url2}"
