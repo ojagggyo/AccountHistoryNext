@@ -1660,6 +1660,7 @@ function generateTooltipHTML(result, author, imageList) {
 }
 
 // アバター画像のHTMLを作成
+/*
 function createImageHTML_avatar(author) {
   return `<div class="image-placeholder">
             <img src="https://steemitimages.com/u/${author}/avatar" 
@@ -1668,8 +1669,19 @@ function createImageHTML_avatar(author) {
                  onerror="this.classList.add('error');" />
           </div>`;
 }
+*/
+function createImageHTML_avatar(author) {
+  return `<div class="image-placeholder">
+            <div class="loader"></div>
+            <img src="https://steemitimages.com/u/${author}/avatar"
+                 onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none';"
+                 onerror="this.classList.add('error'); this.previousElementSibling.style.display='none';" />
+          </div>`;
+}
+
 
 // 画像のHTMLを作成
+/*
 function createImageHTML(url) {
   return `<div class="image-placeholder">
             <img src="${url}" style="width:100%;height:100%;object-fit:cover;" 
@@ -1677,6 +1689,17 @@ function createImageHTML(url) {
                  onerror="this.classList.add('error');" />
           </div>`;
 }
+*/
+function createImageHTML(url) {
+  return `<div class="image-placeholder">
+            <div class="loader"></div>
+            <img src="${url}"
+                 onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none';"
+                 onerror="this.classList.add('error'); this.previousElementSibling.style.display='none';" />
+          </div>`;
+}
+
+
 
 // ツールチップのサイズ計算
 function calculateTooltipSize(imageCount) {

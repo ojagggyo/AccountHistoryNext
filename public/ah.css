@@ -251,19 +251,43 @@ input[type=checkbox] {
   gap: 0px; /* アイテム間のスペース */
 }
 
+/*
 .image-placeholder {
   width: 128px;
   height: 128px;
   margin: 4px;
 }
+*/
+/* プレースホルダーを相対位置に */
+.image-placeholder {
+  position: relative; /* loader を中央に置くため */
+  width: 128px;
+  height: 128px;
+  margin: 4px;
+  background: #f0f0f0;
+}
 
 /* 画像読み込み前の透明状態 */
+/*
 .image-placeholder img {
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
+*/
+/* 画像読み込み前は透明 */
+.image-placeholder img {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute; /* loader の上に置く */
+}
 
-/* 画像が読み込まれたらフェードイン */
+
+
+/* 画像読み込み後はフェードイン＆loaderを消す */
 .image-placeholder img.loaded {
   opacity: 1;
 }
@@ -272,3 +296,26 @@ input[type=checkbox] {
 .image-placeholder img.error {
   border: 2px solid red; /* エラー画像に赤い枠 */
 }
+
+
+/* --------------------------------------- */
+/* ローダー用の円スピナー */
+.image-placeholder .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  border: 3px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* スピナー回転アニメーション */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
