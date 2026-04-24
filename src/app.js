@@ -1671,9 +1671,11 @@ function createImageHTML_avatar(author) {
 
 // 画像のHTMLを作成
 function createImageHTML(url) {
-  return `<div class="image-placeholder">
+	//const str = "https://steemitimages.com/640x0/https://example.com/image.jpg";
+	const url2 = url.replace("https://steemitimages.com/640x0/", "");
+	return `<div class="image-placeholder">
             <div class="loader"></div>
-            <img src="${url}"
+            <img src="${url2}"
                  onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none';"
                  onerror="this.classList.add('error'); this.previousElementSibling.style.display='none';" />
           </div>`;
