@@ -17,6 +17,27 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@steemit/steem-js/dist/index.umd.min.js"></script>
 <script src="bundle.js"></script>
+
+<script>
+let lastScrollTop = 0; // 前回のスクロール位置
+let topNav = document.querySelector('.top-nav'); // ナビゲーションバーの要素を取得
+
+window.addEventListener('scroll', () => {
+    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScrollTop) {
+        // スクロールダウンした場合、ナビゲーションバーを隠す
+        topNav.style.top = "-100px"; // ナビゲーションバーの高さに応じて調整
+    } else {
+        // スクロールアップした場合、ナビゲーションバーを表示
+        topNav.style.top = "0";
+    }
+
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // スクロール位置が負にならないようにする
+});
+</script>
+
+
 </head>
 <body>
 <div id="tooltip" display="none" style="position: absolute; display: none;"></div>
