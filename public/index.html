@@ -18,11 +18,21 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="https://cdn.jsdelivr.net/npm/@steemit/steem-js/dist/index.umd.min.js"></script>
 <script src="bundle.js"></script>
 
+
+
+
 <script>
 let lastScrollTop = 0; // 前回のスクロール位置
-let topNav = document.querySelector('.top-nav'); // ナビゲーションバーの要素を取得
+let topNav; // グローバル変数としてtopNavを定義
+
+document.addEventListener('DOMContentLoaded', function() {
+    topNav = document.querySelector('.top-nav'); // ナビゲーションバーの要素を取得
+    // ここでtopNavを操作できます
+});
 
 window.addEventListener('scroll', () => {
+    if (!topNav) return; // topNavがまだ取得できていない場合は処理しない
+
     let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
     if (currentScroll > lastScrollTop) {
@@ -36,6 +46,8 @@ window.addEventListener('scroll', () => {
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // スクロール位置が負にならないようにする
 });
 </script>
+
+
 
 
 </head>
