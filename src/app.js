@@ -1565,10 +1565,12 @@ console.log("*** showTooltip ***");
 	tooltip.innerHTML = s;
 	tooltip.style.display = "block";
 	tooltip.style.zIndex = "9999";
+	tooltip.style.width = 'auto';
 	reputation(username, "tooltip_rep");
 	effectivepower(username, "tooltip_ep1", "tooltip_ep2");
 	votingpower(username, "tooltip_vp");
 	postingJsonMetadataAbout(username, "tooltip_about");
+	
 }
 function moveTooltip(e) {
 }
