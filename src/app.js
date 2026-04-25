@@ -1673,7 +1673,7 @@ function createImageHTML_avatar(author) {
 function createImageHTML(url) {
 	//const str = "https://steemitimages.com/640x0/https://example.com/image.jpg";
 	//const url2 = url.replace("https://steemitimages.com/640x0/", "");
-	const regex = /https:\/\/steemitimages\.com\/(0x0|640x0)\//g;
+	const regex = /https:\/\/steemitimages\.com\/(0x0|640x0|160x92)\//g;
 	const url2 = url.replace(regex, '');
 	return `<div class="image-placeholder">
             <div class="loader"></div>
