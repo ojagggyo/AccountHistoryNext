@@ -34,10 +34,11 @@ window.addEventListener('scroll', () => {
     if (!topNav) return; // topNavがまだ取得できていない場合は処理しない
 
     let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    const navHeight = topNav.offsetHeight; // ナビゲーションバーの実際の高さを取得
 
     if (currentScroll > lastScrollTop) {
         // スクロールダウンした場合、ナビゲーションバーを隠す
-        topNav.style.top = "-100px"; // ナビゲーションバーの高さに応じて調整
+        topNav.style.top = `-${navHeight}px`; // 実際の高さに基づいて隠す
     } else {
         // スクロールアップした場合、ナビゲーションバーを表示
         topNav.style.top = "0";
