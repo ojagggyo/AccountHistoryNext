@@ -18,15 +18,12 @@ body {
   /*スクロール対応*/
   /* margin-top: 60px; /* nav の高さ分だけ余白を作る */
 }
-.text { font-size: 1rem; }
 
-
-#tooltip {
-  background: rgba(245, 245, 220, 1.0);
-  padding: 10px;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
-  width: fit-content;/*2023.10.21*/
+body {
+  position: relative;
 }
+
+.text { font-size: 1rem; }
 
 
 a {
@@ -216,6 +213,7 @@ input[type=checkbox] {
 } */
 
 
+
 /*スクロール対応*/
 .top-nav {
     position: fixed;
@@ -235,6 +233,14 @@ input[type=checkbox] {
 
 /* --------------------------------------------------- */
 
+
+#tooltip {
+  background: rgba(245, 245, 220, 1.0);
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+  width: fit-content;/*2023.10.21*/
+}
+
 #tooltip {
   position: absolute;
   display: none;
@@ -244,6 +250,15 @@ input[type=checkbox] {
   z-index: 9999;
   pointer-events: none; 
 }
+
+
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            #tooltip {
+                top: 50px; /* モバイル用に調整 */
+            }
+        }
+
 
 .image-container {
   display: flex;
