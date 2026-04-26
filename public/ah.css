@@ -221,11 +221,11 @@ input[type=checkbox] {
     left: 0;
     width: 100%;          /* 幅いっぱいに固定 */
     background-color: rgba(255, 255, 255, 0.0) ;
-    z-index: 1000;        /* 他のコンテンツの上に表示されるように */
+    z-index: 1000;
     padding: 10px 0;
     border-bottom: none;   /* 下の線を消す */
     box-shadow: none;      /* 影を消す */
-    transition: top 0.3s ease-in-out; /* スムーズに表示/非表示を切り替えるため */
+
 
   /*backdrop-filter: blur(8px);            /* 背景をぼかして柄を和らげる */
   /*-webkit-backdrop-filter: blur(8px);    /* Safari対応 */
