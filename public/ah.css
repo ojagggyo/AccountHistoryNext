@@ -248,14 +248,6 @@ input[type=checkbox] {
 }
 
 
-        /* レスポンシブデザイン */
-        @media (max-width: 768px) {
-            #tooltip {
-                top: 50px; /* モバイル用に調整 */
-            }
-        }
-
-
 .image-container {
   display: flex;
   flex-wrap: wrap;  /* 画像とアバターを横並び */
