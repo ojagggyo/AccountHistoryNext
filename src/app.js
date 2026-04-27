@@ -913,6 +913,7 @@ function getPostingJsonMetadata(username) {
     steem.api.getAccountsAsync([username]).then(res=>{
 
 			if (res.length == 0) reject("res.length == 0");
+			if (res[0].posting_json_metadata == "") reject('res[0].posting_json_metadata == ""');
 			const posting_json_metadata = res[0].posting_json_metadata ;
 			resolve(JSON.parse(posting_json_metadata));
 		}).catch(err=>{reject(err)})
