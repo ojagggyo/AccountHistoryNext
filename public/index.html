@@ -32,12 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
       	// ヘッダーの高さを取得
       	const headerHeight = topNav.offsetHeight;
 
-console.log("body paddingTop before:", body.style.paddingTop);
-console.log("body marginTop after:", body.style.marginTop);
-
       	// bodyの上部余白にヘッダーの高さを設定
     	body.style.paddingTop = `${headerHeight}px`;
-		body.style.marginTop = `0px`; 
+		//body.style.marginTop = `0px`; 
     }
 
     // ページ読み込み時とウィンドウリサイズ時に余白を調整

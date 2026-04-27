@@ -1774,19 +1774,7 @@ window.hideTooltip_post = () => {
 
 //}
 
-/* --------------------------------------------------------------------- */
 
 
-//if (typeof window !== 'undefined') {
-	/*スクロール対応*/
-	/*
-window.addEventListener('load', function() {
-    const nav = document.querySelector('.top-nav');
-    document.body.style.marginTop = nav.offsetHeight + 'px';
-});
-window.addEventListener('resize', function() {
-    const nav = document.querySelector('.top-nav');
-    document.body.style.marginTop = nav.offsetHeight + 'px';
-});
-*/
+
 //}
