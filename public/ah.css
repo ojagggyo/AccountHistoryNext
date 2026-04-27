@@ -232,22 +232,19 @@ input[type=checkbox] {
     /*margin: 0px 0px;*/
     border-bottom: none;   /* 下の線を消す */
     box-shadow: none;      /* 影を消す */
-
-
-  /*backdrop-filter: blur(8px);            /* 背景をぼかして柄を和らげる */
-  /*-webkit-backdrop-filter: blur(8px);    /* Safari対応 */
   }
 
 /* --------------------------------------------------- */
+
 .top-nav {
-  position: fixed;
-  top: 0; /* 固定領域がページ上部にくっつくように */
+  position: fixed; /* 固定位置にする */
+  top: 0; /* 初期状態で画面上部に固定 */
   left: 0;
   right: 0;
   z-index: 1000;
   background-color: rgba(255, 255, 255, 1);
-  height: auto; /* 固定ヘッダーの高さが自動調整される */
-  margin: 0;
+  transition: top 0.3s ease; /* スクロール時にスムーズに移動 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* オプションで影をつける */
 }
 
 
