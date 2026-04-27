@@ -1545,9 +1545,6 @@ window.onload = function() {
 
 
 window.showTooltip = async (e) => {
-
-console.log("*** showTooltip ***");
-
 	let tooltip = document.getElementById("tooltip");
 	let username = e.target.getAttribute('data-username');
 		
@@ -1576,12 +1573,8 @@ console.log("*** showTooltip ***");
 function moveTooltip(e) {
 }
 window.hideTooltip = async (e) => {
-
-	console.log("*** hideTooltip ***");
-
 	var tooltip = document.getElementById("tooltip");
 	tooltip.style.display = "none";
-	//resetTooltip();
 }
 //}
 
