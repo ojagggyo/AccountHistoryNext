@@ -26,8 +26,20 @@ let lastScrollTop = 0; // 前回のスクロール位置
 let topNav; // グローバル変数としてtopNavを定義
 
 document.addEventListener('DOMContentLoaded', function() {
-    topNav = document.querySelector('.top-nav'); // ナビゲーションバーの要素を取得
-    // ここでtopNavを操作できます
+	const topNav = document.querySelector('.top-nav');  // 固定ヘッダーの要素
+  	const body = document.body;
+
+  	function adjustBodyPadding() {
+    	// ヘッダーの高さを取得
+	    const headerHeight = topNav.offsetHeight;
+
+    	// bodyの上部余白にヘッダーの高さを設定
+    	body.style.paddingTop = `${headerHeight}px`;
+  	}
+
+  	// ページ読み込み時とウィンドウリサイズ時に余白を調整
+  	adjustBodyPadding();
+  	window.addEventListener('resize', adjustBodyPadding);
 });
 
 window.addEventListener('scroll', () => {
