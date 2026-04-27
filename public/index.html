@@ -29,11 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const body = document.body;
 
     function adjustBodyPadding() {
-      // ヘッダーの高さを取得
-      const headerHeight = topNav.offsetHeight;
+      	// ヘッダーの高さを取得
+      	const headerHeight = topNav.offsetHeight;
 
-      // bodyの上部余白にヘッダーの高さを設定
-      body.style.paddingTop = `${headerHeight}px`;
+console.log("body paddingTop before:", body.style.paddingTop);
+console.log("body marginTop after:", body.style.marginTop);
+
+      	// bodyの上部余白にヘッダーの高さを設定
+    	body.style.paddingTop = `${headerHeight}px`;
+		body.style.marginTop = `0px`; 
     }
 
     // ページ読み込み時とウィンドウリサイズ時に余白を調整
