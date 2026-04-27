@@ -25,7 +25,7 @@ let lastScrollTop = 0; // 前回のスクロール位置
 let topNav; // グローバル変数としてtopNavを定義
 
 document.addEventListener('DOMContentLoaded', function() {
-  topNav = document.querySelector('.top-nav');  // 固定ヘッダーの要素を取得
+  const topNav = document.querySelector('.top-nav');  // 固定ヘッダーの要素
   const body = document.body;
 
   function adjustBodyPadding() {

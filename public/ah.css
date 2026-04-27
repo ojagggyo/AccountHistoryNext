@@ -19,7 +19,12 @@ body {
   background-position: center top; /* 画像の位置を中央上部に */
 
   /*スクロール対応*/
-  /* margin-top: 60px; /* nav の高さ分だけ余白を作る */
+  /* margin-top: 60
+  px; /* nav の高さ分だけ余白を作る */
+}
+
+body {
+  padding-top: 0; /* paddingは0にして高さを補完 */
 }
 
 .text { font-size: 1rem; }
@@ -234,6 +239,17 @@ input[type=checkbox] {
   }
 
 /* --------------------------------------------------- */
+.top-nav {
+  position: fixed;
+  top: 0; /* 固定領域がページ上部にくっつくように */
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 1);
+  height: auto; /* 固定ヘッダーの高さが自動調整される */
+  margin: 0;
+}
+
 
 
 #tooltip {
