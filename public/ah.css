@@ -218,8 +218,8 @@ input[type=checkbox] {
     width: 100%;          /* 幅いっぱいに固定 */
     background-color: rgba(255, 255, 255, 1.0) ;
     z-index: 1000;
-    padding: 0px 0px;
-    margin: 0px 0px;
+    padding: 0px 24px 0px 8px;
+    /*margin: 0px 0px;*/
     border-bottom: none;   /* 下の線を消す */
     box-shadow: none;      /* 影を消す */
 
