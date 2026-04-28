@@ -1675,8 +1675,8 @@ function createImageHTML(url) {
 	if (!url) return '';
 	const regex = /https:\/\/steemitimages\.com\/(0x0|640x0|160x92)\//g;
 	url = url.replace(regex, '');
-	const regex = /^https:\/\/steemitimages\.com\/p\/|(\?.*)$/g;
-	url = base58decode(url.replace(regex, ''));
+	const regex2 = /^https:\/\/steemitimages\.com\/p\/|(\?.*)$/g;
+	url = base58decode(url.replace(regex2, ''));
 	return `<div class="image-placeholder">
             <div class="loader"></div>
             <img src="${url}"
