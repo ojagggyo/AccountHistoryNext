@@ -1,4 +1,5 @@
 require("regenerator-runtime/runtime");
+const { default: bs58 } = require('bs58');
 //const steem = require('@steemit/steem-js').steem;
 steem.api.setOptions({ url: 'https://api.steememory.com' });
 
@@ -18,6 +19,8 @@ let usdtsbd;//2025/01/12
 let usdtbtc;//2025/01/12
 let steemsbd;//2025/01/18
 let btcjpy;//2026/04/13
+
+
 
 async function getTick(){
 
@@ -175,6 +178,8 @@ async function getEffectivePower(username){
 	//let accounts = await client.database.getAccounts([username]);
   let accounts = await steem.api.getAccountsAsync([username]);
 	
+//console.log("accounts[0]",accounts[0]);
+
 	let vesting_shares = parseFloat(accounts[0].vesting_shares.replace(" VESTS", ""));
 	let received_vesting_shares = parseFloat(accounts[0].received_vesting_shares.replace(" VESTS", ""));
 	let delegated_vesting_shares = parseFloat(accounts[0].delegated_vesting_shares.replace(" VESTS", ""));
@@ -1667,9 +1672,14 @@ function createImageHTML_avatar(author) {
 
 // 画像のHTMLを作成
 function createImageHTML(url) {
-	if(!url) return '';
-	const regex = /https:\/\/steemitimages\.com\/(0x0|640x0|160x92)\//g;
-	const url2 = url.replace(regex, '');
+	if (!url) return '';
+	let url2;
+	if (url.indexOf('/p/') < 0) {
+		const regex = /https:\/\/steemitimages\.com\/(0x0|640x0|160x92|p)\//g;
+		url2 = url.replace(regex, '');
+	} else {
+		url2 = base58decode(getImageId(url));
+	}
 	return `<div class="image-placeholder">
             <div class="loader"></div>
             <img src="${url2}"
@@ -1677,6 +1687,27 @@ function createImageHTML(url) {
                  onerror="this.classList.add('error'); this.previousElementSibling.style.display='none';" />
           </div>`;
 }
+
+function base58decode(encodedStr){
+// Base58エンコードされた文字列
+//const encodedStr = "7258xSVeJbKkzXhyseBP4PYz11eBDT8sW2oR1a4vfVFS6HTgF8L6UEYSRQ1gKRddiCXgecEAvX369nWAsmwvmijwiv69wZ6jdUstW1y2VHQzcMxz2DoAYvVKymjDaHNJYjsJsSXcdBeGW";
+// Base58デコード
+const decoded = bs58.decode(encodedStr);
+// バッファをUTF-8文字列に変換
+return  Buffer.from(decoded).toString('utf8');  // UTF-8文字列として表示
+}
+
+function getImageId(url){
+// URLから画像識別子部分を切り抜く
+//const url = "https://steemitimages.com/p/7258xSVeJbKkzXhyseBP4PYz11eBDT8sW2oR1a4vfVFS6HYBvRM5f1gcL3AjyX16tEiX5EbAwdh6w5CFSqrDh9xZeMZy6GkTzz53ciqhqKFUjhZbMCrfU2dGLDmpruHUdJe8RhUnDAB5G?mode=fit&format=match&width=640";
+// '/p/' より後ろ、 '?' より前を切り取る
+const startIdx = url.indexOf('/p/') + 3; // '/p/' の直後
+const endIdx = url.indexOf('?'); // '?' の前
+// 切り取った部分を取得
+const imageId = url.substring(startIdx, endIdx);
+return imageId;
+}
+
 
 // ツールチップのサイズ計算
 function calculateTooltipSize(imageCount) {
