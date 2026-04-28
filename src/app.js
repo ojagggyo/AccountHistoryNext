@@ -1675,10 +1675,11 @@ function createImageHTML(url) {
 	if (!url) return '';
 	let url2;
 	if (url.indexOf('/p/') < 0) {
-		const regex = /https:\/\/steemitimages\.com\/(0x0|640x0|160x92|p)\//g;
+		const regex = /https:\/\/steemitimages\.com\/(0x0|640x0|160x92)\//g;
 		url2 = url.replace(regex, '');
 	} else {
-		url2 = base58decode(getImageId(url));
+		const regex = /^https:\/\/steemitimages\.com\/p\/|(\?.*)$/g;
+		url2 = base58decode(url.replace(regex, ''));
 	}
 	return `<div class="image-placeholder">
             <div class="loader"></div>
@@ -1695,17 +1696,6 @@ function base58decode(encodedStr){
 const decoded = bs58.decode(encodedStr);
 // バッファをUTF-8文字列に変換
 return  Buffer.from(decoded).toString('utf8');  // UTF-8文字列として表示
-}
-
-function getImageId(url){
-// URLから画像識別子部分を切り抜く
-//const url = "https://steemitimages.com/p/7258xSVeJbKkzXhyseBP4PYz11eBDT8sW2oR1a4vfVFS6HYBvRM5f1gcL3AjyX16tEiX5EbAwdh6w5CFSqrDh9xZeMZy6GkTzz53ciqhqKFUjhZbMCrfU2dGLDmpruHUdJe8RhUnDAB5G?mode=fit&format=match&width=640";
-// '/p/' より後ろ、 '?' より前を切り取る
-const startIdx = url.indexOf('/p/') + 3; // '/p/' の直後
-const endIdx = url.indexOf('?'); // '?' の前
-// 切り取った部分を取得
-const imageId = url.substring(startIdx, endIdx);
-return imageId;
 }
 
 
