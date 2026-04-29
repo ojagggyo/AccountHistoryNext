@@ -28,7 +28,7 @@
 	color: red;
 }
 
-/* ---------- color etc ---------- */
+/* ---------- color 2 ---------- */
 #history_hide {
   accent-color: red;
 }
@@ -37,6 +37,20 @@
 }
 #history_hide3{
   accent-color: red;
+}
+
+/* ---------- color 3 ---------- */
+.marker {
+   /*background: linear-gradient(transparent 60%, #ff6 60%);/*yellow*/
+   background: linear-gradient(transparent 60%, #6f6 60%);/*green*/
+   /*background: linear-gradient(transparent 60%, #6cf 60%);/*blue*/
+   /*background: linear-gradient(transparent 60%, #f6c 60%);/*pink*/
+}
+.under1 { 
+  border-bottom: solid 2px rgba(255,0,0,0.1);
+}
+.under2 {
+  background: linear-gradient(transparent  70%, #ffc037  70%);
 }
 
 /* ---------- footer ---------- */
@@ -112,7 +126,7 @@ span.large{
   vertical-align: top;
 }
 
-/* ---------- image ---------- */
+/* ---------- image 1 ---------- */
 img.maru {
   border-radius: 50%;
   object-fit: cover;
@@ -123,7 +137,7 @@ img.shikaku {
   filter: sepia(100%);
 }
 
-/* ---------- image ---------- */
+/* ---------- image 2 ---------- */
 .image-container {
   display: flex;
   flex-wrap: wrap;  /* 画像とアバターを横並び */
