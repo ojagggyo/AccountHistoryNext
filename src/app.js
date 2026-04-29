@@ -1670,18 +1670,29 @@ function createImageHTML_avatar(author) {
           </div>`;
 }
 
-// 画像のHTMLを作成
-function createImageHTML(url) {
-	if (!url) return '';
-	const regex = /https:\/\/steemitimages\.com\/(0x0|640x0|160x92)\//g;
+function removeProxyUrl(url){
+    //https://steemitimages.com/0x0/
+	//https://steemitimages.com/640x0/
+	//https://steemitimages.com/160x92/
+	//から始まるURLの先頭部分をURLからのぞく
+	const regex = /https:\/\/steemitimages\.com\/(0x0|640x0|160x92|1040x600)\//g;  
 	url = url.replace(regex, '');
+	//さらに
+	//https://steemitimages.com/p/
+	//から始まるURLの先頭部分をURLからのぞく
 	if (url.indexOf('/p/') > -1) {
 		const regex2 = /^https:\/\/steemitimages\.com\/p\/|(\?.*)$/g;
 		url = base58decode(url.replace(regex2, ''));
 	}
+    return url;
+}
+
+// 画像のHTMLを作成
+function createImageHTML(url) {
+	if (!url) return '';
 	return `<div class="image-placeholder">
             <div class="loader"></div>
-            <img src="${url}"
+            <img src="${removeProxyUrl(url)}"
                  onload="this.classList.add('loaded'); this.previousElementSibling.style.display='none';"
                  onerror="this.classList.add('error'); this.previousElementSibling.style.display='none';" />
           </div>`;
