@@ -1,90 +1,93 @@
 <!doctype html>
 <html lang="en">
-<head>
-<title>Account History</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="favicon_ah.ico" id="favicon">
-<link rel="stylesheet" type="text/css" href="./ah.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-window.jdenticon_config = { replaceMode: "observe" };
-document.addEventListener("DOMContentLoaded", () => {
-    const script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/npm/jdenticon@3.1.1/dist/jdenticon.min.js";
-    document.body.appendChild(script);
-});
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@steemit/steem-js/dist/index.umd.min.js"></script>
-<script src="bundle.js"></script>
-<script src="scroll.js"></script>
 
+<head>
+	<title>Account History</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="favicon_ah.ico" id="favicon">
+	<link rel="stylesheet" type="text/css" href="./ah.css">
+	<link rel="stylesheet" type="text/css" href="./ah2.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		window.jdenticon_config = { replaceMode: "observe" };
+		document.addEventListener("DOMContentLoaded", () => {
+			const script = document.createElement("script");
+			script.src = "https://cdn.jsdelivr.net/npm/jdenticon@3.1.1/dist/jdenticon.min.js";
+			document.body.appendChild(script);
+		});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/@steemit/steem-js/dist/index.umd.min.js"></script>
+	<script src="bundle.js"></script>
+	<script src="scroll.js"></script>
 </head>
+
 <body>
-<div id="tooltip" display="none" style="position: absolute; display: none;"></div>
-<!--<div id="tooltip" class="hide"></div>-->
-<div class="top-nav">
-	<div class=right id=price></div>
-	<a style="font-size: 2rem">Account History</a>
-	| <a href="javascript:clickAppLink('/posts/#')" class=black>Posts</a>
-	| <a href="javascript:clickAppLink('https://steemit.com/@')" class=black>Steemit</a>
-	| <a href="javascript:clickAppLink('https://ecosynthesizer.com/steem/@')" class=black>Ecosynthesizer</a>
-	| <a href="javascript:clickAppLink('https://steemworld.org/@')" class=black>Steemworld</a>
-	| <a href="javascript:clickAppLink('../app/followerchecker.html?username=')" class=black>FollowerChecker</a>
-	| <a href="javascript:clickAppLink('../chart/sp.html?user=')" class=black>SteemPower</a>
-	| <a href="javascript:clickAppLink('../chart/ranking.html?user=')" class=black>WitnessRanking</a>
-	|<br/>
-	<form action="javascript:clickBtn(1);">
-	<table>
-	<tr>
-	<td  style="display: auto;">
-	<input type="search" id="username" size="20" value="" oninput="inputChange(event)" placeholder="account name">
-	<input type="button" value="24hours" onclick="clickBtn(1)" />
-	<input type="button" value="3days" onclick="clickBtn(3)" />
-	<input type="button" value="7days" onclick="clickBtn(7)" />
-	<input type="button" value="30days" onclick="clickBtn(30)" />
-	<input type="button" value="60days" onclick="clickBtn(60)" />
-	<input type="button" value="90days" onclick="clickBtn(90)" />
-	</td>
-	</tr>
-	</table>
-	</form>
-	<a id="userlink"></a><br/>
-</div>
-<div>
-	<br/><b>Power</b><br/>
-	Effective Power <b><a id=effectivepowervalue></a></b>
-	<a id=effectivepowerdetail></a><br/>
-	<progress id=effectivepower></progress><br/>
-	Voting Power <b><a id=votingpowervalue></a></b><br/>
-	<progress id=votingpower max=100></progress><br/>
-	<b>Reputation </b><a id="reputation"></a> <b>Age </b><a id="age"></a> <b>Wallet </b><a id="wallet"></a><br/>
-	<b>Witness</b><br/><span id="witness"></span><br/>
-	<b>Period</b><br/>
-	<a id="progress"></a><br/>
-	<div id="title_reward">
-	<b>Reward</b><br/>
-	<a id="author_reward"></a>
-	<a id="curation_reward"></a>
-	<a id="producer_reward"></a>
-	<a id="comment_benefactor_reward"></a>
+	<div id="tooltip" display="none" style="position: absolute; display: none;"></div>
+	<!--<div id="tooltip" class="hide"></div>-->
+	<div class="top-nav">
+		<div class=right id=price></div>
+		<a style="font-size: 2rem">Account History</a>
+		| <a href="javascript:clickAppLink('/posts/#')" class=black>Posts</a>
+		| <a href="javascript:clickAppLink('https://steemit.com/@')" class=black>Steemit</a>
+		| <a href="javascript:clickAppLink('https://ecosynthesizer.com/steem/@')" class=black>Ecosynthesizer</a>
+		| <a href="javascript:clickAppLink('https://steemworld.org/@')" class=black>Steemworld</a>
+		| <a href="javascript:clickAppLink('../app/followerchecker.html?username=')" class=black>FollowerChecker</a>
+		| <a href="javascript:clickAppLink('../chart/sp.html?user=')" class=black>SteemPower</a>
+		| <a href="javascript:clickAppLink('../chart/ranking.html?user=')" class=black>WitnessRanking</a>
+		|<br />
+		<form action="javascript:clickBtn(1);">
+			<table>
+				<tr>
+					<td style="display: auto;">
+						<input type="search" id="username" size="20" value="" oninput="inputChange(event)"
+							placeholder="account name">
+						<input type="button" value="24hours" onclick="clickBtn(1)" />
+						<input type="button" value="3days" onclick="clickBtn(3)" />
+						<input type="button" value="7days" onclick="clickBtn(7)" />
+						<input type="button" value="30days" onclick="clickBtn(30)" />
+						<input type="button" value="60days" onclick="clickBtn(60)" />
+						<input type="button" value="90days" onclick="clickBtn(90)" />
+					</td>
+				</tr>
+			</table>
+		</form>
+		<a id="userlink"></a><br />
 	</div>
-	<div id="title_transfer">
-	<b>Transfer</b><br/>
-	<a id="transfer_in"></a>
-	<a id="transfer_out"></a>
+	<div>
+		<br /><b>Power</b><br />
+		Effective Power <b><a id=effectivepowervalue></a></b>
+		<a id=effectivepowerdetail></a><br />
+		<progress id=effectivepower></progress><br />
+		Voting Power <b><a id=votingpowervalue></a></b><br />
+		<progress id=votingpower max=100></progress><br />
+		<b>Reputation </b><a id="reputation"></a> <b>Age </b><a id="age"></a> <b>Wallet </b><a id="wallet"></a><br />
+		<b>Witness</b><br /><span id="witness"></span><br />
+		<b>Period</b><br />
+		<a id="progress"></a><br />
+		<div id="title_reward">
+			<b>Reward</b><br />
+			<a id="author_reward"></a>
+			<a id="curation_reward"></a>
+			<a id="producer_reward"></a>
+			<a id="comment_benefactor_reward"></a>
+		</div>
+		<div id="title_transfer">
+			<b>Transfer</b><br />
+			<a id="transfer_in"></a>
+			<a id="transfer_out"></a>
+		</div>
+		<div id="title_power_up">
+			<b>Power</b><br />
+			<a id="power_up"></a>
+			<a id="power_down"></a>
+		</div>
+		<div id="title_donation">
+			<b>Donation</b><br />
+			<a id="donation"></a>
+		</div>
 	</div>
-	<div id="title_power_up">
-	<b>Power</b><br/>
-	<a id="power_up"></a>
-	<a id="power_down"></a>
-	</div>
-	<div id="title_donation">
-	<b>Donation</b><br/>
-	<a id="donation"></a>
-	</div>
-</div>
-	<b>History</b><br/>
+	<b>History</b><br />
 	<input type="checkbox" id="history_comment" onchange="changecheckbox(this);">POST
 	<input type="checkbox" id="history_upvote" onchange="changecheckbox(this);">UPVOTE
 	<input type="checkbox" id="history_reward" onchange="changecheckbox(this);">REWARD
@@ -92,16 +95,20 @@ document.addEventListener("DOMContentLoaded", () => {
 	<input type="checkbox" id="history_witness" onchange="changecheckbox(this);">WITNESS
 	<input type="checkbox" id="history_account" onchange="changecheckbox(this);">ACCOUNT
 	<input type="checkbox" id="history_delegate" onchange="changecheckbox(this);">DELEGATE
-	<input type="checkbox" id="history_withdraw" onchange="changecheckbox(this);">WITHDRAW<br/>
+	<input type="checkbox" id="history_withdraw" onchange="changecheckbox(this);">WITHDRAW<br />
 	<input type="checkbox" id="history_hide2" onchange="checkbox();" checked>hide (producer_reward)
 	<input type="checkbox" id="history_hide3" onchange="checkbox();" checked>hide (curation_reward)
-	<input type="checkbox" id="history_hide" onchange="checkbox();" checked title="account_update2 custom_json feed_publish claim_account claim_reward_balance witness_set_properties witness_update">hide (other)
-	<br/>
+	<input type="checkbox" id="history_hide" onchange="checkbox();" checked
+		title="account_update2 custom_json feed_publish claim_account claim_reward_balance witness_set_properties witness_update">hide
+	(other)
+	<br />
 	<span id="text"></span>
 
 
-	<br/>
-	<a class="copyright">© 2022 steememory.com by </a><a class="author" href="https://steemit.com/@yasu.witness/posts" target="steemit">@yasu.witness</a>
+	<br />
+	<a class="copyright">© 2022 steememory.com by </a><a class="author" href="https://steemit.com/@yasu.witness/posts"
+		target="steemit">@yasu.witness</a>
 	<a class="version">updated 20260427</a>
 </body>
+
 </html>
