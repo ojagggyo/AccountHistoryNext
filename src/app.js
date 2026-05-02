@@ -1003,7 +1003,7 @@ function makeLine(record){
 			+ " " + record[1].op[0] + " "
 			+ emoji_curation_reward 
 			+ ' ' + vestToSteem(reward).toFixed(3) + ' SP' 
-			+ ' for <a href=https://steemit.com/@' + comment_author + '/' + comment_permlink 
+			+ ' for <a href=https://' + DOMAIN + '/@' + comment_author + '/' + comment_permlink 
 			+ ' onmouseover=showTooltip_post(event) onmouseout=hideTooltip_post(event)'
 			+ ' data-author='+ comment_author
 			+ ' data-permlink='+ comment_permlink
@@ -1023,7 +1023,7 @@ function makeLine(record){
 			+ " " + record[1].op[0] + " "
 			+ emoji_comment_benefactor_reward
 			+ ' ' + sbd_payout + ' and ' + vestToSteem(vesting_payout).toFixed(3) + ' SP'
-			+ ' for <a href=https://steemit.com/@' + author + '/' + permlink
+			+ ' for <a href=https://' + DOMAIN + '/@' + author + '/' + permlink
 			+ ' onmouseover=showTooltip_post(event) onmouseout=hideTooltip_post(event)'
 			+ ' data-author='+ author
 			+ ' data-permlink='+ permlink
@@ -1036,7 +1036,7 @@ function makeLine(record){
 		identicon = `<img class=maru id=${record[0]} width=48 height=48 src=https://steemitimages.com/u/${author}/avatar />`;//2023.05.14
 		body = author 
 			+ " " + record[1].op[0] + " "
-			+ emoji_authored + ' <a href=https://steemit.com/@' + author + '/' + permlink 
+			+ emoji_authored + ' <a href=https://' + DOMAIN + '/@' + author + '/' + permlink 
 			+ ' onmouseover=showTooltip_post(event) onmouseout=hideTooltip_post(event)'
 			+ ' data-author='+ author
 			+ ' data-permlink='+ permlink		
@@ -1074,7 +1074,7 @@ function makeLine(record){
 			+ " " + record[1].op[0] + " "
 			+ emoji_author_reward 
 			+ ' ' + steem_payout + ', ' + sbd_payout + ' and ' + vestToSteem(vesting_payout).toFixed(3) + ' SP'
-			+ ' for <a href=https://steemit.com/@' + author + '/' + permlink
+			+ ' for <a href=https://' + DOMAIN + '/@' + author + '/' + permlink
 			+ ' onmouseover=showTooltip_post(event) onmouseout=hideTooltip_post(event)'
 			+ ' data-author='+ author
 			+ ' data-permlink='+ permlink
