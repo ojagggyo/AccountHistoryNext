@@ -983,7 +983,7 @@ function makeLine(record){
 				`<img class=shikaku id=${author} width=24 height=24 src=https://steemitimages.com/u/${author}/avatar />` 
 				: '') 
 				: emoji_downvote)
-			+ ' <a href=https://steemit.com/'
+			+ ' <a href=https://' + DOMAIN + '/'
 			+ '@' + author + '/' + permlink
 			+ ' onmouseover=showTooltip_post(event) onmouseout=hideTooltip_post(event)'
 			+ ' data-author='+ author
@@ -1053,7 +1053,7 @@ function makeLine(record){
 		body = author 
 			+ " " + record[1].op[0] + " "
 			+ emoji_replied 
-			+ ' <a href=https://steemit.com/' 
+			+ ' <a href=https://' + DOMAIN + '/' 
 			+ '@' + parent_author + '/' + parent_permlink + '#' + '@' + author + '/' + permlink 
 			+ ' onmouseover=showTooltip_post(event) onmouseout=hideTooltip_post(event)'
 			+ ' data-author='+ parent_author
