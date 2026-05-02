@@ -683,7 +683,8 @@ async function getPrice(name, markets) {
         // スクリプトを作成して body に追加
         const sc = document.createElement("script");
         sc.id = name;
-        sc.src = "https://steememory.com/ah/upbit/?callback=" + 'get' + name + "&pattern=" + markets;
+        //sc.src = "https://steememory.com/ah/upbit/?callback=" + 'get' + name + "&pattern=" + markets;
+		sc.src = "/upbit/?callback=" + 'get' + name + "&pattern=" + markets;
         document.body.appendChild(sc);
     });
 }
@@ -701,7 +702,8 @@ async function getPriceHuobi(name, markets) {
 		}
 		let sc = document.createElement("script");
 		sc.id = name;
-		sc.src = "https://steememory.com/ah/huobi/?callback="+'get'+name+"&pattern=" + markets;
+		//sc.src = "https://steememory.com/ah/huobi/?callback="+'get'+name+"&pattern=" + markets;
+		sc.src = "/huobi/?callback="+'get'+name+"&pattern=" + markets;
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
@@ -729,7 +731,8 @@ async function getPriceBitpoint(name, markets) {
 		}
 		let sc = document.createElement("script");
 		sc.id = name;
-		sc.src = "https://steememory.com/ah/bitpoint/?callback="+'get'+name+"&pattern=" + markets;
+		//sc.src = "https://steememory.com/ah/bitpoint/?callback="+'get'+name+"&pattern=" + markets;
+		sc.src = "/bitpoint/?callback="+'get'+name+"&pattern=" + markets;
 		document.body.appendChild(sc);
 		document.getElementById(sc.id).remove();
 	});
