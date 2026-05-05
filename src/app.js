@@ -1264,14 +1264,14 @@ async function aaa(days){
 
 	const upbiturl = "https://upbit.com/exchange?code=CRIX.UPBIT.";
 	const huobiurl = "https://www.htx.com/trade/";
-	const bitpointurl = "https://tradepro.bpj-ex.com/#/";
+	const bitpointurl = "https://trades.bpj-ex.com/#/";
 	document.getElementById('price').innerHTML = 
 		'<a class="right black" href=' + upbiturl + 'KRW-STEEM'+ ' target=upbit>STEEM ' + (krwsteem == 0 ? "---" : numberWithCommas(krwsteem)) + ' KRW</a>' 
 		+ '<br/><a class="right black" href=' + huobiurl + 'sbd_usdt/' + ' target=huobi>(HTX) SBD ' + (usdtsbd == 0 ? "---" : usdtsbd) + ' USDT ' + numberWithCommas(parseInt(usdtsbd/krwusd)) + ' KRW</a>'
 		+ '<br/><a class="right black" href=' + upbiturl + 'KRW-TRX'+ ' target=upbit>TRX ' + (krwtrx == 0 ? "---" : numberWithCommas(krwtrx)) + ' KRW</a>'
 		+ '<br/><a class="right black" href=' + upbiturl + 'KRW-BTC'+ ' target=upbit>BTC ' + (krwbtc == 0 ? "---" : numberWithCommas(krwbtc)) + ' KRW</a>'
 		+ '<br/><a class="right black" href=' + upbiturl + 'BTC-STEEM'+ ' target=upbit>STEEM ' + (btcsteem == 0 ? "---" : numberWithCommas(parseInt(btcsteem * 100000000))) + ' SATOSHI</a>'
-		+ '<br/><a class="right black" href=' + bitpointurl + 'BTC-JPY'+ ' target=bitpoint>BTC ' + (btcjpy == 0 ? "---" : numberWithCommas(btcjpy)) + ' JPY</a>';
+		+ '<br/><a class="right black" href=' + bitpointurl + '' + ' target=bitpoint>BTC ' + (btcjpy == 0 ? "---" : numberWithCommas(btcjpy)) + ' JPY</a>';
 
 	const username = document.getElementById("username").value;
 	effectivepower(username);
