@@ -17,6 +17,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // ページ読み込み時とウィンドウリサイズ時に余白を調整
     adjustBodyPadding();
     window.addEventListener('resize', adjustBodyPadding);
+
+    // ナビゲーションバーの動的な変更を監視
+    const observer = new MutationObserver(() => {
+        adjustBodyPadding(); // ナビゲーションバーの高さが変わったら余白を再調整
+    });
+
+    observer.observe(topNav, {
+        childList: true,  // 子ノードの変化を監視
+        subtree: true     // サブツリー内の変化も監視
+    });
 });
 
 window.addEventListener('scroll', function () {
