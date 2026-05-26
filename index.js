@@ -19,11 +19,13 @@ app.use(koaStatic(staticDir, {
 
 // APIにアクセスされた際の処理
 router.get('/hello', (ctx) => {
+  console.info(`router.get('/hello', (ctx) => {`);
   ctx.body = 'Hello World!!';
 });
 
 // Upbit API
 router.get('/upbit', async (ctx) => {
+  console.info(`router.get('/upbit', async (ctx) => {`);
   const { pattern, callback } = ctx.query;
 
   if (!callback || callback.trim() === "") {
@@ -45,6 +47,7 @@ router.get('/upbit', async (ctx) => {
 
 // Huobi API
 router.get('/huobi', async (ctx) => {
+  console.info(`router.get('/huobi', async (ctx) => {`);
   const { pattern, callback } = ctx.query;
 
   if (!callback || callback.trim() === "") {
@@ -67,6 +70,7 @@ router.get('/huobi', async (ctx) => {
 
 // Bitpoint API
 router.get('/bitpoint', async (ctx) => {
+  console.info(`router.get('/bitpoint', async (ctx) => {`);
   const { pattern, callback } = ctx.query;
 
   if (!callback || callback.trim() === "") {
