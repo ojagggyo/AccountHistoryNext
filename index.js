@@ -25,7 +25,7 @@ router.get('/hello', (ctx) => {
 
 // Upbit API
 router.get('/upbit', async (ctx) => {
-  console.log(`router.get('/upbit', async (ctx) => {`);
+  console.log(`*** upbit start ***`);
   const { pattern, callback } = ctx.query;
 
   if (!callback || callback.trim() === "") {
@@ -39,8 +39,9 @@ router.get('/upbit', async (ctx) => {
     //ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.type = 'application/javascript';
     ctx.body = `${callback}(${JSON.stringify(data)});`;  // JSONP形式で返す
-    console.log(`*** hello end ***`);
+    console.log(`*** upbit end ***`);
   } catch (error) {
+    console.log(`error=${error}`);
     ctx.status = 500;
     ctx.body = `Upbit APIエラー: ${error.message}`;
   }
@@ -48,7 +49,7 @@ router.get('/upbit', async (ctx) => {
 
 // Huobi API
 router.get('/huobi', async (ctx) => {
-  console.log(`router.get('/huobi', async (ctx) => {`);
+  console.log(`*** huobi start ***`);
   const { pattern, callback } = ctx.query;
 
   if (!callback || callback.trim() === "") {
@@ -62,8 +63,9 @@ router.get('/huobi', async (ctx) => {
     //ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.type = 'application/javascript';
     ctx.body = `${callback}(${JSON.stringify(data)});`;  // JSONP形式で返す
-   console.log(`*** hello huobi ***`);
+    console.log(`*** huobi end ***`);
   } catch (error) {
+    console.log(`error=${error}`);
     ctx.status = 500;
     ctx.body = `Huobi APIエラー: ${error.message}`;
   }
@@ -71,7 +73,7 @@ router.get('/huobi', async (ctx) => {
 
 // Bitpoint API
 router.get('/bitpoint', async (ctx) => {
-  console.log(`router.get('/bitpoint', async (ctx) => {`);
+  console.log(`*** bitpoint start ***`);
   const { pattern, callback } = ctx.query;
 
   if (!callback || callback.trim() === "") {
@@ -85,8 +87,9 @@ router.get('/bitpoint', async (ctx) => {
     //ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.type = 'application/javascript';
     ctx.body = `${callback}(${JSON.stringify(data)});`;  // JSONP形式で返す
-    console.log(`*** hello bitpoint ***`);
+console.log(`*** bitpoint end ***`);
   } catch (error) {
+    console.log(`error=${error}`);
     ctx.status = 500;
     ctx.body = `Huobi APIエラー: ${error.message}`;
   }
@@ -94,39 +97,42 @@ router.get('/bitpoint', async (ctx) => {
 
 // Webhook - Upbitから価格を取得
 async function getPrice(markets) {
-  console.log(`*** getPrice end ***`);
+  console.log(`*** getPrice start ***`);
   const url = `https://api.upbit.com/v1/ticker?markets=${markets}`;
   try {
     const response = await axios.get(url, { timeout: 5000 });  // タイムアウト設定（5秒）
     console.log(`*** getPrice end ***`);
     return response.data;
   } catch (error) {
+    console.log(`error=${error}`);
     throw new Error('Upbitからデータを取得中にエラーが発生しました: ' + error.message);
   }
 }
 
 // Webhook - Huobiから価格を取得
 async function getPriceHuobi(pattern) {
-    console.log(`*** getPriceHuobi end ***`);
+    console.log(`*** getPriceHuobi start ***`);
   const url = `https://api.huobi.pro/market/history/trade?symbol=${pattern}`;
   try {
     const response = await axios.get(url, { timeout: 5000 });  // タイムアウト設定（5秒）
     console.log(`*** getPriceHuobi end ***`);
     return response.data;
   } catch (error) {
+    console.log(`error=${error}`);
     throw new Error('Huobiからデータを取得中にエラーが発生しました: ' + error.message);
   }
 }
 
 // Webhook - Bitpointから価格を取得
 async function getPriceBitpoint(pattern) {
-  console.log(`*** getPriceBitpoint end ***`);
+  console.log(`*** getPriceBitpoint start ***`);
   const url = `https://smartapi.bitpoint.co.jp/bpj-smart-api/api/ticker/24hr?symbol=${pattern}`;
   try {
     const response = await axios.get(url, { timeout: 5000 });  // タイムアウト設定（5秒）
     console.log(`*** getPriceBitpoint end ***`);
     return response.data;
   } catch (error) {
+    console.log(`error=${error}`);
     throw new Error('Bitpointからデータを取得中にエラーが発生しました: ' + error.message);
   }
 }
