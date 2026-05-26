@@ -39,6 +39,7 @@ router.get('/upbit', async (ctx) => {
     //ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.type = 'application/javascript';
     ctx.body = `${callback}(${JSON.stringify(data)});`;  // JSONP形式で返す
+    console.log(`*** hello end ***`);
   } catch (error) {
     ctx.status = 500;
     ctx.body = `Upbit APIエラー: ${error.message}`;
@@ -61,7 +62,7 @@ router.get('/huobi', async (ctx) => {
     //ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.type = 'application/javascript';
     ctx.body = `${callback}(${JSON.stringify(data)});`;  // JSONP形式で返す
-   
+   console.log(`*** hello huobi ***`);
   } catch (error) {
     ctx.status = 500;
     ctx.body = `Huobi APIエラー: ${error.message}`;
@@ -84,6 +85,7 @@ router.get('/bitpoint', async (ctx) => {
     //ctx.contentType = 'application/javascript';  // JSONPのContent-Type
     ctx.type = 'application/javascript';
     ctx.body = `${callback}(${JSON.stringify(data)});`;  // JSONP形式で返す
+    console.log(`*** hello bitpoint ***`);
   } catch (error) {
     ctx.status = 500;
     ctx.body = `Huobi APIエラー: ${error.message}`;
@@ -92,9 +94,11 @@ router.get('/bitpoint', async (ctx) => {
 
 // Webhook - Upbitから価格を取得
 async function getPrice(markets) {
+  console.log(`*** getPrice end ***`);
   const url = `https://api.upbit.com/v1/ticker?markets=${markets}`;
   try {
     const response = await axios.get(url, { timeout: 5000 });  // タイムアウト設定（5秒）
+    console.log(`*** getPrice end ***`);
     return response.data;
   } catch (error) {
     throw new Error('Upbitからデータを取得中にエラーが発生しました: ' + error.message);
@@ -103,9 +107,11 @@ async function getPrice(markets) {
 
 // Webhook - Huobiから価格を取得
 async function getPriceHuobi(pattern) {
+    console.log(`*** getPriceHuobi end ***`);
   const url = `https://api.huobi.pro/market/history/trade?symbol=${pattern}`;
   try {
     const response = await axios.get(url, { timeout: 5000 });  // タイムアウト設定（5秒）
+    console.log(`*** getPriceHuobi end ***`);
     return response.data;
   } catch (error) {
     throw new Error('Huobiからデータを取得中にエラーが発生しました: ' + error.message);
@@ -114,9 +120,11 @@ async function getPriceHuobi(pattern) {
 
 // Webhook - Bitpointから価格を取得
 async function getPriceBitpoint(pattern) {
+  console.log(`*** getPriceBitpoint end ***`);
   const url = `https://smartapi.bitpoint.co.jp/bpj-smart-api/api/ticker/24hr?symbol=${pattern}`;
   try {
     const response = await axios.get(url, { timeout: 5000 });  // タイムアウト設定（5秒）
+    console.log(`*** getPriceBitpoint end ***`);
     return response.data;
   } catch (error) {
     throw new Error('Bitpointからデータを取得中にエラーが発生しました: ' + error.message);
