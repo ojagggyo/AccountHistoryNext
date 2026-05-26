@@ -1233,7 +1233,7 @@ function makeTable(records){
 }
 
 async function rate(){
-	globalProperties = await steem.api.getDynamicGlobalPropertiesAsync();
+	let globalProperties = await steem.api.getDynamicGlobalPropertiesAsync();
 	//globalProperties = await steem.api.callAsync('condenser_api.get_dynamic_global_properties');
 	                 
 
