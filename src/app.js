@@ -1234,9 +1234,10 @@ function makeTable(records){
 
 async function rate(){
 
+	globalProperties = await steem.api.getDynamicGlobalPropertiesAsync();
 	if(!globalProperties){
 		//const promise0 = await client.database.getDynamicGlobalProperties();//★
-    	const promise0 = steem.api.getDynamicGlobalPropertiesAsync();
+    	//const promise0 = steem.api.getDynamicGlobalPropertiesAsync();
 		const promise1 = getPrice('krwsteem','KRW-STEEM');
 		const promise3 = getPrice('krwtrx','KRW-TRX');
 		const promise4 = getPrice('krwbtc','KRW-BTC');
@@ -1249,8 +1250,10 @@ async function rate(){
 		const promise11 = getPriceBitpoint('btcjpy','BTCJPY');
 
 		try{
-		[globalProperties,krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc,btcjpy] 
-			= await Promise.all([promise0,promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10,promise11]);
+		//[globalProperties,krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc,btcjpy] 
+		//	= await Promise.all([promise0,promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10,promise11]);
+		[krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc,btcjpy] 
+			= await Promise.all([promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10,promise11]);
 		}catch(error){
      		console.log(error);
 		}
