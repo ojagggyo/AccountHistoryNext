@@ -1248,9 +1248,12 @@ async function rate(){
 		const promise10 = getPriceHuobi('usdtbtc','btcusdt');
 		const promise11 = getPriceBitpoint('btcjpy','BTCJPY');
 
+		try{
 		[globalProperties,krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc,btcjpy] 
 			= await Promise.all([promise0,promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10,promise11]);
-
+		}catch(error){
+     		console.log(error);
+		}
 		krwsbd = usdtsbd * krwusd;
 		
         console.log( "*** rate finish !!! ***");
