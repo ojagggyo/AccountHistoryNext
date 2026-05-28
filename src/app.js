@@ -21,6 +21,11 @@ let steemsbd;//2025/01/18
 let btcjpy;//2026/04/13
 
 
+async function getDynamicGlobalPropertiesAsync(){
+	return steem.api.getDynamicGlobalPropertiesAsync();
+}
+
+
 
 async function getTick(){
 
@@ -36,9 +41,6 @@ async function getTick(){
 
 const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-//function _sleep(ms) {
-//    return new Promise(resolve => setTimeout(resolve, ms));
-//}
 
 //-----------------------------------------------------------------------
 
@@ -1233,13 +1235,12 @@ function makeTable(records){
 }
 
 async function rate(){
-	let globalProperties = await steem.api.getDynamicGlobalPropertiesAsync();
-	//globalProperties = await steem.api.callAsync('condenser_api.get_dynamic_global_properties');
-	                 
+	//let globalProperties = await steem.api.getDynamicGlobalPropertiesAsync();
+                
 
 	if(!globalProperties){
 		//const promise0 = await client.database.getDynamicGlobalProperties();//★
-    	//const promise0 = steem.api.getDynamicGlobalPropertiesAsync();
+    	const promise0 = steem.api.getDynamicGlobalPropertiesAsync();
 		const promise1 = getPrice('krwsteem','KRW-STEEM');
 		const promise3 = getPrice('krwtrx','KRW-TRX');
 		const promise4 = getPrice('krwbtc','KRW-BTC');
@@ -1252,10 +1253,10 @@ async function rate(){
 		const promise11 = getPriceBitpoint('btcjpy','BTCJPY');
 
 		try{
-		//[globalProperties,krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc,btcjpy] 
-		//	= await Promise.all([promise0,promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10,promise11]);
-		[krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc,btcjpy] 
-			= await Promise.all([promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10,promise11]);
+		[globalProperties,krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc,btcjpy] 
+			= await Promise.all([promise0,promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10,promise11]);
+		//[krwsteem,krwtrx,krwbtc,krweth,btcsteem,krwjpy,krwusd,usdtsbd,usdtbtc,btcjpy] 
+		//	= await Promise.all([promise1,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10,promise11]);
 		}catch(error){
      		console.log(error);
 		}
