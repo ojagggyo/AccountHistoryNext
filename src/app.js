@@ -399,7 +399,11 @@ async function getWithdraw_routes(username) {
 				} else {
 					out += ", "
 				}
-				out += row.to_account + "(" + (parseInt(row.percent / 100)) + "%)"
+				out += row.to_account
+					+ "(" 
+					+ (parseInt(row.percent / 100)) + "%"
+					+ (auto_vest ? " auto vest" : "")
+					+ ")"
 			}
 			resolve(out);
 		}).catch(err => { reject(err) })
