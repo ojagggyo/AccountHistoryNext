@@ -836,7 +836,8 @@ function getTransferAmount(record){
 
 //if (typeof window !== 'undefined') {
 window.clickBtn = async (days) => {
-	
+		console.log("--- clickBtn ---");
+
 	let username = document.getElementById("username").value.trimEnd();
 	document.getElementById("username").value = username;
 	window.location.hash = '#' + username;
@@ -859,6 +860,8 @@ window.clickBtn = async (days) => {
 	document.getElementById("title_transfer").style.display = "none";
 	document.getElementById("title_power_up").style.display = "none";
 	document.getElementById("title_donation").style.display = "none";
+
+	console.log("--- ★ ---");
 	document.getElementById("title_withdraw_routes").style.display = "none";
 
 	//payout
