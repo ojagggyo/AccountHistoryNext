@@ -376,11 +376,38 @@ async function getWitness(username){
 }
 
 function witness(username){
-
 	getWitness(username).then(result => {
 		document.getElementById("witness").innerHTML = result ;
 	}).catch(err => {
 		console.log("call getWitness",username);
+		console.log(err);
+	});
+}
+
+// ---------- withdraw_routes ----------
+//await steem.api.callAsync('condenser_api.get_withdraw_routes', ["usay","outgoing"]);
+async function getWithdraw_routes(username){
+	return new Promise((resolve, reject) => {
+		steem.api.callAsync('condenser_api.get_withdraw_routes', [username,"outgoing"]).then(list =>{
+
+			let out = "";
+			for (let index = 0; index < list.length; index++) {
+				const row = list[index];
+				if(out != ""){
+					out +=","
+				}
+				out+=row.to_account
+			}
+			resolve(out);
+		}).catch(err=>{reject(err)})
+	});
+}
+
+function withdraw_routes(username){
+	getWithdraw_routes(username).then(result => {
+		document.getElementById("withdraw_routes").innerHTML = result ;
+	}).catch(err => {
+		console.log("call getWitness_routes",username);
 		console.log(err);
 	});
 }
@@ -570,8 +597,6 @@ function getReward(record){
 		return false;
 	}
 	
-
-	
 	if(total_count[op] === void 0){
 		total_count[op] = 1;
 		total_sbd_payout[op] = sbd_payout;
@@ -608,7 +633,6 @@ function getReward_donation(record){
 	}else {
 		return false;
 	}
-	
 
 	if(total_donation_count[op] === void 0){
 		total_donation_count[op] = 1;
@@ -830,6 +854,7 @@ window.clickBtn = async (days) => {
 	document.getElementById("title_transfer").style.display = "none";
 	document.getElementById("title_power_up").style.display = "none";
 	document.getElementById("title_donation").style.display = "none";
+	document.getElementById("withdraw_routes").style.display = "none";
 
 	//payout
 	total_count = {};
