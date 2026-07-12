@@ -400,7 +400,7 @@ async function getWithdraw_routes(username) {
 					out += ", "
 				}
 				out += row.to_account
-					+ "(" 
+					+ " (" 
 					+ (parseInt(row.percent / 100)) + "%"
 					+ (row.auto_vest ? " auto vest" : "")
 					+ ")"
