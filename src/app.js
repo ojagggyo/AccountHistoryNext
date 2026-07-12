@@ -405,7 +405,10 @@ async function getWithdraw_routes(username){
 
 function withdraw_routes(username){
 	getWithdraw_routes(username).then(result => {
-		document.getElementById("withdraw_routes").innerHTML = result ;
+		if(result!=""){
+			document.getElementById("withdraw_routes").innerHTML = result ;
+			document.getElementById("title_withdraw_routes").style.display = "block";
+		}
 	}).catch(err => {
 		console.log("call getWitness_routes",username);
 		console.log(err);
