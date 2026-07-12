@@ -391,13 +391,13 @@ async function getWithdraw_routes(username) {
 	return new Promise((resolve, reject) => {
 		steem.api.callAsync('condenser_api.get_withdraw_routes', [username, "outgoing"]).then(list => {
 			console.log("list=",list);
-			let out = "";
+			let out = "Outgoing: ";
 			for (let index = 0; index < list.length; index++) {
 				const row = list[index];
 				if (out != "") {
 					out += ","
 				}
-				out += row.to_account
+				out += row.to_account + "(" + (parseInt(row.percent / 100)) + "%)"
 			}
 			resolve(out);
 		}).catch(err => { reject(err) })
