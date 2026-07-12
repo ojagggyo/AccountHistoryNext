@@ -386,26 +386,25 @@ function witness(username){
 
 // ---------- withdraw_routes ----------
 //await steem.api.callAsync('condenser_api.get_withdraw_routes', ["usay","outgoing"]);
-async function getWithdraw_routes(username){
+async function getWithdraw_routes(username) {
 	return new Promise((resolve, reject) => {
-		steem.api.callAsync('condenser_api.get_withdraw_routes', [username,"outgoing"]).then(list =>{
-
+		steem.api.callAsync('condenser_api.get_withdraw_routes', [username, "outgoing"]).then(list => {
 			let out = "";
 			for (let index = 0; index < list.length; index++) {
 				const row = list[index];
-				if(out != ""){
-					out +=","
+				if (out != "") {
+					out += ","
 				}
-				out+=row.to_account
+				out += row.to_account
 			}
 			resolve(out);
-		}).catch(err=>{reject(err)})
+		}).catch(err => { reject(err) })
 	});
 }
 
 function withdraw_routes(username){
 	getWithdraw_routes(username).then(result => {
-		if(result!=""){
+		if(result !="" ){
 			document.getElementById("withdraw_routes").innerHTML = result ;
 			document.getElementById("title_withdraw_routes").style.display = "block";
 		}
@@ -857,7 +856,7 @@ window.clickBtn = async (days) => {
 	document.getElementById("title_transfer").style.display = "none";
 	document.getElementById("title_power_up").style.display = "none";
 	document.getElementById("title_donation").style.display = "none";
-	document.getElementById("withdraw_routes").style.display = "none";
+	document.getElementById("title_withdraw_routes").style.display = "none";
 
 	//payout
 	total_count = {};
