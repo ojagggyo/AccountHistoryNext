@@ -836,7 +836,7 @@ function getTransferAmount(record){
 
 //if (typeof window !== 'undefined') {
 window.clickBtn = async (days) => {
-		console.log("--- clickBtn ---");
+	console.log("--- clickBtn ---");
 
 	let username = document.getElementById("username").value.trimEnd();
 	document.getElementById("username").value = username;
@@ -1324,7 +1324,7 @@ async function aaa(days){
 	wallet(username);
 	setUsername(username);
 	userlink();
-	//withdraw_routes(username);
+	withdraw_routes(username);
 
 	let out = [];
 	let limit = _get_account_history_limit;
