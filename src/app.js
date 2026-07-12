@@ -387,6 +387,7 @@ function witness(username){
 // ---------- withdraw_routes ----------
 //await steem.api.callAsync('condenser_api.get_withdraw_routes', ["usay","outgoing"]);
 async function getWithdraw_routes(username) {
+	console.log("--- getWithdraw_routes ---");
 	return new Promise((resolve, reject) => {
 		steem.api.callAsync('condenser_api.get_withdraw_routes', [username, "outgoing"]).then(list => {
 			console.log("list=",list);
@@ -404,6 +405,7 @@ async function getWithdraw_routes(username) {
 }
 
 function withdraw_routes(username){
+	console.log("--- withdraw_routes ---");
 	getWithdraw_routes(username).then(result => {
 		if(result !="" ){
 			document.getElementById("withdraw_routes").innerHTML = result ;
