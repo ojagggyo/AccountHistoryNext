@@ -1,0 +1,11 @@
+build:
+	docker rm -f accounthistory
+	rm -rf node_modules package-lock.json
+	git pull
+	npm i
+	webpack
+	#webpack --mode production
+	docker build -t ojagggyo/accounthistory:next .
+	sudo docker build -t ojagggyo/accounthistory:next .
+	docker run --name accounthistory --net=mynet0 --ip=172.100.0.102 -p 3002:3000 ojagggyo/accounthistory:next
+

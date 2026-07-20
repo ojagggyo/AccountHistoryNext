@@ -1,0 +1,17 @@
+// babel.config.js
+module.exports = {
+  presets: [
+    [
+      "@babel/preset-env",
+      {
+        targets: {
+          node: "current", // 現在の Node.js バージョンに対応
+        },
+        modules: "commonjs", // モジュールを CommonJS に変換
+
+        useBuiltIns: "entry",  // 必須のポリフィルをインポートする設定
+        corejs: 3,  // core-js のバージョンを指定
+      },
+    ],
+  ],
+};
