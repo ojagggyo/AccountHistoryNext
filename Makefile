@@ -17,8 +17,8 @@ dev:
 	webpack
 	docker build -t ojagggyo/accounthistorynext:beta .
 vps:
-	git checkout -- .
-	git pull
+	# git checkout -- .
+	# git pull
 	webpack
 	docker build -t ojagggyo/accounthistorynext:vps .
 
